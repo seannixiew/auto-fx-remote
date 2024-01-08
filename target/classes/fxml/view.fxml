@@ -1,13 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="680.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cn.controllers.outline.ViewController">
+   <children>
+      <VBox layoutX="158.0" layoutY="83.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <MenuBar prefWidth="730.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Settings">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+            <HBox prefHeight="398.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox minWidth="100.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #666666;" HBox.hgrow="NEVER">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#showRfTestPane" prefHeight="37.0" prefWidth="128.0" text="射频测试" />
+                        <Button mnemonicParsing="false" onAction="#showChartsPane" prefHeight="37.0" prefWidth="128.0" text="实时图表" />
+                        <Button mnemonicParsing="false" onAction="#showMonitorPane" prefHeight="37.0" prefWidth="128.0" text="仪表监视" />
+                        <Button mnemonicParsing="false" onAction="#showPropertiesPane" prefHeight="37.0" prefWidth="128.0" text="配置文件" />
+                        <Button mnemonicParsing="false" onAction="#showOtherClientPane" prefHeight="37.0" prefWidth="128.0" text="地检通信" />
+                     </children>
+                  </VBox>
+                   <AnchorPane fx:id="containerPane" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                       <children>
+                           <fx:include fx:id="rfTestPane" source="rftest.fxml" visible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           <fx:include fx:id="chartsPane" source="charts.fxml" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           <fx:include fx:id="propertiesPane" source="properties.fxml" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           <fx:include fx:id="monitorPane" source="monitor.fxml" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           <fx:include fx:id="otherClientPane" source="otherclient.fxml" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+<!--                           必须使用AnchorPane属性使子界面自适应窗口变化，如果在Controller中绑定属性（两个方式同时做也不行），会出现窗口扩大自适应有效，缩小无效的问题（bug？）-->
+                       </children>
+                   </AnchorPane>
+               </children>
+            </HBox>
+            <TitledPane animated="false" expanded="false" text="开发者日志">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextArea prefHeight="127.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </TitledPane>
+         </children>
+      </VBox>
+   </children>
 </AnchorPane>
