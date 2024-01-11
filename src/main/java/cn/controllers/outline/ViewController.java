@@ -24,7 +24,9 @@ public class ViewController extends RootController {
     @FXML
     Pane propertiesPane;
     @FXML
-    Pane otherClientPane;
+    Pane groundTestPane;
+    @FXML
+    Pane vivadoClientPane;
 
 
     @FXML
@@ -53,7 +55,8 @@ public class ViewController extends RootController {
         chartsPane.setVisible(false);
         monitorPane.setVisible(false);
         propertiesPane.setVisible(false);
-        otherClientPane.setVisible(false);
+        groundTestPane.setVisible(false);
+        vivadoClientPane.setVisible(false);
 
     }
 
@@ -62,7 +65,8 @@ public class ViewController extends RootController {
         rfTestPane.setVisible(false);
         monitorPane.setVisible(false);
         propertiesPane.setVisible(false);
-        otherClientPane.setVisible(false);
+        groundTestPane.setVisible(false);
+        vivadoClientPane.setVisible(false);
 
 
     }
@@ -72,7 +76,8 @@ public class ViewController extends RootController {
         chartsPane.setVisible(false);
         rfTestPane.setVisible(false);
         propertiesPane.setVisible(false);
-        otherClientPane.setVisible(false);
+        groundTestPane.setVisible(false);
+        vivadoClientPane.setVisible(false);
 
     }
 
@@ -81,16 +86,29 @@ public class ViewController extends RootController {
         chartsPane.setVisible(false);
         rfTestPane.setVisible(false);
         monitorPane.setVisible(false);
-        otherClientPane.setVisible(false);
+        groundTestPane.setVisible(false);
+        vivadoClientPane.setVisible(false);
 
     }
 
-    public void showOtherClientPane(){
-        otherClientPane.setVisible(true);
+    public void showGroundTestPane(){
+        groundTestPane.setVisible(true);
         chartsPane.setVisible(false);
         rfTestPane.setVisible(false);
         monitorPane.setVisible(false);
         propertiesPane.setVisible(false);
+        vivadoClientPane.setVisible(false);
+
+    }
+
+    public void showVivadoClientPane(){
+        vivadoClientPane.setVisible(true);
+        groundTestPane.setVisible(false);
+        chartsPane.setVisible(false);
+        rfTestPane.setVisible(false);
+        monitorPane.setVisible(false);
+        propertiesPane.setVisible(false);
+
 
     }
 

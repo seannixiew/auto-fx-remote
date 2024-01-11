@@ -8,5 +8,5 @@ public class DateFormat {
 
     public static final SimpleDateFormat FORFILENAME=new SimpleDateFormat("yyyyMMddHHmmss");
 
-    public static final SimpleDateFormat FORSHORT=new SimpleDateFormat("[MM-dd HH:mm:ss] ");
+    public static final SimpleDateFormat FORLOGSHORT=new SimpleDateFormat("[mm:ss] ");
 }

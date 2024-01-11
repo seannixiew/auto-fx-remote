@@ -5,6 +5,7 @@ import cn.handler.tx.PowerInit;
 import cn.instr.InstrumentClient;
 import cn.instr.MatrixClient;
 import cn.model.TestItemModel;
+import cn.utils.CommonUtils;
 import cn.utils.ControllersManager;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -26,12 +27,21 @@ public class MainTestDispatcher {
     List<String> offeredChannelsA=rfTestController.offeredChannelsA;
     List<String> offeredChannelsB=rfTestController.offeredChannelsB;
 
+    MatrixClient matrix0= rfTestController.matrix0;
+    MatrixClient matrix1= rfTestController.matrix1;
+
+
     public void testHandlerDispatcher( Event event){
 
         if(tsA.isSelected() && tsB.isSelected()){ //遍历操作两个矩阵
             System.out.println("遍历操作两个矩阵");
 
+
         }else if(tsA.isSelected() && !tsB.isSelected()){ //遍历操作单个矩阵X
+            if(matrix0==null || offeredChannelsA==null || offeredChannelsA.size()==0){
+                CommonUtils.warningDialog("矩阵配置异常","矩阵未连接或未输入通道！");
+                return;
+            }
             System.out.println("遍历操作单个矩阵X");
             for (String currChannel:offeredChannelsA) {   //注意：currChanel通道号前带“A”
                 System.out.println("当前测试矩阵通道为"+currChannel);
@@ -44,13 +54,14 @@ public class MainTestDispatcher {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    //固定等待，执行下一个测试项
                 }
-
-                //统一，反射调用测试项进行测试；逐个；期间等待固定时间；
-                //在每个测试方法中，识别仪表型号，根据不同型号执行不同流程
             }
+
+
         }else if(!tsA.isSelected() && tsB.isSelected()){ //遍历操作单个矩阵Y
             System.out.println("遍历操作单个矩阵Y");
+
 
         }else {//不操作任何矩阵
             System.out.println("不操作任何矩阵");

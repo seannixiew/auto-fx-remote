@@ -96,13 +96,13 @@ public class RfTestController extends RootController {
 
     @FXML
     void onActionBtStart(Event event){
-//        if(listView.getItems().size()==0 || (instru0.isConnected || instru1.isConnected || instru2.isConnected || instru3.isConnected)==false){
-//            Platform.runLater(()->{
-//                taLogs.appendText(DateFormat.FORLOG.format(new Date())+"未配置测试项，或者未连接任何测试仪器！\n");
-//                System.out.println("未配置测试项，或者未连接任何测试仪器！");
-//            });
-//            return;
-//        }
+        if(listView.getItems().size()==0 || (instru0.isConnected || instru1.isConnected || instru2.isConnected || instru3.isConnected)==false){
+            Platform.runLater(()->{
+                taLogs.appendText(DateFormat.FORLOG.format(new Date())+"未配置测试项，或者未连接任何测试仪器！\n");
+                System.out.println("未配置测试项，或者未连接任何测试仪器！");
+            });
+            return;
+        }
         System.out.println(instru0);
         new MainTestDispatcher().testHandlerDispatcher(event);
     }
@@ -152,6 +152,7 @@ public class RfTestController extends RootController {
         }).start();
     }
 
+
     @FXML
     void onActionBtConnection1(){
         new Thread(()->{
@@ -187,7 +188,13 @@ public class RfTestController extends RootController {
                 CommonUtils.warningDialog("ip异常","ip地址为空！");
                 return;
             }
-            boolean isOpen=instru2.open("",ip);
+            String cbValue=(String) cbVNA.getValue();
+            if(cbValue==null){
+                CommonUtils.warningDialog("仪表型号异常！","请选择型号！");
+                return;
+            }
+
+            boolean isOpen=instru2.open(cbValue,ip);
             if(!isOpen){
                 System.out.println("connecting failed.");
                 Platform.runLater(()->{
@@ -195,6 +202,7 @@ public class RfTestController extends RootController {
                 });
                 return;
             }
+            System.out.println("是否连接："+instru2.isConnected+"，标识仪表型号为："+instru2.instruType+"，仪表实例为："+instru2);
             instru2.writeCmd("*IDN?");
             String s = instru2.readResult();
             System.out.println(s);
@@ -256,11 +264,29 @@ public class RfTestController extends RootController {
         CheckBoxTreeItem<TestItemModel> node2 = new CheckBoxTreeItem<TestItemModel>(TestItems.dbf);
         node2.setExpanded(true);
         node2.getChildren().addAll(
-                new CheckBoxTreeItem<TestItemModel>(TestItems.dbfBoard),
-                new CheckBoxTreeItem<TestItemModel>(TestItems.dbfMachine));
+                new CheckBoxTreeItem<TestItemModel>(TestItems.daAndRf),
+                new CheckBoxTreeItem<TestItemModel>(TestItems.adAndRf),
+                new CheckBoxTreeItem<TestItemModel>(TestItems.dbfAndRfTx),
+                new CheckBoxTreeItem<TestItemModel>(TestItems.dbfAndRfRx));
+
+        CheckBoxTreeItem<TestItemModel> node3 = new CheckBoxTreeItem<TestItemModel>(TestItems.ad);
+        node3.setExpanded(true);
+        node3.getChildren().addAll(
+                new CheckBoxTreeItem<TestItemModel>(TestItems.ad40FuncAndPerformance),
+                new CheckBoxTreeItem<TestItemModel>(TestItems.adTestDAFuncAndPerformance),
+                new CheckBoxTreeItem<TestItemModel>(TestItems.ad40Isolation),
+                new CheckBoxTreeItem<TestItemModel>(TestItems.ad40Consistency));
+
+        CheckBoxTreeItem<TestItemModel> node4 = new CheckBoxTreeItem<TestItemModel>(TestItems.da);
+        node4.setExpanded(true);
+        node4.getChildren().addAll(
+                new CheckBoxTreeItem<TestItemModel>(TestItems.da40FuncAndPerformanceAndIso),
+                new CheckBoxTreeItem<TestItemModel>(TestItems.daTestADFuncAndPerformance),
+                new CheckBoxTreeItem<TestItemModel>(TestItems.da40Power),
+                new CheckBoxTreeItem<TestItemModel>(TestItems.da40Consistency));
 
         CheckBoxTreeItem<TestItemModel> virualNode = new CheckBoxTreeItem<TestItemModel>();
-        virualNode.getChildren().addAll(node0,node1,node2);
+        virualNode.getChildren().addAll(node0,node1,node2,node3,node4);
         final CheckTreeView<TestItemModel> checkTreeView = new CheckTreeView<>(virualNode);
         checkTreeView.setShowRoot(false);
 

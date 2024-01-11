@@ -23,71 +23,75 @@
    <children>
       <VBox fx:id="vb0" maxHeight="1.7976931348623157E308" prefHeight="637.0" prefWidth="835.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <TitledPane fx:id="tp0" animated="false" collapsible="false" maxWidth="1.7976931348623157E308" prefHeight="319.0" prefWidth="835.0" text="测试配置" VBox.vgrow="ALWAYS">
+            <TitledPane fx:id="tp0" animated="false" collapsible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="364.0" prefWidth="1001.0" text="测试配置" VBox.vgrow="ALWAYS">
                <content>
-                  <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                  <AnchorPane maxHeight="1.7976931348623157E308">
                      <children>
-                        <VBox fx:id="vb1" maxWidth="1.7976931348623157E308" minWidth="250.0" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS" />
-                        <ImageView fitHeight="56.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../imgs/arrow-a.png" />
-                           </image>
-                           <HBox.margin>
-                              <Insets left="-10.0" right="-15.0" />
-                           </HBox.margin>
-                        </ImageView>
-                        <ListView fx:id="listView" maxWidth="300.0" prefHeight="36.0" prefWidth="150.0" HBox.hgrow="ALWAYS" />
-                        <GridPane>
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="60.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
+                        <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="340.0" prefWidth="999.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <ComboBox fx:id="cbVSG" prefWidth="150.0" promptText="信号源型号..." />
-                              <ComboBox fx:id="cbSA" prefWidth="150.0" promptText="频谱仪型号..." GridPane.rowIndex="1" />
-                              <ComboBox fx:id="cbVNA" prefWidth="150.0" promptText="矢网型号..." GridPane.rowIndex="2" />
-                              <ComboBox fx:id="cbPowerMeter" prefWidth="150.0" promptText="功率计型号..." GridPane.rowIndex="3" />
-                              <TextField fx:id="tf0" promptText="输入IP..." GridPane.columnIndex="1" />
-                              <TextField fx:id="tf1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <TextField fx:id="tf2" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <TextField fx:id="tf3" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <Button fx:id="btConnection0" mnemonicParsing="false" onAction="#onActionBtConnection0" text="连接" GridPane.columnIndex="2" />
-                              <Button fx:id="btConnection1" mnemonicParsing="false" onAction="#onActionBtConnection1" text="连接" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <Button fx:id="btConnection2" mnemonicParsing="false" onAction="#onActionBtConnection2" text="连接" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                              <Button fx:id="btConnection3" mnemonicParsing="false" onAction="#onActionBtConnection3" text="连接" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                              <VBox fx:id="vb1" maxWidth="1.7976931348623157E308" minWidth="250.0" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS" />
+                              <ImageView fitHeight="56.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../imgs/arrow-a.png" />
+                                 </image>
+                                 <HBox.margin>
+                                    <Insets left="-10.0" right="-15.0" />
+                                 </HBox.margin>
+                              </ImageView>
+                              <ListView fx:id="listView" maxWidth="300.0" prefHeight="36.0" prefWidth="150.0" HBox.hgrow="ALWAYS" />
+                              <GridPane>
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="60.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <ComboBox fx:id="cbVSG" prefWidth="150.0" promptText="信号源型号..." />
+                                    <ComboBox fx:id="cbSA" prefWidth="150.0" promptText="频谱仪型号..." GridPane.rowIndex="1" />
+                                    <ComboBox fx:id="cbVNA" prefWidth="150.0" promptText="矢网型号..." GridPane.rowIndex="2" />
+                                    <ComboBox fx:id="cbPowerMeter" prefWidth="150.0" promptText="功率计型号..." GridPane.rowIndex="3" />
+                                    <TextField fx:id="tf0" promptText="输入IP..." GridPane.columnIndex="1" />
+                                    <TextField fx:id="tf1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <TextField fx:id="tf2" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <TextField fx:id="tf3" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <Button fx:id="btConnection0" mnemonicParsing="false" onAction="#onActionBtConnection0" text="连接" GridPane.columnIndex="2" />
+                                    <Button fx:id="btConnection1" mnemonicParsing="false" onAction="#onActionBtConnection1" text="连接" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                    <Button fx:id="btConnection2" mnemonicParsing="false" onAction="#onActionBtConnection2" text="连接" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                    <Button fx:id="btConnection3" mnemonicParsing="false" onAction="#onActionBtConnection3" text="连接" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                 </children>
+                              </GridPane>
+                              <Separator orientation="VERTICAL" prefHeight="200.0" />
+                              <GridPane>
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <ToggleSwitch fx:id="tsA" prefHeight="18.0" prefWidth="85.0" text="矩阵X选通" />
+                                    <ToggleSwitch fx:id="tsB" prefHeight="18.0" prefWidth="87.0" text="矩阵Y选通" GridPane.rowIndex="1" />
+                                 </children>
+                              </GridPane>
+                              <Separator orientation="VERTICAL" prefHeight="200.0" />
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="50.0">
+                                 <children>
+                                    <Button fx:id="btStart" alignment="CENTER" mnemonicParsing="false" onAction="#onActionBtStart" style="-fx-min-height: 60px; -fx-max-height: 60px; -fx-max-width: 60px; -fx-min-width: 60px; -fx-font-size: 10px;-fx-font-style: italic" text="启动" />
+                                    <Button fx:id="btEnd" alignment="CENTER" mnemonicParsing="false" onAction="#onActionBtEnd" style="-fx-background-radius: 10em; -fx-min-height: 60px; -fx-max-height: 60px; -fx-max-width: 60px; -fx-min-width: 60px; -fx-font-size: 10px;-fx-font-style: italic" text="终止" />
+                                    <Button fx:id="btCustom" alignment="CENTER" mnemonicParsing="false" onAction="#onActionBtCustom" style="-fx-background-radius: 10em; -fx-min-height: 60px; -fx-max-height: 60px; -fx-max-width: 60px; -fx-min-width: 60px; -fx-font-size: 10px;-fx-font-style: italic" text="CUSTOM" />
+                                 </children>
+                              </VBox>
                            </children>
-                        </GridPane>
-                        <Separator orientation="VERTICAL" prefHeight="200.0" />
-                        <GridPane>
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <ToggleSwitch fx:id="tsA" prefHeight="18.0" prefWidth="85.0" text="矩阵X选通" />
-                              <ToggleSwitch fx:id="tsB" prefHeight="18.0" prefWidth="87.0" text="矩阵Y选通" GridPane.rowIndex="1" />
-                           </children>
-                        </GridPane>
-                        <Separator orientation="VERTICAL" prefHeight="200.0" />
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="50.0">
-                           <children>
-                              <Button fx:id="btStart" onAction="#onActionBtStart" alignment="CENTER" mnemonicParsing="false" style="-fx-min-height: 60px; -fx-max-height: 60px; -fx-max-width: 60px; -fx-min-width: 60px; -fx-font-size: 10px;-fx-font-style: italic" text="启动" />
-                              <Button fx:id="btEnd" onAction="#onActionBtEnd" alignment="CENTER" mnemonicParsing="false" style="-fx-background-radius: 10em; -fx-min-height: 60px; -fx-max-height: 60px; -fx-max-width: 60px; -fx-min-width: 60px; -fx-font-size: 10px;-fx-font-style: italic" text="终止" />
-                              <Button fx:id="btCustom" onAction="#onActionBtCustom" alignment="CENTER" mnemonicParsing="false" style="-fx-background-radius: 10em; -fx-min-height: 60px; -fx-max-height: 60px; -fx-max-width: 60px; -fx-min-width: 60px; -fx-font-size: 10px;-fx-font-style: italic" text="CUSTOM" />
-                           </children>
-                        </VBox>
+                        </HBox>
                      </children>
-                  </HBox>
+                  </AnchorPane>
                </content>
             </TitledPane>
             <TitledPane animated="false" collapsible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="203.0" prefWidth="835.0" text="结果概要" VBox.vgrow="ALWAYS">
@@ -99,7 +103,7 @@
                   </AnchorPane>
               </content>
             </TitledPane>
-            <TitledPane animated="false" collapsible="false" maxHeight="300.0" maxWidth="1.7976931348623157E308" prefHeight="166.0" prefWidth="835.0" text="操作日志" VBox.vgrow="ALWAYS">
+            <TitledPane animated="false" collapsible="false" maxHeight="200.0" maxWidth="1.7976931348623157E308" prefHeight="166.0" prefWidth="835.0" text="操作日志" VBox.vgrow="ALWAYS">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

@@ -37,11 +37,12 @@
                <children>
                   <VBox minWidth="100.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #666666;" HBox.hgrow="NEVER">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#showRfTestPane" prefHeight="37.0" prefWidth="128.0" text="射频测试" />
+                        <Button mnemonicParsing="false" onAction="#showRfTestPane" prefHeight="37.0" prefWidth="128.0" text="测试面板" />
                         <Button mnemonicParsing="false" onAction="#showChartsPane" prefHeight="37.0" prefWidth="128.0" text="实时图表" />
                         <Button mnemonicParsing="false" onAction="#showMonitorPane" prefHeight="37.0" prefWidth="128.0" text="仪表监视" />
                         <Button mnemonicParsing="false" onAction="#showPropertiesPane" prefHeight="37.0" prefWidth="128.0" text="配置文件" />
-                        <Button mnemonicParsing="false" onAction="#showOtherClientPane" prefHeight="37.0" prefWidth="128.0" text="地检通信" />
+                         <Button mnemonicParsing="false" onAction="#showVivadoClientPane" prefHeight="37.0" prefWidth="128.0" text="Vivado TCL" />
+                        <Button mnemonicParsing="false" onAction="#showGroundTestPane" prefHeight="37.0" prefWidth="128.0" text="地检通信" />
                      </children>
                   </VBox>
                    <AnchorPane fx:id="containerPane" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
@@ -50,7 +51,8 @@
                            <fx:include fx:id="chartsPane" source="charts.fxml" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            <fx:include fx:id="propertiesPane" source="properties.fxml" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            <fx:include fx:id="monitorPane" source="monitor.fxml" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                           <fx:include fx:id="otherClientPane" source="otherclient.fxml" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           <fx:include fx:id="groundTestPane" source="groundtest.fxml" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           <fx:include fx:id="vivadoClientPane" source="vivadoclient.fxml" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
 <!--                           必须使用AnchorPane属性使子界面自适应窗口变化，如果在Controller中绑定属性（两个方式同时做也不行），会出现窗口扩大自适应有效，缩小无效的问题（bug？）-->
                        </children>
                    </AnchorPane>

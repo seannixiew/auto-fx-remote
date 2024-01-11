@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cn.controllers.GroundTestController">
+    <children>
+        <VBox layoutX="104.0" layoutY="31.0" maxHeight="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Pane maxHeight="20.0" minHeight="20.0" prefHeight="200.0" prefWidth="200.0" />
+                <HBox alignment="CENTER" minHeight="0.0" prefHeight="24.0" prefWidth="600.0">
+                    <children>
+                        <AnchorPane prefHeight="36.0" prefWidth="74.0">
+                            <children>
+                                <Label alignment="CENTER" prefHeight="24.0" prefWidth="74.0" text="TCP/IP" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                            </children>
+                        </AnchorPane>
+                  <TextField />
+                        <Button mnemonicParsing="false" text="地检建链" />
+                    </children>
+                </HBox>
+                <HBox alignment="BOTTOM_LEFT" prefHeight="60.0" prefWidth="600.0">
+                    <children>
+                        <TextField prefHeight="23.0" prefWidth="517.0" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets />
+                            </HBox.margin>
+                        </TextField>
+                        <Button alignment="CENTER" mnemonicParsing="false" style="-fx-border-color: orange;" text="发送" />
+                    </children>
+                </HBox>
+                <TitledPane animated="false" collapsible="false" maxHeight="1.7976931348623157E308" prefHeight="119.0" prefWidth="600.0" text="地检响应" VBox.vgrow="ALWAYS">
+                    <content>
+                        <AnchorPane maxHeight="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <TextArea layoutY="-20.0" prefHeight="180.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </TitledPane>
+            <TitledPane animated="false" collapsible="false" maxHeight="1.7976931348623157E308" prefHeight="133.0" prefWidth="600.0" text="指令记录" VBox.vgrow="ALWAYS">
+               <content>
+                  <AnchorPane maxHeight="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextArea layoutX="18.6" layoutY="60.6" prefHeight="114.0" prefWidth="579.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </TitledPane>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
