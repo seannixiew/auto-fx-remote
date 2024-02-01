@@ -10,6 +10,5 @@ public class ChartsModel {
 
     public static Map<Number, List<Number>> lineValues=new HashMap<>();
 
-    public static Map<Number, List<Number>> barValues=new HashMap<>();
 
 }

@@ -38,7 +38,7 @@ public class RfTestController extends RootController {
     @FXML
     public Pane vb0;
     @FXML
-    public Pane vb1;
+    public Pane ap0;
 
     public ObservableList<TreeItem<TestItemModel>> selectedItems;
 
@@ -337,7 +337,7 @@ public class RfTestController extends RootController {
                 System.out.println(selectedItems);
             }
         });
-        vb1.getChildren().add(checkTreeView);
+        ap0.getChildren().add(checkTreeView);
 
 
         cbVSG.setItems(FXCollections.observableArrayList(InstruType.SMW200A,InstruType.E8267D));

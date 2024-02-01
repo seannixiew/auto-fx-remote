@@ -24,13 +24,13 @@
    <children>
       <VBox fx:id="vb0" maxHeight="1.7976931348623157E308" prefHeight="637.0" prefWidth="835.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <TitledPane styleClass="titled-pane-rftest-0" fx:id="tp0" animated="false" collapsible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="364.0" prefWidth="1001.0" text="测试配置" VBox.vgrow="ALWAYS">
+            <TitledPane fx:id="tp0" animated="false" collapsible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="364.0" prefWidth="1001.0" styleClass="titled-pane-rftest-0" text="测试配置" VBox.vgrow="ALWAYS">
                <content>
                   <AnchorPane maxHeight="1.7976931348623157E308">
                      <children>
                         <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="340.0" prefWidth="999.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <VBox fx:id="vb1" maxWidth="1.7976931348623157E308" minWidth="250.0" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS" />
+                              <AnchorPane fx:id="ap0" maxWidth="1.7976931348623157E308" minWidth="250.0" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                               <ImageView fitHeight="56.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../imgs/arrow-a.png" />
@@ -95,7 +95,7 @@
                               <Separator orientation="VERTICAL" prefHeight="200.0" />
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="50.0">
                                  <children>
-                                    <Button fx:id="btStart" alignment="CENTER" mnemonicParsing="false" onAction="#onActionBtStart" defaultButton="true" style="-fx-min-height: 60px; -fx-max-height: 60px; -fx-max-width: 60px; -fx-min-width: 60px; -fx-font-size: 10px;-fx-font-style: italic" text="启动" />
+                                    <Button fx:id="btStart" alignment="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#onActionBtStart" style="-fx-min-height: 60px; -fx-max-height: 60px; -fx-max-width: 60px; -fx-min-width: 60px; -fx-font-size: 10px;-fx-font-style: italic" text="启动" />
                                     <Button fx:id="btEnd" alignment="CENTER" mnemonicParsing="false" onAction="#onActionBtEnd" style="-fx-background-radius: 10em; -fx-min-height: 60px; -fx-max-height: 60px; -fx-max-width: 60px; -fx-min-width: 60px; -fx-font-size: 10px;-fx-font-style: italic" text="终止" />
                                     <Button fx:id="btCustom" alignment="CENTER" mnemonicParsing="false" onAction="#onActionBtCustom" style="-fx-background-radius: 10em; -fx-min-height: 60px; -fx-max-height: 60px; -fx-max-width: 60px; -fx-min-width: 60px; -fx-font-size: 10px;-fx-font-style: italic" text="CUSTOM" />
                                  </children>
@@ -106,7 +106,7 @@
                   </AnchorPane>
                </content>
             </TitledPane>
-            <TitledPane styleClass="titled-pane-rftest-1" animated="false" collapsible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="203.0" prefWidth="835.0" text="结果概要" VBox.vgrow="ALWAYS">
+            <TitledPane animated="false" collapsible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="203.0" prefWidth="835.0" styleClass="titled-pane-rftest-1" text="结果概要" VBox.vgrow="ALWAYS">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -115,7 +115,7 @@
                   </AnchorPane>
               </content>
             </TitledPane>
-            <TitledPane styleClass="titled-pane-rftest-2" animated="false" collapsible="false" maxHeight="200.0" maxWidth="1.7976931348623157E308" prefHeight="166.0" prefWidth="835.0" text="操作日志" VBox.vgrow="ALWAYS">
+            <TitledPane animated="false" collapsible="false" maxHeight="200.0" maxWidth="1.7976931348623157E308" prefHeight="166.0" prefWidth="835.0" styleClass="titled-pane-rftest-2" text="操作日志" VBox.vgrow="ALWAYS">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

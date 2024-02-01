@@ -1,8 +1,6 @@
 package cn.controllers;
 
 import cn.controllers.root.RootController;
-import cn.demo.ChartsDataGenerateDemo;
-import cn.model.ChartsModel;
 import javafx.fxml.FXML;
 import javafx.scene.chart.*;
 import javafx.scene.control.Button;

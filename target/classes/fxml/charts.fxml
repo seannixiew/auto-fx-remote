@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
@@ -16,9 +15,8 @@
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" VBox.vgrow="NEVER">
                <children>
-                  <CheckBox mnemonicParsing="false" text="表1" />
-                  <CheckBox mnemonicParsing="false" text="表2" />
-                  <CheckBox mnemonicParsing="false" text="表3" />
+                  <CheckBox mnemonicParsing="false" text="实时图" />
+                  <CheckBox mnemonicParsing="false" text="统计图" />
                   <Button fx:id="btStartPlot" mnemonicParsing="false" onAction="#onStartPlot" text="数据监测" />
                   <Button fx:id="btEndPlot" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#onEndPlot" text="停止" />
                </children>
@@ -26,16 +24,18 @@
 
             <LineChart fx:id="lineChart" VBox.vgrow="ALWAYS">
               <xAxis>
-                <NumberAxis fx:id="xLine" label="Channel" side="BOTTOM"  />
+                <NumberAxis label="Channel" side="BOTTOM" fx:id="xLine" />
               </xAxis>
               <yAxis>
                 <NumberAxis fx:id="yLine" label="Value" side="LEFT" />
               </yAxis>
             </LineChart>
-
-
-
-            <PieChart fx:id="pieChart" minHeight="0.0" />
+            <AnchorPane VBox.vgrow="ALWAYS">
+               <children>
+      
+                  <PieChart fx:id="pieChart" minHeight="0.0" prefHeight="400.0" prefWidth="608.0" title="良率" titleSide="BOTTOM" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
          </children>
       </VBox>
    </children>

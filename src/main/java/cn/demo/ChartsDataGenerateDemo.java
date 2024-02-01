@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class ChartsDataGenerateDemo {
 
-    public static void test() {
+    public  void test() {
 
         new Thread(()->{
 
@@ -25,7 +25,6 @@ public class ChartsDataGenerateDemo {
                     if (ChartsModel.chartsActive) {
                         System.out.println("图表数据写入内存...");
                         ChartsModel.lineValues.put(ch, Arrays.asList(val1,val2));
-                        ChartsModel.barValues.put(ch,Arrays.asList(val1,val2));
                     }
 
                }
