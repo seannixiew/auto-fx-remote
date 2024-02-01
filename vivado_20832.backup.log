@@ -1,0 +1,223 @@
+#-----------------------------------------------------------
+# Vivado v2018.3.1 (64-bit)
+# SW Build 2489853 on Tue Mar 26 04:20:25 MDT 2019
+# IP Build 2486929 on Tue Mar 26 06:44:21 MDT 2019
+# Start of session at: Mon Jan 15 19:43:51 2024
+# Process ID: 20832
+# Current directory: D:/IDEA_Projects/auto-fx
+# Command line: vivado.exe -mode tcl -source D:\vivado_projects\blank.tcl
+# Log file: D:/IDEA_Projects/auto-fx/vivado.log
+# Journal file: D:/IDEA_Projects/auto-fx\vivado.jou
+#-----------------------------------------------------------ssource {D:\vivado_projects\blank.tcl}
+open_hw
+connect_hw_server
+INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
+close_hw_target {localhost:3121/xilinx_tcf/Xilinx/80806580066901}
+INFO: [Labtoolstcl 44-464] Closing hw_target localhost:3121/xilinx_tcf/Xilinx/80806580066901
+INFO: [Labtoolstcl 44-468] Target hw_target localhost:3121/xilinx_tcf/Xilinx/80806580066901 is already closed
+close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c001}
+INFO: [Labtoolstcl 44-464] Closing hw_target localhost:3121/xilinx_tcf/Xilinx/8080658006c001
+INFO: [Labtoolstcl 44-468] Target hw_target localhost:3121/xilinx_tcf/Xilinx/8080658006c001 is already closed
+open_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c101}
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Xilinx/8080658006c101
+current_hw_device [get_hw_devices xc7vx690t_0]
+refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]
+INFO: [Labtools 27-1435] Device xc7vx690t (JTAG device index = 0) is not programmed (DONE status = 0).
+refresh_hw_device: Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 1246.078 ; gain = 993.516
+set_property PROBES.FILE {E:/wx/1_auto-test/about vivado/bit_file_from_yangjiashuo/TOP_test2_2.ltx} [get_hw_devices xc7vx690t_0]
+set_property FULL_PROBES.FILE {E:/wx/1_auto-test/about vivado/bit_file_from_yangjiashuo/TOP_test2_2.ltx} [get_hw_devices xc7vx690t_0]
+set_property PROGRAM.FILE {E:/wx/1_auto-test/about vivado/bit_file_from_yangjiashuo/TOP_test2_2.bit} [get_hw_devices xc7vx690t_0]
+program_hw_devices [get_hw_devices xc7vx690t_0]
+INFO: [Labtools 27-3164] End of startup status: HIGH
+program_hw_devices: Time (s): cpu = 00:00:55 ; elapsed = 00:00:57 . Memory (MB): peak = 1246.582 ; gain = 0.504
+refresh_hw_device [lindex [get_hw_devices xc7vx690t_0] 0]
+INFO: [Labtools 27-2302] Device xc7vx690t (JTAG device index = 0) is programmed with a design that has 6 ILA core(s).
+INFO: [Labtools 27-2302] Device xc7vx690t (JTAG device index = 0) is programmed with a design that has 18 VIO core(s).
+INFO: [Labtools 27-1889] Uploading output probe values for VIO core [hw_vio_11]
+INFO: [Labtools 27-1889] Uploading output probe values for VIO core [hw_vio_12]
+INFO: [Labtools 27-1889] Uploading output probe values for VIO core [hw_vio_13]
+INFO: [Labtools 27-1889] Uploading output probe values for VIO core [hw_vio_14]
+INFO: [Labtools 27-1889] Uploading output probe values for VIO core [hw_vio_15]
+INFO: [Labtools 27-1889] Uploading output probe values for VIO core [hw_vio_16]
+INFO: [Labtools 27-1889] Uploading output probe values for VIO core [hw_vio_17]
+INFO: [Labtools 27-1889] Uploading output probe values for VIO core [hw_vio_18]
+refresh_hw_device: Time (s): cpu = 00:00:00 ; elapsed = 00:00:07 . Memory (MB): peak = 1252.543 ; gain = 5.961
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_1 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/AD_SPI_inst/ila_spi_inst"}]]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_2 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/DA_SPI_INST/ila_daspi_INST"}]]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_3 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_4 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"TCTM_INST/ila_tctm_inst"}]]
+WARNING: [Labtoolstcl 44-129] No matching hw_ila_data was found.
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_5 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"rec_Calib_inst/ila_rec_calib_simp_inst"}]]
+WARNING: [Labtoolstcl 44-129] No matching hw_ila_data was found.
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_6 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"uut_beam_gth/dut_54/ila_54beam_inst"}]]
+WARNING: [Labtoolstcl 44-130] No matching hw_ilas were found.
+WARNING: [Labtoolstcl 44-129] No matching hw_ila_data was found.
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_7 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"uut_beam_gth/ila_dds_inst"}]]
+WARNING: [Labtoolstcl 44-130] No matching hw_ilas were found.
+WARNING: [Labtoolstcl 44-129] No matching hw_ila_data was found.
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_8 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"uut_beam_gth/uut_para539/uut_ila_5"}]]
+WARNING: [Labtoolstcl 44-130] No matching hw_ilas were found.
+WARNING: [Labtoolstcl 44-129] No matching hw_ila_data was found.
+set_property TRIGGER_COMPARE_VALUE eq3'bXXX [get_hw_probes ADandDA_inst/pps_r -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]]
+set_property TRIGGER_COMPARE_VALUE eq3'b100 [get_hw_probes ADandDA_inst/pps_r -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]]
+startgroup
+set_property CONTROL.DATA_DEPTH 8192 [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+set_property CONTROL.TRIGGER_POSITION 8191 [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+endgroup
+set_property CONTROL.TRIGGER_POSITION 100 [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/CNTVALUEIN -of_objects [get_hw_vios -of_objects [get_hw_devices xset_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devicset_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/CNTVset_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/delay_load_en -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/delcommit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {Ccommit_hw_vio [get_hw_probes {ADandDA_inst/delaset_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delay_load_en -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0set_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delcommit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {Ccommit_hw_vio [get_hw_probes {ADandDA_inst/delaset_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/delay_load_en_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx69set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/delay_lcommit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filtecommit_hw_vio [get_hw_probes {ADandDA_inst/delay_loset_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delay_load_en_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx69set_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delay_lcommit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filtecommit_hw_vio [get_hw_probes {ADandDA_inst/delay_loset_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/CNTVcommit_hw_vio [get_hw_probes {ADandDA_inst/CNTVALUEIN_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {commit_hw_vio [get_hw_probes {ADandDA_inst/CNTVAset_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/CNTVcommit_hw_vio [get_hw_probes {ADandDA_inst/CNTVALUEIN} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELLcommit_hw_vio [get_hw_probes {ADandDA_inst/Crun_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_3' trigger was armed at 2024-Jan-15 19:49:00
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_3' triggered at 2024-Jan-15 19:49:03
+upload_hw_ila_data: Time (s): cpu = 00:00:00 ; elapsed = 00:01:32 . Memory (MB): peak = 1261.055 ; gain = 6.559
+write_hw_ila_data -csvupload_hw_ila_data: Time (s): cpu = 00:00:00 ; elapsed = 00:01:34 . Memory (MB): peak = 1262.148 ; set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/CNTVALUEIN -of_objects [get_hw_vios -of_objects [get_hw_devices xset_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/delay_load_en -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delay_load_en -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/delay_load_en_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filtecommit_hw_vio [get_hw_probes {ADandDA_inst/delay_loset_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delay_load_en_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filtecommit_hw_vio [get_hw_probes {ADandDA_inst/delay_loset_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/CNTVcommit_hw_vio [get_hw_probes {ADandDA_inst/CNTVALUEIN_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {commit_hw_vio [get_hw_probes {ADandDA_inst/CNTVAset_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_set_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/CNTVcommit_hw_vio [get_hw_probes {ADandDA_inst/CNTVALUEIN} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELLcommit_hw_vio [get_hw_probes {ADandDA_inst/Crun_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_3' trigger was armed at 2024-Jan-15 19:50:57
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_3' triggered at 2024-Jan-15 19:50:59
+upload_hw_ila_data: Time (s): cpu = 00:00:00 ; elapsed = 00:01:13 . Memory (MB): peak = 1273.082 ; gain = 6.262
+write_hw_ila_data -csv_file {E:\wx\1_auto-test\about vivado\bit_file_from_yangjiashuo\0111\process2_1.csv} hw_ila_data_3
+set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/CNTVALUEIN -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/delay_load_en -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {Ccommit_hw_vio [get_hw_probes {ADandDA_inst/delaset_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delay_load_en -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0set_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delcommit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {Ccommit_hw_vio [get_hw_probes {ADandDA_inst/delaset_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/delay_load_en_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx69set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/delay_lcommit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filtecommit_hw_vio [get_hw_probes {ADandDA_inst/delay_loset_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delay_load_en_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx69set_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delay_lcommit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filtecommit_hw_vio [get_hw_probes {ADandDA_inst/delay_loset_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/CNTVcommit_hw_vio [get_hw_probes {ADandDA_inst/CNTVALUEIN_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {commit_hw_vio [get_hw_probes {ADandDA_inst/CNTVAset_property OUTPUT_VALUE 2 [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_set_property OUTPUT_VALUE 2 [get_hw_probes ADandDA_inst/CNTVcommit_hw_vio [get_hw_probes {ADandDA_inst/CNTVALUEIN} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELLcommit_hw_vio [get_hw_probes {ADandDA_inst/Crun_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_3' trigger was armed at 2024-Jan-15 19:52:33
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_3' triggered at 2024-Jan-15 19:52:35
+upload_hw_ila_data: Time (s): cpu = 00:00:01 ; elapsed = 00:01:21 . Memory (MB): peak = 1275.629 ; gain = 2.547
+write_hw_ila_data -csv_file {E:\wx\1_auto-test\about vivado\bit_file_from_yangjiashuo\0111\process2_2.csv} hw_ila_data_3
+set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/CNTVALUEIN -of_objects [get_hw_vios -of_objects [get_hw_devices xset_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/delay_load_en -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delay_load_en -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/delay_load_en_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delay_load_en_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/CNTVALUEIN_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 3 [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/CNTVALUEIN} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_3' trigger was armed at 2024-Jan-15 19:54:17
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_3' triggered at 2024-Jan-15 19:54:20
+upload_hw_ila_data: Time (s): cpu = 00:00:00 ; elapsed = 00:01:21 . Memory (MB): peak = 1275.832 ; gain = 0.203
+write_hw_ila_data -csv_file {E:\wx\1_auto-test\about vivado\bit_file_from_yangjiashuo\0111\process2_3.csv} hw_ila_data_3
+set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/CNTVALUEIN -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/delay_load_en -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delay_load_en -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/delay_load_en_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delay_load_en_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/CNTVALUEIN_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 4 [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/CNTVALUEIN} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_3' trigger was armed at 2024-Jan-15 19:56:01
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_3' triggered at 2024-Jan-15 19:56:03
+upload_hw_ila_data: Time (s): cpu = 00:00:00 ; elapsed = 00:01:33 . Memory (MB): peak = 1275.855 ; gain = 0.023
+write_hw_ila_data -csvupload_hw_ila_data: Time (s): cpu = 00:00:00 ; elapsed = 00:01:36 . Memory (MB): peak = 1276.938 ; set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/CNTVALUEIN -of_objects [get_hw_vios -of_objects [get_hw_devices xset_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/delay_load_en -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delay_load_en -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/delay_load_en_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx69set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/delay_lcommit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filtecommit_hw_vio [get_hw_probes {ADandDA_inst/delay_loset_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delay_load_en_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx69set_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delay_lcommit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filtecommit_hw_vio [get_hw_probes {ADandDA_inst/delay_loset_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/CNTVcommit_hw_vio [get_hw_probes {ADandDA_inst/CNTVALUEIN_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {commit_hw_vio [get_hw_probes {ADandDA_inst/CNTVAset_property OUTPUT_VALUE 5 [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_set_property OUTPUT_VALUE 5 [get_hw_probes ADandDA_inst/CNTVcommit_hw_vio [get_hw_probes {ADandDA_inst/CNTVALUEIN} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELLcommit_hw_vio [get_hw_probes {ADandDA_inst/Crun_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_3' trigger was armed at 2024-Jan-15 19:57:59
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_3' triggered at 2024-Jan-15 19:58:01
+upload_hw_ila_data: Time (s): cpu = 00:00:00 ; elapsed = 00:01:36 . Memory (MB): peak = 1275.863 ; gain = 0.008
+write_hw_ila_data -csv_file {E:\wx\1_auto-test\about vivado\bit_file_from_yangjiashuo\0111\process2_5.csv} hw_ila_data_3
+set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/CNTVALUEIN -of_objects [get_hw_vios -of_objects [get_hw_devices xset_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/delay_load_en -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delay_load_en -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/delay_load_en_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delay_load_en_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/CNTVALUEIN_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 6 [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/CNTVALUEIN} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELLcommit_hw_vio [get_hw_probes {ADandDA_inst/Crun_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_3' trigger was armed at 2024-Jan-15 19:59:57
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_3' triggered at 2024-Jan-15 20:00:00
+upload_hw_ila_data: Time (s): cpu = 00:00:00 ; elapsed = 00:01:51 . Memory (MB): peak = 1275.863 ; gain = 0.000
+write_hw_ila_data -csv_file {E:\wx\1_auto-test\about vivado\bit_file_from_yangjiashuo\0111\process2_6.csv} hw_ila_data_3
+set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/CNTVALUEIN -of_objects [get_hw_vios -of_objects [get_hw_devices xset_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devicset_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/CNTVset_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/delay_load_en -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {Ccommit_hw_vio [get_hw_probes {ADandDA_inst/delaset_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delay_load_en -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0set_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delcommit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {Ccommit_hw_vio [get_hw_probes {ADandDA_inst/delaset_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/delay_load_en_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx69set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/delay_lcommit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filtecommit_hw_vio [get_hw_probes {ADandDA_inst/delay_loset_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delay_load_en_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx69set_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delay_lcommit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filtecommit_hw_vio [get_hw_probes {ADandDA_inst/delay_loset_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/CNTVcommit_hw_vio [get_hw_probes {ADandDA_inst/CNTVALUEIN_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {commit_hw_vio [get_hw_probes {ADandDA_inst/CNTVAset_property OUTPUT_VALUE 7 [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_set_property OUTPUT_VALUE 7 [get_hw_probes ADandDA_inst/CNTVcommit_hw_vio [get_hw_probes {ADandDA_inst/CNTVALUEIN} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELLcommit_hw_vio [get_hw_probes {ADandDA_inst/Crun_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+INFO: [Labtools run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {Cwait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_3' triggered at 2024-Jan-15 20:02:13
+upload_hw_ila_data: Time (s): cpu = 00:00:00 ; elapsed = 00:01:51 . Memory (MB): peak = 1275.863 ; gain = 0.000
+write_hw_ila_data -csv_file {E:\wx\1_auto-test\about vivado\bit_file_from_yangjiashuo\0111\process2_7.csv} hw_ila_data_3
+set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/CNTVALUEIN -of_objects [get_hw_vios -of_objects [get_hw_devices xset_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devicset_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/CNTVset_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/delay_load_en -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delay_load_en -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0set_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delcommit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {Ccommit_hw_vio [get_hw_probes {ADandDA_inst/delaset_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/delay_load_en_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filtecommit_hw_vio [get_hw_probes {ADandDA_inst/delay_loset_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delay_load_en_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx69set_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delay_lcommit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/CNTVALUEIN_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 8 [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/CNTVALUEIN} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_3' trigger was armed at 2024-Jan-15 20:04:25
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_3' triggered at 2024-Jan-15 20:04:28
+upload_hw_ila_data: Time (s): cpu = 00:00:00 ; elapsed = 00:02:05 . Memory (MB): peak = 1275.875 ; gain = 0.012
+write_hw_ila_data -csvupload_hw_ila_data: Time (s): cpu = 00:00:00 ; elapsed = 00:02:07 . Memory (MB): peak = 1277.438 ; set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/CNTVALUEIN -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/delay_load_en -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delay_load_en -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/delay_load_en_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delay_load_en_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/CNTVALUEIN_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 9 [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+commit_hw_vio [get_hw_probes {ADandDA_inst/CNTVALUEIN} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_3' trigger was armed at 2024-Jan-15 20:06:55
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_3' triggered at 2024-Jan-15 20:06:58
+upload_hw_ila_data: Time (s): cpu = 00:00:00 ; elapsed = 00:01:54 . Memory (MB): peak = 1275.875 ; gain = 0.000
+write_hw_ila_data -csvupload_hw_ila_data: Time (s): cpu = 00:00:00 ; elapsed = 00:01:56 . Memory (MB): peak = 1277.441 ; set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/CNTVALUEIN -of_objects [get_hw_vios -of_objects [get_hw_devices xset_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/delay_load_en -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/delcommit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {Ccommit_hw_vio [get_hw_probes {ADandDA_inst/delaset_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delay_load_en -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0set_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delcommit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/vio_delay_all_inst"}]]
+set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/delay_load_en_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx69set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/delay_lcommit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filtecommit_hw_vio [get_hw_probes {ADandDA_inst/delay_loset_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delay_load_en_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx69set_property OUTPUT_VALUE 1 [get_hw_probes ADandDA_inst/delay_lcommit_hw_vio [get_hw_probes {ADandDA_inst/delay_load_en_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filtecommit_hw_vio [get_hw_probes {ADandDA_inst/delay_loset_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_set_property OUTPUT_VALUE 0 [get_hw_probes ADandDA_inst/CNTVcommit_hw_vio [get_hw_probes {ADandDA_inst/CNTVALUEIN_CLK} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {commit_hw_vio [get_hw_probes {ADandDA_inst/CNTVAset_property OUTPUT_VALUE 10 [get_hw_probes ADandDA_inst/CNTVALUEIN_CLK -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690tset_property OUTPUT_VALUE 10 [get_hw_probes ADandDA_inst/CNTVcommit_hw_vio [get_hw_probes {ADandDA_inst/CNTVALUEIN} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELLcommit_hw_vio [get_hw_probes {ADandDA_inst/Crun_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+INFO: [Labtools 27-1964] The ILA core 'hw_ila_3' trigger was armed at 2024-Jan-15 20:09:13
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
+INFO: [Labtools 27-1966] The ILA core 'hw_ila_3' triggered at 2024-Jan-15 20:09:16
+upload_hw_ila_data: Time (s): cpu = 00:00:00 ; elapsed = 00:01:30 . Memory (MB): peak = 1275.875 ; gain = 0.000
+write_hw_ila_data -csv_file {E:\wx\1_auto-test\about vivado\bit_file_from_yangjiashuo\0111\process2_10.csv} hw_ila_data_3
+INFO: [Common 17-206] Exiting Vivado at Mon Jan 15 20:10:52 2024...
+00:01:30 . Memory (MB): peak = 1277.871 ; gain = 0.000
+write_hw_ilINFO: [Common 17-206] Exiting Vivado at Mon Jan 15 20:10:52 2024...
+iashuo\0111\process0_10.csv} hw_ila_data_3
+INFO: [Common 17-206] Exiting Vivado at Mon Jan 15 20:10:52 2024...

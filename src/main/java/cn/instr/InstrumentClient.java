@@ -55,6 +55,31 @@ public class InstrumentClient {
         return true;
     }
 
+    public boolean openHislip(String deviceType, String ip) {
+        VISA32 visa32 = VISA32.INSTANCE;
+
+        defaultSession = new LongByReference(0);
+        int result = visa32.viOpenDefaultRM(defaultSession);
+        if (result != VISA32.VI_SUCCESS) {
+            return false;
+        }
+
+        vipSession = new LongByReference(0);
+        String cmd = "TCPIP0::<ip>::hislip1::INSTR".replace("<ip>", ip);
+//        String cmd = "TCPIP0::<ip>::5025::SOCKET".replace("<ip>", ip);
+        NativeLong a = new NativeLong(defaultSession.getValue());
+        NativeLong b = new NativeLong(0);
+        result = visa32.viOpen(a, cmd, b, b, vipSession);
+        if (result != VISA32.VI_SUCCESS) {
+            System.out.println("open fail:"+result);
+            return false;
+        }
+        //连接成功才会设置
+        isConnected=true;
+        instruType=deviceType;
+        return true;
+    }
+
     //NRP专用（未使用）
     public boolean openSocket(String deviceType, String ip) {
         VISA32 visa32 = VISA32.INSTANCE;
@@ -67,7 +92,7 @@ public class InstrumentClient {
 
         vipSession = new LongByReference(0);
 //        String cmd = "TCPIP0::<ip>::inst0::INSTR".replace("<ip>", ip);
-        String cmd = "TCPIP0::<ip>::4002::SOCKET".replace("<ip>", ip);
+        String cmd = "TCPIP0::<ip>::5025::SOCKET".replace("<ip>", ip); //nrp是4002
         NativeLong a = new NativeLong(defaultSession.getValue());
 
         //开启socket终止符
@@ -130,6 +155,34 @@ public class InstrumentClient {
             return null;
         }
         return mem.getString(0);
+    }
+
+    public String readResultSocket() {
+        NativeLong a = new NativeLong(vipSession.getValue());
+        Memory mem = new Memory(1024);
+
+         VISA32.INSTANCE.viSetAttribute(a,new NativeLong(VISA32.VI_ATTR_TERMCHAR_EN),new NativeLong(1) );
+
+        int result = VISA32.INSTANCE.viScanf(a, "%t", mem);
+        if (result != VISA32.VI_SUCCESS) {
+            System.out.println("read fail:"+result);
+            return null;
+        }
+        return mem.getString(0);
+    }
+
+    public byte[] readImg() {
+        NativeLong a = new NativeLong(vipSession.getValue());
+        Memory mem = new Memory(10240);
+
+         VISA32.INSTANCE.viSetAttribute(a,new NativeLong(VISA32.VI_ATTR_TERMCHAR_EN),new NativeLong(1) );
+
+        int result = VISA32.INSTANCE.viScanf(a, "%t", mem);
+        if (result != VISA32.VI_SUCCESS) {
+            System.out.println("read fail:"+result);
+            return null;
+        }
+        return mem.getByteArray(0,10240);
     }
 
 

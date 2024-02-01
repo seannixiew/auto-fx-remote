@@ -17,13 +17,13 @@
     <dependency>
         <groupId>org.controlsfx</groupId>
         <artifactId>controlsfx</artifactId>
-        <version>8.40.18</version>  <!-- sceneBuilder导入的控件8.40.18，再高无法导入；但pom引入8.40.18代码运行会抛出异常-->
+        <version>8.40.18</version>  <!-- sceneBuilder导入的控件8.40.18，再高无法导入 -->
     </dependency>
     <dependency>
         <groupId>org.jfxtras</groupId>
         <artifactId>jmetro</artifactId>
         <version>8.6.14</version>
-        <type>pom</type>
+<!--        <type>pom</type>-->
     </dependency>
     <!-- https://mvnrepository.com/artifact/net.java.dev.jna/jna -->
     <dependency>
@@ -49,6 +49,11 @@
         <artifactId>poi-ooxml</artifactId>
         <version>5.0.0</version>
     </dependency>
+     <dependency>
+         <groupId>com.google.guava</groupId>
+         <artifactId>guava</artifactId>
+         <version>28.1-jre</version>
+     </dependency>
 </dependencies>
 
     <build>

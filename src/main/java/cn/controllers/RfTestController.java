@@ -4,6 +4,7 @@ import cn.controllers.popup.PopupControllerA;
 import cn.controllers.popup.PopupControllerB;
 import cn.controllers.root.RootController;
 import cn.dispatcher.MainTestDispatcher;
+import cn.instr.DbfClient;
 import cn.model.InstruKind;
 import cn.model.InstruType;
 import cn.model.TestItemModel;
@@ -22,6 +23,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import org.controlsfx.control.CheckTreeView;
 import org.controlsfx.control.PopOver;
@@ -57,6 +59,10 @@ public class RfTestController extends RootController {
     @FXML
     public ToggleSwitch tsB;
     @FXML
+    public ToggleSwitch tsDividerIf;
+    @FXML
+    public ToggleSwitch tsDividerRf;
+    @FXML
     public TextArea taResults;
     @FXML
     public TextArea taLogs;
@@ -82,6 +88,10 @@ public class RfTestController extends RootController {
     public Button btEnd;
     @FXML
     public Button btCustom;
+    @FXML
+    public ToggleButton btDownload;
+    @FXML
+    public Button btGroundTest;
 
 
     public InstrumentClient instru0=new InstrumentClient(InstruKind.vectorSignalGenerator);
@@ -90,21 +100,26 @@ public class RfTestController extends RootController {
     public InstrumentClient instru3=new InstrumentClient(InstruKind.powerMetre);
     public MatrixClient matrix0=new MatrixClient();
     public MatrixClient matrix1=new MatrixClient();
+    public DbfClient dbfClient=new DbfClient();
 
     public List<String> offeredChannelsA;
     public List<String> offeredChannelsB;
 
+    public MainTestDispatcher mainTestDispatcher;
+
     @FXML
     void onActionBtStart(Event event){
-        if(listView.getItems().size()==0 || (instru0.isConnected || instru1.isConnected || instru2.isConnected || instru3.isConnected)==false){
-            Platform.runLater(()->{
-                taLogs.appendText(DateFormat.FORLOG.format(new Date())+"未配置测试项，或者未连接任何测试仪器！\n");
-                System.out.println("未配置测试项，或者未连接任何测试仪器！");
-            });
-            return;
-        }
+//        if(listView.getItems().size()==0 || (instru0.isConnected || instru1.isConnected || instru2.isConnected || instru3.isConnected)==false){
+//            Platform.runLater(()->{
+//                taLogs.appendText(DateFormat.FORLOG.format(new Date())+"未配置测试项，或者未连接任何测试仪器！\n");
+//                System.out.println("未配置测试项，或者未连接任何测试仪器！");
+//            });
+//            return;
+//        }
         System.out.println(instru0);
-        new MainTestDispatcher().testHandlerDispatcher(event);
+        System.out.println("测试启动...");
+        mainTestDispatcher=new MainTestDispatcher();
+        mainTestDispatcher.testHandlerDispatcher(event);
     }
 
 
@@ -117,6 +132,14 @@ public class RfTestController extends RootController {
     void onActionBtCustom(){
     }
 
+
+    @FXML
+    void onActionBtGroundTest(){
+        new Thread(()->{
+            String res=dbfClient.connect("",0);
+            taLogs.appendText(res);
+        }).start();
+    }
 
     @FXML
     void onActionBtConnection0(){
@@ -261,34 +284,41 @@ public class RfTestController extends RootController {
                 new CheckBoxTreeItem<TestItemModel>(TestItems.rxFlatness),
                 new CheckBoxTreeItem<TestItemModel>(TestItems.rxConsisAmongChannels));
 
-        CheckBoxTreeItem<TestItemModel> node2 = new CheckBoxTreeItem<TestItemModel>(TestItems.dbf);
+        CheckBoxTreeItem<TestItemModel> node2 = new CheckBoxTreeItem<TestItemModel>(TestItems.ad);
         node2.setExpanded(true);
         node2.getChildren().addAll(
-                new CheckBoxTreeItem<TestItemModel>(TestItems.daAndRf),
-                new CheckBoxTreeItem<TestItemModel>(TestItems.adAndRf),
-                new CheckBoxTreeItem<TestItemModel>(TestItems.dbfAndRfTx),
-                new CheckBoxTreeItem<TestItemModel>(TestItems.dbfAndRfRx));
-
-        CheckBoxTreeItem<TestItemModel> node3 = new CheckBoxTreeItem<TestItemModel>(TestItems.ad);
-        node3.setExpanded(true);
-        node3.getChildren().addAll(
                 new CheckBoxTreeItem<TestItemModel>(TestItems.ad40FuncAndPerformance),
                 new CheckBoxTreeItem<TestItemModel>(TestItems.adTestDAFuncAndPerformance),
                 new CheckBoxTreeItem<TestItemModel>(TestItems.ad40Isolation),
-                new CheckBoxTreeItem<TestItemModel>(TestItems.ad40Consistency));
+                new CheckBoxTreeItem<TestItemModel>(TestItems.ad40Consistency),
+                new CheckBoxTreeItem<TestItemModel>(TestItems.adInModuleSequenceStability));
 
-        CheckBoxTreeItem<TestItemModel> node4 = new CheckBoxTreeItem<TestItemModel>(TestItems.da);
-        node4.setExpanded(true);
-        node4.getChildren().addAll(
+        CheckBoxTreeItem<TestItemModel> node3 = new CheckBoxTreeItem<TestItemModel>(TestItems.da);
+        node3.setExpanded(true);
+        node3.getChildren().addAll(
                 new CheckBoxTreeItem<TestItemModel>(TestItems.da40FuncAndPerformanceAndIso),
                 new CheckBoxTreeItem<TestItemModel>(TestItems.daTestADFuncAndPerformance),
                 new CheckBoxTreeItem<TestItemModel>(TestItems.da40Power),
                 new CheckBoxTreeItem<TestItemModel>(TestItems.da40Consistency));
 
+        CheckBoxTreeItem<TestItemModel> node4 = new CheckBoxTreeItem<TestItemModel>(TestItems.dbf);
+        node4.setExpanded(true);
+        node4.getChildren().addAll(
+                new CheckBoxTreeItem<TestItemModel>(TestItems.daAndRf),
+                new CheckBoxTreeItem<TestItemModel>(TestItems.adAndRf),
+                new CheckBoxTreeItem<TestItemModel>(TestItems.dbfAndRfTxPower),
+                new CheckBoxTreeItem<TestItemModel>(TestItems.dbfAndRfTxConsistency),
+                new CheckBoxTreeItem<TestItemModel>(TestItems.dbfAndRfRxConsistency));
+
         CheckBoxTreeItem<TestItemModel> virualNode = new CheckBoxTreeItem<TestItemModel>();
         virualNode.getChildren().addAll(node0,node1,node2,node3,node4);
         final CheckTreeView<TestItemModel> checkTreeView = new CheckTreeView<>(virualNode);
         checkTreeView.setShowRoot(false);
+        AnchorPane.setLeftAnchor(checkTreeView,0.0);
+        AnchorPane.setRightAnchor(checkTreeView,0.0);
+        AnchorPane.setTopAnchor(checkTreeView,0.0);
+        AnchorPane.setBottomAnchor(checkTreeView,0.0);
+
 
         // and listen to the relevant events (e.g. when the checked items change).
         checkTreeView.getCheckModel().getCheckedItems().addListener(new ListChangeListener<TreeItem<TestItemModel>>() {

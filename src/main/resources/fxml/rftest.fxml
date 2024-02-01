@@ -8,6 +8,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -23,7 +24,7 @@
    <children>
       <VBox fx:id="vb0" maxHeight="1.7976931348623157E308" prefHeight="637.0" prefWidth="835.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <TitledPane fx:id="tp0" animated="false" collapsible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="364.0" prefWidth="1001.0" text="测试配置" VBox.vgrow="ALWAYS">
+            <TitledPane styleClass="titled-pane-rftest-0" fx:id="tp0" animated="false" collapsible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="364.0" prefWidth="1001.0" text="测试配置" VBox.vgrow="ALWAYS">
                <content>
                   <AnchorPane maxHeight="1.7976931348623157E308">
                      <children>
@@ -73,17 +74,28 @@
                                 </columnConstraints>
                                 <rowConstraints>
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <ToggleSwitch fx:id="tsA" prefHeight="18.0" prefWidth="85.0" text="矩阵X选通" />
-                                    <ToggleSwitch fx:id="tsB" prefHeight="18.0" prefWidth="87.0" text="矩阵Y选通" GridPane.rowIndex="1" />
+                                    <ToggleSwitch fx:id="tsA" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="18.0" prefWidth="85.0" text="矩阵X选通" />
+                                    <ToggleSwitch fx:id="tsB" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="87.0" text="矩阵Y选通" GridPane.rowIndex="1" />
+                                    <ToggleSwitch fx:id="tsDividerIf" alignment="CENTER_RIGHT" text="功分器：IF" GridPane.rowIndex="2" />
+                                    <ToggleSwitch fx:id="tsDividerRf" alignment="CENTER_RIGHT" text="功分器：RF" GridPane.rowIndex="3" />
+                                    <VBox alignment="CENTER" spacing="10.0" GridPane.rowIndex="4">
+                                       <children>
+                                          <ToggleButton fx:id="btDownload" mnemonicParsing="false" text="FPGA下载" textFill="#2641c9" />
+                                          <Button fx:id="btGroundTest" mnemonicParsing="false" onAction="#onActionBtGroundTest" text="地检建链" />
+                                       </children>
+                                    </VBox>
                                  </children>
                               </GridPane>
                               <Separator orientation="VERTICAL" prefHeight="200.0" />
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="50.0">
                                  <children>
-                                    <Button fx:id="btStart" alignment="CENTER" mnemonicParsing="false" onAction="#onActionBtStart" style="-fx-min-height: 60px; -fx-max-height: 60px; -fx-max-width: 60px; -fx-min-width: 60px; -fx-font-size: 10px;-fx-font-style: italic" text="启动" />
+                                    <Button fx:id="btStart" alignment="CENTER" mnemonicParsing="false" onAction="#onActionBtStart" defaultButton="true" style="-fx-min-height: 60px; -fx-max-height: 60px; -fx-max-width: 60px; -fx-min-width: 60px; -fx-font-size: 10px;-fx-font-style: italic" text="启动" />
                                     <Button fx:id="btEnd" alignment="CENTER" mnemonicParsing="false" onAction="#onActionBtEnd" style="-fx-background-radius: 10em; -fx-min-height: 60px; -fx-max-height: 60px; -fx-max-width: 60px; -fx-min-width: 60px; -fx-font-size: 10px;-fx-font-style: italic" text="终止" />
                                     <Button fx:id="btCustom" alignment="CENTER" mnemonicParsing="false" onAction="#onActionBtCustom" style="-fx-background-radius: 10em; -fx-min-height: 60px; -fx-max-height: 60px; -fx-max-width: 60px; -fx-min-width: 60px; -fx-font-size: 10px;-fx-font-style: italic" text="CUSTOM" />
                                  </children>
@@ -94,7 +106,7 @@
                   </AnchorPane>
                </content>
             </TitledPane>
-            <TitledPane animated="false" collapsible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="203.0" prefWidth="835.0" text="结果概要" VBox.vgrow="ALWAYS">
+            <TitledPane styleClass="titled-pane-rftest-1" animated="false" collapsible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="203.0" prefWidth="835.0" text="结果概要" VBox.vgrow="ALWAYS">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -103,7 +115,7 @@
                   </AnchorPane>
               </content>
             </TitledPane>
-            <TitledPane animated="false" collapsible="false" maxHeight="200.0" maxWidth="1.7976931348623157E308" prefHeight="166.0" prefWidth="835.0" text="操作日志" VBox.vgrow="ALWAYS">
+            <TitledPane styleClass="titled-pane-rftest-2" animated="false" collapsible="false" maxHeight="200.0" maxWidth="1.7976931348623157E308" prefHeight="166.0" prefWidth="835.0" text="操作日志" VBox.vgrow="ALWAYS">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

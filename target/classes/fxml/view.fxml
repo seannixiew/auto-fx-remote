@@ -9,12 +9,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="680.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cn.controllers.outline.ViewController">
    <children>
       <VBox layoutX="158.0" layoutY="83.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <MenuBar prefWidth="730.0">
+            <MenuBar prefWidth="730.0" style="-fx-background-color: #F5F5F5;">
               <menus>
                 <Menu mnemonicParsing="false" text="File">
                   <items>
@@ -37,12 +38,31 @@
                <children>
                   <VBox minWidth="100.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #666666;" HBox.hgrow="NEVER">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#showRfTestPane" prefHeight="37.0" prefWidth="128.0" text="测试面板" />
-                        <Button mnemonicParsing="false" onAction="#showChartsPane" prefHeight="37.0" prefWidth="128.0" text="实时图表" />
-                        <Button mnemonicParsing="false" onAction="#showMonitorPane" prefHeight="37.0" prefWidth="128.0" text="仪表监视" />
-                        <Button mnemonicParsing="false" onAction="#showPropertiesPane" prefHeight="37.0" prefWidth="128.0" text="配置文件" />
-                         <Button mnemonicParsing="false" onAction="#showVivadoClientPane" prefHeight="37.0" prefWidth="128.0" text="Vivado TCL" />
-                        <Button mnemonicParsing="false" onAction="#showGroundTestPane" prefHeight="37.0" prefWidth="128.0" text="地检通信" />
+                        <Button fx:id="btRfTest" mnemonicParsing="false" onAction="#showRfTestPane" prefHeight="37.0" prefWidth="128.0" styleClass="buttonStyle0" text="测试面板 ">
+                           <font>
+                              <Font name="Microsoft YaHei" size="13.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btCharts" mnemonicParsing="false" onAction="#showChartsPane" prefHeight="37.0" prefWidth="128.0" styleClass="buttonStyle0" text="实时图表">
+                           <font>
+                              <Font name="Microsoft YaHei" size="13.0" />
+                           </font></Button>
+                        <Button fx:id="btMonitor" mnemonicParsing="false" onAction="#showMonitorPane" prefHeight="37.0" prefWidth="128.0" styleClass="buttonStyle0" text="仪表监视">
+                           <font>
+                              <Font name="Microsoft YaHei" size="13.0" />
+                           </font></Button>
+                        <Button fx:id="btProperties" mnemonicParsing="false" onAction="#showPropertiesPane" prefHeight="37.0" prefWidth="128.0" styleClass="buttonStyle0" text="配置文件">
+                           <font>
+                              <Font name="Microsoft YaHei" size="13.0" />
+                           </font></Button>
+                        <Button fx:id="btGroundTest" mnemonicParsing="false" onAction="#showGroundTestPane" prefHeight="37.0" prefWidth="128.0" styleClass="buttonStyle0" text="地检通信">
+                           <font>
+                              <Font name="Microsoft YaHei" size="13.0" />
+                           </font></Button>
+                         <Button fx:id="btVivadoClient" mnemonicParsing="false" onAction="#showVivadoClientPane" prefHeight="37.0" prefWidth="128.0" styleClass="buttonStyle0" text="VivadoTCL">
+                           <font>
+                              <Font name="Microsoft YaHei" size="13.0" />
+                           </font></Button>
                      </children>
                   </VBox>
                    <AnchorPane fx:id="containerPane" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
@@ -58,7 +78,7 @@
                    </AnchorPane>
                </children>
             </HBox>
-            <TitledPane animated="false" expanded="false" text="开发者日志">
+            <TitledPane animated="false" expanded="false" text="DEVELOPER CONSOLE">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -66,6 +86,9 @@
                      </children>
                   </AnchorPane>
               </content>
+               <font>
+                  <Font name="Arial Italic" size="12.0" />
+               </font>
             </TitledPane>
          </children>
       </VBox>

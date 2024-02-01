@@ -54,15 +54,29 @@
             </HBox>
             <HBox alignment="BOTTOM_LEFT" prefHeight="54.0" prefWidth="600.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onNewShell" style="-fx-border-color: orange;" text="New Shell" />
+                  <VBox alignment="CENTER">
+                     <children>
+                        <Button alignment="CENTER" contentDisplay="CENTER" minWidth="120.0" mnemonicParsing="false" onAction="#onNewShell" text="New Shell" />
+                        <Button alignment="CENTER" minWidth="120.0" mnemonicParsing="false" onAction="#onGetRunningShell" text="Get Running Shell" />
+                     </children>
+                  </VBox>
                   <TextField fx:id="tfTcl" prefHeight="23.0" prefWidth="517.0" HBox.hgrow="ALWAYS">
                      <HBox.margin>
-                        <Insets />
+                        <Insets bottom="10.0" />
                      </HBox.margin>
                   </TextField>
-                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#onTclWrite" style="-fx-border-color: orange;" text="TCL WRITE" />
-                  <Button onAction="#onKillShell" mnemonicParsing="false" style="-fx-border-color: red;" text="Kill Shell" />
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#onTclWrite" style="-fx-border-color: orange;" text="TCL WRITE">
+                     <HBox.margin>
+                        <Insets bottom="10.0" />
+                     </HBox.margin></Button>
+                  <Button mnemonicParsing="false" onAction="#onKillShell" style="-fx-border-color: red;" text="Kill Shell">
+                     <HBox.margin>
+                        <Insets bottom="10.0" />
+                     </HBox.margin></Button>
                </children>
+               <padding>
+                  <Insets bottom="10.0" top="10.0" />
+               </padding>
             </HBox>
             <TitledPane animated="false" collapsible="false" maxHeight="1.7976931348623157E308" text="TCL Shell Reader " VBox.vgrow="ALWAYS">
               <content>

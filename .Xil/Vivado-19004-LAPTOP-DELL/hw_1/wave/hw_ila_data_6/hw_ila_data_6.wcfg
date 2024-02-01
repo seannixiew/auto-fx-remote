@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<wave_config>
+	<wave_state>
+	</wave_state>
+	<db_ref_list>
+		<db_ref path="D:/IDEA_Projects/auto-fx/.Xil/Vivado-19004-LAPTOP-DELL/hw_1/wave/hw_ila_data_6/hw_ila_data_6.wdb" id="1" type="auto">
+			<top_modules>
+				<top_module name="top">
+				</top_module>
+			</top_modules>
+		</db_ref>
+	</db_ref_list>
+	<WVObjectSize size="7">
+	</WVObjectSize>
+	<wvobject fp_name="rec_Calib_inst/check_cos_o" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">rec_Calib_inst/check_cos_o[13:0]</obj_property>
+		<obj_property name="ObjectShortName">check_cos_o[13:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="rec_Calib_inst/check_sin_o" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">rec_Calib_inst/check_sin_o[13:0]</obj_property>
+		<obj_property name="ObjectShortName">check_sin_o[13:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="rec_Calib_inst/Source_syn_o" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">rec_Calib_inst/Source_syn_o</obj_property>
+		<obj_property name="ObjectShortName">Source_syn_o</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="rec_Calib_inst/Calib_AD_o" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">rec_Calib_inst/Calib_AD_o[13:0]</obj_property>
+		<obj_property name="ObjectShortName">Calib_AD_o[13:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="rec_Calib_inst/out" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">rec_Calib_inst/out</obj_property>
+		<obj_property name="ObjectShortName">out</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="rec_Calib_inst/source_cos_avg_reg[31]_0" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">rec_Calib_inst/source_cos_avg_reg[31]_0[31:0]</obj_property>
+		<obj_property name="ObjectShortName">source_cos_avg_reg[31]_0[31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="rec_Calib_inst/source_sin_avg_reg[31]_0" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">rec_Calib_inst/source_sin_avg_reg[31]_0[31:0]</obj_property>
+		<obj_property name="ObjectShortName">source_sin_avg_reg[31]_0[31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+</wave_config>
+

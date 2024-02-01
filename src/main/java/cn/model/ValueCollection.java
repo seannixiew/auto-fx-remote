@@ -5,9 +5,23 @@ import java.util.List;
 
 public class ValueCollection {
 
+    public static Double initPower= Double.valueOf(0);
+
     public static List<FreqAndPower> vsgList= Arrays.asList(
-            new FreqAndPower("100MHz","5"),
-            new FreqAndPower("120MHz","6")
+
+            new FreqAndPower("105MHz",(initPower)+""),
+            new FreqAndPower("132.5MHz",(initPower)+""),
+            new FreqAndPower("160MHz",(initPower)+""),
+            new FreqAndPower("105MHz",(initPower-6)+""),
+            new FreqAndPower("132.5MHz",(initPower-6)+""),
+            new FreqAndPower("160MHz",(initPower-6)+""),
+            new FreqAndPower("105MHz",(initPower-30)+""),
+            new FreqAndPower("132.5MHz",(initPower-30)+""),
+            new FreqAndPower("160MHz",(initPower-30)+""),
+            new FreqAndPower("105MHz",(initPower-60)+""),
+            new FreqAndPower("132.5MHz",(initPower-60)+""),
+            new FreqAndPower("160MHz",(initPower-60)+"")
+
     );
 
     public static class FreqAndPower{

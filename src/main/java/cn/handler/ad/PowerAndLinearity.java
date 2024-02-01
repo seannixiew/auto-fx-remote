@@ -10,6 +10,7 @@ import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.ToggleButton;
 
 import java.io.*;
 import java.util.Date;
@@ -20,18 +21,23 @@ public class PowerAndLinearity implements EventHandler {
     RfTestController rfTestController =(RfTestController) ControllersManager.CONTROLLERS.get(RfTestController.class.getSimpleName());
 
     InstrumentClient instru0=rfTestController.instru0;  //信号源
-    InstrumentClient instru2=rfTestController.instru1;  //网分
+    InstrumentClient instru2=rfTestController.instru2;  //网分
     TextArea taLogs=rfTestController.taLogs;
     TextArea taResults=rfTestController.taResults;
+    ToggleButton btDownload=rfTestController.btDownload;
 
     Process process;
+    public BufferedWriter processOutput;
+    BufferedReader processInput;
+    BufferedReader processError;
     Thread reader;
-    Thread writer;
-    BufferedWriter processOutput;
-    Thread currThread;
+    Thread writerAndTester;
+
 
     boolean programming;
-    boolean sampling;
+//    boolean sampling;
+    static int readCounter=0;
+
 
 
 
@@ -41,7 +47,7 @@ public class PowerAndLinearity implements EventHandler {
 //            System.out.println("请检查仪表连接！");
 //            return;
 //        }
-        if (true || InstruType.SMW200A.equals(instru0.instruType) && InstruType.ZNB.equals(instru2.instruType)) {
+        if (true || InstruType.SMW200A.equals(instru0.instruType) && InstruType.ZNB.equals(instru2.instruType)) {  // TODO: 2024/1/12 被旁路
             System.out.println("执行ad线性度测试...");
             Platform.runLater(() -> {
                 taLogs.appendText("开始执行ad线性度测试...");
@@ -55,19 +61,20 @@ public class PowerAndLinearity implements EventHandler {
 //            ProcessBuilder processBuilder = new ProcessBuilder(vivadoPath);
                 processBuilder.redirectErrorStream(true);
                 process = processBuilder.start();
+
             } catch (Exception e) {
             }
 
             new Thread(() -> {
                 try {
                     reader = Thread.currentThread();
-                    BufferedReader processInput = new BufferedReader(new InputStreamReader(process.getInputStream(), "UTF-8"));
-                    BufferedReader processError = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                    processInput = new BufferedReader(new InputStreamReader(process.getInputStream(), "UTF-8"));
+                    processError = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
                     while (true) {
                         Thread.sleep(1000);
                         String echo = readFromProcess(processInput);
-                        String error = readFromProcess(processError);
+                        String error = readErrorFromProcess(processError);
                         Platform.runLater(() -> {
                             taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+echo + "\n");
                             taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+error + "\n");
@@ -76,15 +83,19 @@ public class PowerAndLinearity implements EventHandler {
                         if (programming) {
                             if (s.contains("End of startup status: HIGH")) {
                                 programming = false;
-                                LockSupport.unpark(writer);
+                                LockSupport.unpark(writerAndTester);
+                                System.out.println("下载完毕，唤醒测试Thread...");
                             }
                         }
-                        if (sampling) {
-                            if (s.contains("ILA Waveform data saved to file")) {
-                                sampling = false;
-                                LockSupport.unpark(writer);
-                            }
-                        }
+//                        if (sampling) {
+//                            System.out.println("采数中回读："+s);
+//                            if (s.contains("ILA Waveform data saved to file")) {
+//                                sampling = false;
+//                                LockSupport.unpark(writerAndTester);
+//                                System.out.println("采数完毕，唤醒测试Thread...");
+//                                System.out.println("sampling="+sampling);
+//                            }
+//                        }
                         //存文件无回显，固定等待或独立起线程
 //                        if (saving) {
 //                            if (s.contains("E:/wx/1_auto-test/about vivado")) {
@@ -102,7 +113,7 @@ public class PowerAndLinearity implements EventHandler {
             System.out.println("当前shell进程状态：" + process.isAlive());
 
             new Thread(() -> {
-                writer = Thread.currentThread();
+                writerAndTester = Thread.currentThread();
                 try {
                     writeToProcess(processOutput, "open_hw" + "\n");
                     writeToProcess(processOutput, "connect_hw_server" + "\n");
@@ -113,13 +124,18 @@ public class PowerAndLinearity implements EventHandler {
                     writeToProcess(processOutput, "set_property PROBES.FILE {E:/wx/1_auto-test/about vivado/bit_file_from_yangjiashuo/0111/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
                     writeToProcess(processOutput, "set_property FULL_PROBES.FILE {E:/wx/1_auto-test/about vivado/bit_file_from_yangjiashuo/0111/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
                     writeToProcess(processOutput, "set_property PROGRAM.FILE {E:/wx/1_auto-test/about vivado/bit_file_from_yangjiashuo/0111/TOP_test2.bit} [get_hw_devices xc7vx690t_0]" + "\n");
-                    writeToProcess(processOutput, "program_hw_devices [get_hw_devices xc7vx690t_0]" + "\n");
-                    //display_hw_ila_data [ get_hw_ila_data hw_ila_data_3 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]]
+                    if(btDownload.isSelected()) {
+                        writeToProcess(processOutput, "program_hw_devices [get_hw_devices xc7vx690t_0]" + "\n");
+                        //display_hw_ila_data [ get_hw_ila_data hw_ila_data_3 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]]
 
-                    //...
-                    programming = true;
-                    LockSupport.park();
+                        //考虑：在reader线程中增加readerWait标志，if(readerWait){Locksupport.park();}
+                        // 测试线程下载程序时，readerWait设置为true，下载完毕后，将readerWait设置为false，然后LockSupport.unpark(readerThread)
+                        programming = true;
+                        LockSupport.park();
+                    }
+                    Thread.sleep(10000);
                     writeToProcess(processOutput, "refresh_hw_device [lindex [get_hw_devices xc7vx690t_0] 0]" + "\n");
+                    Thread.sleep(10000);
 
                     writeToProcess(processOutput, "display_hw_ila_data [ get_hw_ila_data hw_ila_data_1 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/AD_SPI_inst/ila_spi_inst\"}]]" + "\n");
                     writeToProcess(processOutput, "display_hw_ila_data [ get_hw_ila_data hw_ila_data_2 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/DA_SPI_INST/ila_daspi_INST\"}]]" + "\n");
@@ -130,6 +146,9 @@ public class PowerAndLinearity implements EventHandler {
                     Thread.sleep(1000);
                     writeToProcess(processOutput, "display_hw_ila_data [ get_hw_ila_data hw_ila_data_7 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"uut_beam_gth/ila_dds_inst\"}]]" + "\n");
                     writeToProcess(processOutput, "display_hw_ila_data [ get_hw_ila_data hw_ila_data_8 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"uut_beam_gth/uut_para539/uut_ila_5\"}]]" + "\n");
+
+                    writeToProcess(processOutput, "set_property OUTPUT_VALUE 0 [get_hw_probes pps_t_ctrl -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"vio_rstctl_inst\"}]]" + "\n");
+                    writeToProcess(processOutput, "commit_hw_vio [get_hw_probes {pps_t_ctrl} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"vio_rstctl_inst\"}]]" + "\n");
                     writeToProcess(processOutput, "set_property OUTPUT_VALUE 1 [get_hw_probes pps_t_ctrl -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"vio_rstctl_inst\"}]]" + "\n");
                     writeToProcess(processOutput, "commit_hw_vio [get_hw_probes {pps_t_ctrl} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"vio_rstctl_inst\"}]]" + "\n");
                     writeToProcess(processOutput, "set_property OUTPUT_VALUE 1 [get_hw_probes rst_in_t -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"vio_rstctl_inst\"}]]" + "\n");
@@ -137,39 +156,64 @@ public class PowerAndLinearity implements EventHandler {
                     writeToProcess(processOutput, "set_property OUTPUT_VALUE 0 [get_hw_probes rst_in_t -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"vio_rstctl_inst\"}]]" + "\n");
                     writeToProcess(processOutput, "commit_hw_vio [get_hw_probes {rst_in_t} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"vio_rstctl_inst\"}]]" + "\n");
                     writeToProcess(processOutput, "set_property OUTPUT_VALUE 1 [get_hw_probes rst_in_t -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"vio_rstctl_inst\"}]]" + "\n");
-
                     writeToProcess(processOutput, "commit_hw_vio [get_hw_probes {rst_in_t} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"vio_rstctl_inst\"}]]" + "\n");
                     writeToProcess(processOutput, "set_property OUTPUT_VALUE 1 [get_hw_probes pps_t -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"vio_rstctl_inst\"}]]" + "\n");
                     writeToProcess(processOutput, "commit_hw_vio [get_hw_probes {pps_t} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"vio_rstctl_inst\"}]]" + "\n");
                     writeToProcess(processOutput, "set_property OUTPUT_VALUE 0 [get_hw_probes pps_t -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"vio_rstctl_inst\"}]]" + "\n");
-
                     writeToProcess(processOutput, "commit_hw_vio [get_hw_probes {pps_t} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"vio_rstctl_inst\"}]]" + "\n");
-                    writeToProcess(processOutput, "run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/ila_addata_inst\"}] -trigger_now" + "\n");
-                    writeToProcess(processOutput, "wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/ila_addata_inst\"}]" + "\n");
-                    writeToProcess(processOutput, "display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/ila_addata_inst\"}]]\n" + "\n");
-                    sampling = true;
-                    LockSupport.park();
 
-                    writeToProcess(processOutput, "write_hw_ila_data -csv_file {E:\\wx\\1_auto-test\\about vivado\\bit_file_from_yangjiashuo\\0111\\iladata6.csv} hw_ila_data_3" + "\n");
-                    Thread.sleep(2000); //存文件时间
+//                    sampling = true;
+//                    LockSupport.park();
+//                    Thread.sleep(7000);
+//                    writeToProcess(processOutput, "write_hw_ila_data -csv_file {E:\\wx\\1_auto-test\\about vivado\\bit_file_from_yangjiashuo\\0111\\firstSample.csv} hw_ila_data_3" + "\n");
+//                    Thread.sleep(3000); //存文件时间
 
-                    instru0.writeCmd("*RST;*CLS");
-                    instru0.writeCmd("*WAI");
-                    instru0.writeCmd("SOURce1:FREQuency:MODE CW");
+//                    instru0.writeCmd("*RST");
+//                    instru0.writeCmd("*CLS");
+//                    instru0.writeCmd("*WAI");
+//                    instru0.writeCmd("SOURce1:FREQuency:MODE CW");
+
+                    System.out.println("待遍历set："+ValueCollection.vsgList);
 
                     for(ValueCollection.FreqAndPower set :ValueCollection.vsgList){
                         String freq=set.getFreq();
                         String power=set.getPower();
-                        instru0.writeCmd("SOURce1:FREQuency:CW "+freq);
-                        instru0.writeCmd("SOURce1:POWer:POWer " + power);
+                        /***********************************************************************************************/
+//                        instru0.writeCmd("SOURce1:FREQuency:CW "+freq);   R&S
+                        instru0.writeCmd(":FREQuency "+freq);
+                        System.out.println("当前频点："+freq);
+//                        instru0.writeCmd("SOURce1:POWer:POWer " + power);  R&S
+                        instru0.writeCmd("SOURce:POWer:LEVel " + power);
+                        System.out.println("当前功率："+power);
+//                        instru0.writeCmd(":OUTPut1 ON"); R&S
+                        instru0.writeCmd(":OUTPut ON");
                         Thread.sleep(500);
+                        /***********************************************************************************************/
                         //采数
-                        sampling=true;
-                        LockSupport.park();
-                        writeToProcess(processOutput, "write_hw_ila_data -csv_file {E:\\wx\\1_auto-test\\about vivado\\bit_file_from_yangjiashuo\\0111\\"
-                                +freq+"_"+power+"_"+"iladata.csv} hw_ila_data_3" + "\n");
-                    }
+                        writeToProcess(processOutput, "run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/ila_addata_inst\"}] -trigger_now" + "\n");
+                        writeToProcess(processOutput, "wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/ila_addata_inst\"}]" + "\n");
+//                        writeToProcess(processOutput, "display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/ila_addata_inst\"}]]" + "\n");
+                        writeToProcess(processOutput, "upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/ila_addata_inst\"}]" + "\n");
 
+//                        sampling=true;
+
+                        // TODO: 2024/1/12 还是要增加标志位，时间长
+//                        System.out.println("等待采数...");
+//                        LockSupport.park();
+//                        Thread.sleep(7000);
+                        System.out.println("开始存文件...");
+                        writeToProcess(processOutput, "write_hw_ila_data -csv_file {E:\\wx\\1_auto-test\\about vivado\\bit_file_from_yangjiashuo\\0111\\"
+                                +freq+"_"+power+".csv} hw_ila_data_3" + "\n");
+                        File file=new File("E:\\wx\\1_auto-test\\about vivado\\bit_file_from_yangjiashuo\\0111\\"+freq+"_"+power+".csv");
+                        while (true){
+                            if (file.exists()){
+                                System.out.println("已生成文件"+"E:\\wx\\1_auto-test\\about vivado\\bit_file_from_yangjiashuo\\0111\\"+freq+"_"+power+".csv");
+                                break;
+                            }
+                        }
+                    }
+                    instru0.writeCmd(":OUTPut1 OFF");
+                    System.out.println("测试结束");
 
                 } catch (Exception e) {
                 }
@@ -186,15 +230,44 @@ public class PowerAndLinearity implements EventHandler {
             taLogs.appendText(s);
         });
         System.out.println(s);
-        Thread.sleep(500);
+        Thread.sleep(1000);
     }
 
+    /** 说明：AD线性度测试可用。 */
+//    private static String readFromProcess(BufferedReader processInput) throws IOException {
+//        char[] bt = new char[1024];
+//        processInput.read(bt);
+//        String s=String.valueOf(bt);
+//        s=s.replaceAll("\\u0000"," ");
+//        System.out.println(s);
+//        return s;
+//    }
+
     private static String readFromProcess(BufferedReader processInput) throws IOException {
-        char[] bt = new char[1024];
-        processInput.read(bt);
-        String s=String.valueOf(bt);
-        s=s.replaceAll("\\u0000"," ");
-        System.out.println(s);
+
+        String s="read pending...";
+        readCounter++;
+        if(processInput.ready()) {
+            char[] bt = new char[1024];
+            processInput.read(bt);
+            s = String.valueOf(bt);
+            s = s.replaceAll("\\u0000", " ");
+            readCounter=0;
+        }
+        System.out.println(s+" "+readCounter);
+        return s;
+    }
+
+    private static String readErrorFromProcess(BufferedReader processInput) throws IOException {
+
+        String s="read pending...";
+        if(processInput.ready()) {
+            char[] bt = new char[1024];
+            processInput.read(bt);
+            s = String.valueOf(bt);
+            s = s.replaceAll("\\u0000", " ");
+        }
+
         return s;
     }
 }

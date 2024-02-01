@@ -2,6 +2,7 @@ package cn.dispatcher;
 
 import cn.controllers.RfTestController;
 import cn.handler.tx.PowerInit;
+import cn.instr.DbfClient;
 import cn.instr.InstrumentClient;
 import cn.instr.MatrixClient;
 import cn.model.TestItemModel;
@@ -23,12 +24,17 @@ public class MainTestDispatcher {
     ObservableList<TreeItem<TestItemModel>> selectedItems=rfTestController.selectedItems;
     ToggleSwitch tsA=rfTestController.tsA;
     ToggleSwitch tsB=rfTestController.tsB;
+    ToggleSwitch tsDividerIf=rfTestController.tsDividerIf;
+    ToggleSwitch tsDividerRf=rfTestController.tsDividerRf;
     TextArea taLogs=rfTestController.taLogs;
     List<String> offeredChannelsA=rfTestController.offeredChannelsA;
     List<String> offeredChannelsB=rfTestController.offeredChannelsB;
 
     MatrixClient matrix0= rfTestController.matrix0;
     MatrixClient matrix1= rfTestController.matrix1;
+
+
+    public Object HandlerInstance;
 
 
     public void testHandlerDispatcher( Event event){
@@ -38,7 +44,7 @@ public class MainTestDispatcher {
 
 
         }else if(tsA.isSelected() && !tsB.isSelected()){ //遍历操作单个矩阵X
-            if(matrix0==null || offeredChannelsA==null || offeredChannelsA.size()==0){
+            if(matrix0==null || offeredChannelsA==null || offeredChannelsA.size()==0){  // TODO: 2024/1/12 判断不明
                 CommonUtils.warningDialog("矩阵配置异常","矩阵未连接或未输入通道！");
                 return;
             }
@@ -50,7 +56,8 @@ public class MainTestDispatcher {
                     TestItemModel testItem=item.getValue();
                     try {
                         Class handlerClass=Class.forName(testItem.getHandlerName());
-                        handlerClass.getMethod("handle",Event.class).invoke(handlerClass.newInstance(),event);
+                        HandlerInstance=handlerClass.newInstance();
+                        handlerClass.getMethod("handle",Event.class).invoke(HandlerInstance,event);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -62,9 +69,23 @@ public class MainTestDispatcher {
         }else if(!tsA.isSelected() && tsB.isSelected()){ //遍历操作单个矩阵Y
             System.out.println("遍历操作单个矩阵Y");
 
+        }else if(tsDividerRf.isSelected()){ //遍历RF功分器
+            System.out.println("遍历RF功分器");
 
-        }else {//不操作任何矩阵
-            System.out.println("不操作任何矩阵");
+            for(TreeItem<TestItemModel> item:selectedItems){
+
+                TestItemModel testItem=item.getValue();
+                try {
+                    Class handlerClass=Class.forName(testItem.getHandlerName());
+                    HandlerInstance=handlerClass.newInstance();
+                    handlerClass.getMethod("handle",Event.class).invoke(HandlerInstance,event);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                // TODO: 2024/1/17 读取测试完成响应
+            }
+        }else {//不操作任何矩阵，不遍历任何功分
+            System.out.println("不操作任何矩阵，不遍历任何功分");
 
         }
 

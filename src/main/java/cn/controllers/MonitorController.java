@@ -19,6 +19,6 @@ public class MonitorController extends RootController {
 
 
     public  void initialize(){
-        accorPane.prefHeightProperty().bind(root.heightProperty());
+
     }
 }

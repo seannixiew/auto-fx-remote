@@ -10,6 +10,9 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+//import jfxtras.styles.jmetro.JMetro;
+//import jfxtras.styles.jmetro.Style;
 
 import java.io.File;
 
@@ -21,6 +24,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+//        primaryStage.initStyle(StageStyle.DECORATED);
         primaryStage.getIcons().add(new Image("imgs/window.jpg"));
         primaryStage.setTitle("L载荷-桌面快测 V2.0");
         FXMLLoader fxmlLoader=new FXMLLoader();
@@ -42,8 +46,10 @@ public class Main extends Application {
         });
 
 
-
+//        new JMetro(Style.LIGHT).setScene(scene);  //暂时无法灵活调整细节
+        scene.getStylesheets().add("css/beauty.css");
         primaryStage.setScene(scene);
+
         primaryStage.show();
     }
 

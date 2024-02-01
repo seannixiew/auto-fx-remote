@@ -1,6 +1,8 @@
 package cn.controllers;
 
 import cn.controllers.root.RootController;
+import cn.handler.ad.PowerAndLinearity;
+import cn.utils.ControllersManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
@@ -19,6 +21,8 @@ public class VivadoClientController  extends RootController {
 
 
 
+
+
     @FXML
     public void onTclWrite(){
         try {
@@ -26,6 +30,15 @@ public class VivadoClientController  extends RootController {
 //            writeToProcess(processOutput, "set_property board_part xilinx.com:zc702:part0:1.4 [current_project]\n");
         }catch (Exception e){}
 
+    }
+
+    @FXML
+    public void onGetRunningShell(){
+        // TODO: 2024/1/14 增加分支从其他handlerInstance中获取实例
+
+        RfTestController rfTestController=(RfTestController)ControllersManager.CONTROLLERS.get("RfTestController");
+        PowerAndLinearity handlerInstance = (PowerAndLinearity) rfTestController.mainTestDispatcher.HandlerInstance;
+        processOutput=handlerInstance.processOutput;
     }
 
     @FXML
@@ -82,6 +95,7 @@ public class VivadoClientController  extends RootController {
     }
 
     private static void readFromProcess(BufferedReader processInput) throws IOException {
+        // TODO: 2024/1/14 ready() 
         char[] bt = new char[1024];
 //        do {
         processInput.read(bt);

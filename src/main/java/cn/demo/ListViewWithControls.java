@@ -15,6 +15,7 @@ public class ListViewWithControls extends Application {
     @Override
     public void start(Stage primaryStage) {
         ListView<String> listView = new ListView<>();
+
         listView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
             @Override
             public ListCell<String> call(ListView<String> param) {
@@ -57,7 +58,8 @@ public class ListViewWithControls extends Application {
                 setText(null);
                 setGraphic(null);
             } else {
-                setText(item);
+
+                setText(item);  //获取并显示数据 listView.getItems().addAll("Item 1", "Item 2", "Item 3");
                 setGraphic(button);
             }
         }

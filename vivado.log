@@ -2,74 +2,12 @@
 # Vivado v2018.3.1 (64-bit)
 # SW Build 2489853 on Tue Mar 26 04:20:25 MDT 2019
 # IP Build 2486929 on Tue Mar 26 06:44:21 MDT 2019
-# Start of session at: Fri Jan 12 02:31:43 2024
-# Process ID: 21860
+# Start of session at: Thu Jan 25 14:23:16 2024
+# Process ID: 16256
 # Current directory: D:/IDEA_Projects/auto-fx
 # Command line: vivado.exe -mode tcl -source D:\vivado_projects\blank.tcl
 # Log file: D:/IDEA_Projects/auto-fx/vivado.log
 # Journal file: D:/IDEA_Projects/auto-fx\vivado.jou
 #-----------------------------------------------------------
 source {D:\vivado_projects\blank.tcl}
-open_hw
-connect_hw_server
-INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
-INFO: [Labtools 27-2222] Launching hw_server...
-INFO: [Labtools 27-2221] Launch Output:
-
-****** Xilinx hw_server v2018.3.1
-  **** Build date : Mar 26 2019-05:02:51
-    ** Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
-
-
-open_hw_target
-INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Xilinx/80806580068d01
-current_hw_device [get_hw_devices xc7vx690t_0]
-refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]
-INFO: [Labtools 27-2302] Device xc7vx690t (JTAG device index = 0) is programmed with a design that has 8 ILA core(s).
-INFO: [Labtools 27-2302] Device xc7vx690t (JTAG device index = 0) is programmed with a design that has 7 VIO core(s).
-refresh_hw_device: Time (s): cpu = 00:00:05 ; elapsed = 00:00:08 . Memory (MB): peak = 1249.516 ; gain = 996.426
-set_property PROBES.FILE {E:/wx/1_auto-test/about vivado/bit_file_from_yangjiashuo/0111/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]
-set_property FULL_PROBES.FILE {E:/wx/1_auto-test/about vivado/bit_file_from_yangjiashuo/0111/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]
-set_property PROGRAM.FILE {E:/wx/1_auto-test/about vivado/bit_file_from_yangjiashuo/0111/TOP_test2.bit} [get_hw_devices xc7vx690t_0]
-program_hw_devices [get_hw_devices xc7vx690t_0]
-INFO: [Labtools 27-3164] End of startup status: HIGH
-program_hw_devices: Time (s): cpu = 00:01:02 ; elapsed = 00:01:02 . Memory (MB): peak = 1250.152 ; gain = 0.570
-refresh_hw_device [lindex [get_hw_devices xc7vx690t_0] 0]
-INFO: [Labtools 27-2302] Device xc7vx690t (JTAG device index = 0) is programmed with a design that has 8 ILA core(s).
-INFO: [Labtools 27-2302] Device xc7vx690t (JTAG device index = 0) is programmed with a design that has 7 VIO core(s).
-INFO: [Labtools 27-1889] Uploading output probe values for VIO core [hw_vio_1]
-INFO: [Labtools 27-1889] Uploading output probe values for VIO core [hw_vio_2]
-INFO: [Labtools 27-1889] Uploading output probe values for VIO core [hw_vio_3]
-INFO: [Labtools 27-1889] Uploading output probe values for VIO core [hw_vio_4]
-INFO: [Labtools 27-1889] Uploading output probe values for VIO core [hw_vio_5]
-INFO: [Labtools 27-1889] Uploading output probe values for VIO core [hw_vio_6]
-INFO: [Labtools 27-1889] Uploading output probe values for VIO core [hw_vio_7]
-display_hw_ila_data [ get_hw_ila_data hw_ila_data_1 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/AD_SPI_inst/ila_spi_inst"}]]
-display_hw_ila_data [ get_hw_ila_data hw_ila_data_2 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/DA_SPI_INST/ila_daspi_INST"}]]
-display_hw_ila_data [ get_hw_ila_data hw_ila_data_3 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]]
-display_hw_ila_data [ get_hw_ila_data hw_ila_data_4 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"TCTM_INST/ila_tctm_inst"}]]
-display_hw_ila_data [ get_hw_ila_data hw_ila_data_5 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"rec_Calib_inst/ila_rec_calib_simp_inst"}]]
-display_hw_ila_data [ get_hw_ila_data hw_ila_data_6 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"uut_beam_gth/dut_54/ila_54beam_inst"}]]
-display_hw_ila_data [ get_hw_ila_data hw_ila_data_7 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"uut_beam_gth/ila_dds_inst"}]]
-display_hw_ila_data [ get_hw_ila_data hw_ila_data_8 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"uut_beam_gth/uut_para539/uut_ila_5"}]]
-set_property OUTPUT_VALUE 1 [get_hw_probes pps_t_ctrl -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
-commit_hw_vio [get_hw_probes {pps_t_ctrl} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
-set_property OUTPUT_VALUE 1 [get_hw_probes rst_in_t -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
-commit_hw_vio [get_hw_probes {rst_in_t} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
-set_property OUTPUT_VALUE 0 [get_hw_probes rst_in_t -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
-commit_hw_vio [get_hw_probes {rst_in_t} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
-set_property OUTPUT_VALUE 1 [get_hw_probes rst_in_t -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
-commit_hw_vio [get_hw_probes {rst_in_t} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
-set_property OUTPUT_VALUE 1 [get_hw_probes pps_t -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
-commit_hw_vio [get_hw_probes {pps_t} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
-set_property OUTPUT_VALUE 0 [get_hw_probes pps_t -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
-commit_hw_vio [get_hw_probes {pps_t} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}] -trigger_now
-INFO: [Labtools 27-1964] The ILA core 'hw_ila_3' trigger was armed at 2024-Jan-12 02:33:10
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]]
-INFO: [Labtools 27-1966] The ILA core 'hw_ila_3' triggered at 2024-Jan-12 02:33:10
-upload_hw_ila_data: Time (s): cpu = 00:00:00 ; elapsed = 00:00:19 . Memory (MB): peak = 1270.617 ; gain = 15.016
-INFO: [Labtools 27-3304] ILA Waveform data saved to file D:/IDEA_Projects/auto-fx/.Xil/Vivado-21860-LAPTOP-DELL/backup/hw_ila_data_3.ila. Use Tcl command 'read_hw_ila_data' or Vivado File->Import->Import ILA Data menu item to import the previously saved data.
-display_hw_ila_data: Time (s): cpu = 00:00:21 ; elapsed = 00:00:30 . Memory (MB): peak = 1310.242 ; gain = 39.625
-write_hw_ila_data -csv_file {E:\wx\1_auto-test\about vivado\bit_file_from_yangjiashuo\0111\iladata6.csv} hw_ila_data_3
+INFO: [Common 17-206] Exiting Vivado at Thu Jan 25 14:25:05 2024...

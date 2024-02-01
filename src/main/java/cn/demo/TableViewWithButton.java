@@ -1,102 +1,139 @@
 package cn.demo;
+
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class TableViewWithButton extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        // 创建表格
         TableView<Person> tableView = new TableView<>();
+//        tableView.setTableMenuButtonVisible(false);
+        TableColumn<Person, Void> buttonColumn = new TableColumn<>("Button Column");
+        TableColumn<Person, String> textFieldColumn = new TableColumn<>("TextField Column");
 
+        buttonColumn.setCellFactory(createButtonCellFactory());
+        textFieldColumn.setCellFactory(createTextFieldCellFactory());
 
-        tableView.setStyle("-fx-table-header-visible: false;");
-        // 创建表格列
-        TableColumn<Person, String> firstNameColumn = new TableColumn<>("First Name");
-        TableColumn<Person, Void> actionColumn = new TableColumn<>("Action");
-
-        // 设置列与数据模型的关联
-        firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
-
-        // 添加列到表格
-        tableView.getColumns().addAll(firstNameColumn, actionColumn);
-
-        // 设置 "Action" 列的单元格工厂
-        actionColumn.setCellFactory(column -> new TableCell<Person, Void>() {
-            final Button button = new Button("Click Me");
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (empty || item == null) {
-                    setGraphic(null);
-                } else {
-                    // 在单元格中添加按钮，并设置按钮的事件处理器
-                    setGraphic(button);
-                    button.setOnAction(event -> {
-                        // 处理按钮点击事件
-                        System.out.println("Button clicked for " + getTableRow().getItem());
-                    });
-                }
-            }
-        });
-
-        // 添加数据到表格
-        ObservableList<Person> data = FXCollections.observableArrayList(
+        // Set up the data model
+        tableView.getItems().addAll(
                 new Person("John", "Doe"),
-                new Person("Jane", "Doe"),
-                new Person("Jim", "Smith")
+                new Person("Jane", "Smith"),
+                new Person("Bob", "Johnson")
         );
-        tableView.setItems(data);
 
-        // 创建场景
-        Scene scene = new Scene(tableView, 400, 200);
+        // Add columns to the table
+        tableView.getColumns().addAll(buttonColumn, textFieldColumn);
 
-        // 设置舞台标题
-        primaryStage.setTitle("TableView with Button Example");
+        HBox root = new HBox(tableView);
+        Scene scene = new Scene(root, 400, 200);
 
-        // 设置舞台场景
+        primaryStage.setTitle("TableView with Components Example");
         primaryStage.setScene(scene);
-
-        // 显示舞台
         primaryStage.show();
+    }
+
+    private Callback<TableColumn<Person, Void>, TableCell<Person, Void>> createButtonCellFactory() {
+        return new Callback<TableColumn<Person, Void>, TableCell<Person, Void>>() {
+            @Override
+            public TableCell<Person, Void> call(TableColumn<Person, Void> param) {
+                return new TableCell<Person, Void>() {
+                    private final Button button = new Button("Click me");
+
+                    {
+                        button.setOnAction(event -> {
+                            // Handle button click event
+                            System.out.println("Button clicked for: " + getTableView().getItems().get(getIndex()));
+                        });
+                    }
+
+                    @Override
+                    protected void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(button);
+                        }
+                    }
+                };
+            }
+        };
+    }
+
+    private Callback<TableColumn<Person, String>, TableCell<Person, String>> createTextFieldCellFactory() {
+        return new Callback<TableColumn<Person, String>, TableCell<Person, String>>() {
+            @Override
+            public TableCell<Person, String> call(TableColumn<Person, String> param) {
+                return new TableCell<Person, String>() {
+                    private final TextField textField = new TextField();
+
+                    {
+                        textField.setOnAction(event -> {
+                            // Handle text field action event
+                            System.out.println("TextField value changed to: " + textField.getText());
+                        });
+                    }
+
+                    @Override
+                    protected void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            textField.setText(item);
+                            setGraphic(textField);
+                        }
+                    }
+                };
+            }
+        };
     }
 
     public static void main(String[] args) {
         launch(args);
     }
 
-    // 数据模型类
     public static class Person {
-        private final String firstName;
-        private final String lastName;
+        private final SimpleStringProperty firstName;
+        private final SimpleStringProperty lastName;
 
         public Person(String firstName, String lastName) {
-            this.firstName = firstName;
-            this.lastName = lastName;
+            this.firstName = new SimpleStringProperty(firstName);
+            this.lastName = new SimpleStringProperty(lastName);
         }
 
         public String getFirstName() {
+            return firstName.get();
+        }
+
+        public SimpleStringProperty firstNameProperty() {
             return firstName;
         }
 
+        public void setFirstName(String firstName) {
+            this.firstName.set(firstName);
+        }
+
         public String getLastName() {
+            return lastName.get();
+        }
+
+        public SimpleStringProperty lastNameProperty() {
             return lastName;
         }
 
-        // 下面的方法是为了在表格列中使用 JavaFX 属性绑定
-        public StringProperty firstNameProperty() {
-            return new SimpleStringProperty(firstName);
+        public void setLastName(String lastName) {
+            this.lastName.set(lastName);
         }
     }
 }
