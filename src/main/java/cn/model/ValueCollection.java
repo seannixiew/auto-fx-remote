@@ -1,5 +1,6 @@
 package cn.model;
 
+import java.io.FileInputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
@@ -7,8 +8,17 @@ import java.util.Properties;
 public class ValueCollection {
 
     static Properties properties=new Properties();
-    static String power=properties.getProperty("vsgPower");
-    public static Double initPower= Double.parseDouble(power);
+    public static Double initPower=0.0;
+
+    static {
+        try {
+            properties.load(new FileInputStream("src/main/resources/configs/config.properties"));
+            String power=properties.getProperty("vsgPower");
+            initPower= Double.parseDouble(power);
+        }catch (Exception e){}
+
+    }
+
 
     public static List<FreqAndPower> vsgList= Arrays.asList(
 

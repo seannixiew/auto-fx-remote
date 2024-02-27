@@ -1,0 +1,155 @@
+#-----------------------------------------------------------
+# Vivado v2018.3.1 (64-bit)
+# SW Build 2489853 on Tue Mar 26 04:20:25 MDT 2019
+# IP Build 2486929 on Tue Mar 26 06:44:21 MDT 2019
+# Start of session at: Tue Feb 27 20:00:28 2024
+# Process ID: 12984
+# Current directory: D:/IDEA_Projects/auto-fx
+# Command line: vivado.exe -mode tcl -source D:\vivado_projects\blank.tcl
+# Log file: D:/IDEA_Projects/auto-fx/vivado.log
+# Journal file: D:/IDEA_Projects/auto-fx\vivado.jou
+#-----------------------------------------------------------
+source {D:\vivado_projects\blank.tcl}
+open_hw
+connect_hw_server
+INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
+INFO: [Labtools 27-2222] Launching hw_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+****** Xilinx hw_server v2018.3.1
+  **** Build date : Mar 26 2019-05:02:51
+    ** Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+
+
+open_hw_target
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Xilinx/8080658006b901
+current_hw_device [get_hw_devices xc7vx690t_0]
+refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]
+INFO: [Labtools 27-2302] Device xc7vx690t (JTAG device index = 0) is programmed with a design that has 6 ILA core(s).
+INFO: [Labtools 27-2302] Device xc7vx690t (JTAG device index = 0) is programmed with a design that has 18 VIO core(s).
+refresh_hw_device: Time (s): cpu = 00:00:05 ; elapsed = 00:00:10 . Memory (MB): peak = 1250.238 ; gain = 998.215
+set_property PROBES.FILE {E:/wx/1_auto-test/about vivado/bit_file_from_yangjiashuo/0111/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]
+set_property FULL_PROBES.FILE {E:/wx/1_auto-test/about vivado/bit_file_from_yangjiashuo/0111/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]
+set_property PROGRAM.FILE {E:/wx/1_auto-test/about vivado/bit_file_from_yangjiashuo/0111/TOP_test2.bit} [get_hw_devices xc7vx690t_0]
+refresh_hw_device [lindex [get_hw_devices xc7vx690t_0] 0]
+INFO: [Labtools 27-2302] Device xc7vx690t (JTAG device index = 0) is programmed with a design that has 6 ILA core(s).
+INFO: [Labtools 27-2302] Device xc7vx690t (JTAG device index = 0) is programmed with a design that has 18 VIO core(s).
+WARNING: [Labtools 27-3413] Dropping logic core with cellname:'uut_beam_gth/dut_54/ila_54beam_inst' at location 'uuid_28D7E52C9C8750F19652CBD48786CE85' from probes file, since it cannot be found on the programmed device.
+WARNING: [Labtools 27-3413] Dropping logic core with cellname:'rec_Calib_inst/ila_rec_calib_simp_inst' at location 'uuid_2C1DF05255BE5802A1D5719F3131FDB7' from probes file, since it cannot be found on the programmed device.
+WARNING: [Labtools 27-3413] Dropping logic core with cellname:'uut_beam_gth/uut_vio_1' at location 'uuid_3C8CDB78B6045251B9E7C1741A65D662' from probes file, since it cannot be found on the programmed device.
+WARNING: [Labtools 27-3413] Dropping logic core with cellname:'uut_beam_gth/uut_para539/uut_ila_5' at location 'uuid_4708FBF4D1FD57CA96C538880987BBFD' from probes file, since it cannot be found on the programmed device.
+WARNING: [Labtools 27-3413] Dropping logic core with cellname:'uut_beam_gth/uut_vio_self' at location 'uuid_A2E78EAAF5BE573CBC151E8DB8EB45DE' from probes file, since it cannot be found on the programmed device.
+WARNING: [Labtools 27-3413] Dropping logic core with cellname:'vio_dbfcanshu_inst' at location 'uuid_B91430AFB73E557B8D76A951FA2D7C58' from probes file, since it cannot be found on the programmed device.
+WARNING: [Labtools 27-3413] Dropping logic core with cellname:'uut_beam_gth/ila_dds_inst' at location 'uuid_DCEC15AAFEF75ADEBE3768063A7A6682' from probes file, since it cannot be found on the programmed device.
+WARNING: [Labtools 27-1974] Mismatch between the design programmed into the device xc7vx690t_0 and the probes file(s) E:/wx/1_auto-test/about vivado/bit_file_from_yangjiashuo/0111/TOP_test2.ltx.
+The device design has 6 ILA core(s) and 18 VIO core(s). 4 ILA core(s) and 4 VIO core(s) are matched in the probes file(s).
+Resolution: 
+1. Reprogram device with the correct programming file and associated probes file(s) OR
+2. Goto device properties and associate the correct probes file(s) with the programming file already programmed in the device.
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_1 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/AD_SPI_inst/ila_spi_inst"}]]
+WARNING: [Labtoolstcl 44-130] No matching hw_ilas were found.
+WARNING: [Labtoolstcl 44-129] No matching hw_ila_data was found.
+ERROR: [Labtoolstcl 44-9] Current hw_ila_data is not set and <hw_ila_data> option is empty.
+
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_2 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/DA_SPI_INST/ila_daspi_INST"}]]
+WARNING: [Labtoolstcl 44-130] No matching hw_ilas were found.
+WARNING: [Labtoolstcl 44-129] No matching hw_ila_data was found.
+ERROR: [Labtoolstcl 44-9] Current hw_ila_data is not set and <hw_ila_data> option is empty.
+
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_3 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]]
+WARNING: [Labtoolstcl 44-130] No matching hw_ilas were found.
+WARNING: [Labtoolstcl 44-129] No matching hw_ila_data was found.
+ERROR: [Labtoolstcl 44-9] Current hw_ila_data is not set and <hw_ila_data> option is empty.
+
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_4 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"TCTM_INST/ila_tctm_inst"}]]
+WARNING: [Labtoolstcl 44-130] No matching hw_ilas were found.
+WARNING: [Labtoolstcl 44-129] No matching hw_ila_data was found.
+ERROR: [Labtoolstcl 44-9] Current hw_ila_data is not set and <hw_ila_data> option is empty.
+
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_5 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"rec_Calib_inst/ila_rec_calib_simp_inst"}]]
+WARNING: [Labtoolstcl 44-130] No matching hw_ilas were found.
+WARNING: [Labtoolstcl 44-129] No matching hw_ila_data was found.
+ERROR: [Labtoolstcl 44-9] Current hw_ila_data is not set and <hw_ila_data> option is empty.
+
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_6 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"uut_beam_gth/dut_54/ila_54beam_inst"}]]
+WARNING: [Labtoolstcl 44-130] No matching hw_ilas were found.
+WARNING: [Labtoolstcl 44-129] No matching hw_ila_data was found.
+ERROR: [Labtoolstcl 44-9] Current hw_ila_data is not set and <hw_ila_data> option is empty.
+
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_7 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"uut_beam_gth/ila_dds_inst"}]]
+WARNING: [Labtoolstcl 44-130] No matching hw_ilas were found.
+WARNING: [Labtoolstcl 44-129] No matching hw_ila_data was found.
+ERROR: [Labtoolstcl 44-9] Current hw_ila_data is not set and <hw_ila_data> option is empty.
+
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_8 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"uut_beam_gth/uut_para539/uut_ila_5"}]]
+WARNING: [Labtoolstcl 44-130] No matching hw_ilas were found.
+WARNING: [Labtoolstcl 44-129] No matching hw_ila_data was found.
+ERROR: [Labtoolstcl 44-9] Current hw_ila_data is not set and <hw_ila_data> option is empty.
+
+set_property OUTPUT_VALUE 0 [get_hw_probes pps_t_ctrl -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
+WARNING: [Labtoolstcl 44-169] No matching hw_vios were found.
+WARNING: [Labtoolstcl 44-131] No matching hw_probes were found.
+ERROR: [Common 17-55] 'set_property' expects at least one object.
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+
+commit_hw_vio [get_hw_probes {pps_t_ctrl} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
+WARNING: [Labtoolstcl 44-169] No matching hw_vios were found.
+WARNING: [Labtoolstcl 44-131] No matching hw_probes were found.
+ERROR: [Labtoolstcl 44-187] Required <hw_objects> argument is empty.
+
+set_property OUTPUT_VALUE 1 [get_hw_probes pps_t_ctrl -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
+WARNING: [Labtoolstcl 44-169] No matching hw_vios were found.
+WARNING: [Labtoolstcl 44-131] No matching hw_probes were found.
+ERROR: [Common 17-55] 'set_property' expects at least one object.
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+
+commit_hw_vio [get_hw_probes {pps_t_ctrl} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
+WARNING: [Labtoolstcl 44-169] No matching hw_vios were found.
+WARNING: [Labtoolstcl 44-131] No matching hw_probes were found.
+ERROR: [Labtoolstcl 44-187] Required <hw_objects> argument is empty.
+
+set_property OUTPUT_VALUE 1 [get_hw_probes rst_in_t -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
+WARNING: [Labtoolstcl 44-169] No matching hw_vios were found.
+WARNING: [Labtoolstcl 44-131] No matching hw_probes were found.
+ERROR: [Common 17-55] 'set_property' expects at least one object.
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+
+commit_hw_vio [get_hw_probes {rst_in_t} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
+WARNING: [Labtoolstcl 44-169] No matching hw_vios were found.
+WARNING: [Labtoolstcl 44-131] No matching hw_probes were found.
+ERROR: [Labtoolstcl 44-187] Required <hw_objects> argument is empty.
+
+set_property OUTPUT_VALUE 0 [get_hw_probes rst_in_t -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
+WARNING: [Labtoolstcl 44-169] No matching hw_vios were found.
+WARNING: [Labtoolstcl 44-131] No matching hw_probes were found.
+ERROR: [Common 17-55] 'set_property' expects at least one object.
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+
+commit_hw_vio [get_hw_probes {rst_in_t} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
+WARNING: [Labtoolstcl 44-169] No matching hw_vios were found.
+WARNING: [Labtoolstcl 44-131] No matching hw_probes were found.
+ERROR: [Labtoolstcl 44-187] Required <hw_objects> argument is empty.
+
+set_property OUTPUT_VALUE 1 [get_hw_probes rst_in_t -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
+WARNING: [Labtoolstcl 44-169] No matching hw_vios were found.
+WARNING: [Labtoolstcl 44-131] No matching hw_probes were found.
+ERROR: [Common 17-55] 'set_property' expects at least one object.
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+
+commit_hw_vio [get_hw_probes {rst_in_t} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
+WARNING: [Labtoolstcl 44-169] No matching hw_vios were found.
+WARNING: [Labtoolstcl 44-131] No matching hw_probes were found.
+ERROR: [Labtoolstcl 44-187] Required <hw_objects> argument is empty.
+
+set_property OUTPUT_VALUE 1 [get_hw_probes pps_t -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
+WARNING: [Labtoolstcl 44-169] No matching hw_vios were found.
+WARNING: [Labtoolstcl 44-131] No matching hw_probes were found.
+ERROR: [Common 17-55] 'set_property' expects at least one object.
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+
+commit_hw_vio [get_hw_probes {pps_t} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
+WARNING: [Labtoolstcl 44-169] No matching hw_vios were found.
+WARNING: [Labtoolstcl 44-131] No matching hw_probes were found.
+ERROR: [Labtoolstcl 44-187] Required <hw_objects> argument is empty.
+
+INFO: [Common 17-206] Exiting Vivado at Tue Feb 27 20:01:20 2024...
