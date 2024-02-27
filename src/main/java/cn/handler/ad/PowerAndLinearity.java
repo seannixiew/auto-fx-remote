@@ -179,14 +179,14 @@ public class PowerAndLinearity implements EventHandler {
                         String freq=set.getFreq();
                         String power=set.getPower();
                         /***********************************************************************************************/
-//                        instru0.writeCmd("SOURce1:FREQuency:CW "+freq);   R&S
-                        instru0.writeCmd(":FREQuency "+freq);
+                        instru0.writeCmd("SOURce1:FREQuency:CW "+freq);   //R&S
+//                        instru0.writeCmd(":FREQuency "+freq);   //keysight
                         System.out.println("当前频点："+freq);
-//                        instru0.writeCmd("SOURce1:POWer:POWer " + power);  R&S
-                        instru0.writeCmd("SOURce:POWer:LEVel " + power);
+                        instru0.writeCmd("SOURce1:POWer:POWer " + power);  //R&S
+//                        instru0.writeCmd("SOURce:POWer:LEVel " + power);  //keysight
                         System.out.println("当前功率："+power);
-//                        instru0.writeCmd(":OUTPut1 ON"); R&S
-                        instru0.writeCmd(":OUTPut ON");
+                        instru0.writeCmd(":OUTPut1 ON"); //R&S
+//                        instru0.writeCmd(":OUTPut ON"); //keysight
                         Thread.sleep(500);
                         /***********************************************************************************************/
                         //采数
@@ -202,12 +202,12 @@ public class PowerAndLinearity implements EventHandler {
 //                        LockSupport.park();
 //                        Thread.sleep(7000);
                         System.out.println("开始存文件...");
-                        writeToProcess(processOutput, "write_hw_ila_data -csv_file {E:\\wx\\1_auto-test\\about vivado\\bit_file_from_yangjiashuo\\0111\\"
+                        writeToProcess(processOutput, "write_hw_ila_data -csv_file {E:\\wx\\2_projects\\L payload\\vivado files\\AD_impl_Calib_syn_test\\"
                                 +freq+"_"+power+".csv} hw_ila_data_3" + "\n");
-                        File file=new File("E:\\wx\\1_auto-test\\about vivado\\bit_file_from_yangjiashuo\\0111\\"+freq+"_"+power+".csv");
+                        File file=new File("E:\\wx\\2_projects\\L payload\\vivado files\\AD_impl_Calib_syn_test\\"+freq+"_"+power+".csv");
                         while (true){
                             if (file.exists()){
-                                System.out.println("已生成文件"+"E:\\wx\\1_auto-test\\about vivado\\bit_file_from_yangjiashuo\\0111\\"+freq+"_"+power+".csv");
+                                System.out.println("已生成文件"+"E:\\wx\\2_projects\\L payload\\vivado files\\AD_impl_Calib_syn_test\\\\"+freq+"_"+power+".csv");
                                 break;
                             }
                         }

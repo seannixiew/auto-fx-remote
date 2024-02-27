@@ -2,10 +2,13 @@ package cn.model;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 public class ValueCollection {
 
-    public static Double initPower= Double.valueOf(0);
+    static Properties properties=new Properties();
+    static String power=properties.getProperty("vsgPower");
+    public static Double initPower= Double.parseDouble(power);
 
     public static List<FreqAndPower> vsgList= Arrays.asList(
 

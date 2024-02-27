@@ -49,8 +49,8 @@ public class MainTestDispatcher {
                 return;
             }
             System.out.println("遍历操作单个矩阵X");
-            for (String currChannel:offeredChannelsA) {   //注意：currChanel通道号前带“A”
-                System.out.println("当前测试矩阵通道为"+currChannel);
+//            for (String currChannel:offeredChannelsA) {   //注意：currChanel通道号前带“A”  todo:逻辑需梳理,矩阵遍历应内置到测试项内，因为每项不一样
+//                System.out.println("当前测试矩阵通道为"+currChannel);
                 for(TreeItem<TestItemModel> item:selectedItems){
 
                     TestItemModel testItem=item.getValue();
@@ -62,7 +62,7 @@ public class MainTestDispatcher {
                         e.printStackTrace();
                     }
                     //固定等待，执行下一个测试项
-                }
+//                }
             }
 
 

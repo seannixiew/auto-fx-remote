@@ -46,9 +46,9 @@ public class TestItems {
 
     public static final TestItemModel ad40FuncAndPerformance=new TestItemModel(13,"AD功率线性度测试（40路）","cn.handler.ad.PowerAndLinearity");
 
-    public static final TestItemModel adTestDAFuncAndPerformance=new TestItemModel(14,"测试DA接口功能及性能测试");
+    public static final TestItemModel adTestDAFuncAndPerformance=new TestItemModel(14,"测试DA接口功能及性能测试","cn.handler.ad.DaForTest");
 
-    public static final TestItemModel ad40Isolation=new TestItemModel(15,"AD隔离度测试（40路）");
+    public static final TestItemModel ad40Isolation=new TestItemModel(15,"AD隔离度测试（40路）","cn.handler.ad.Isolation");
 
     public static final TestItemModel ad40Consistency=new TestItemModel(16,"AD一致性测试（40路）");
 

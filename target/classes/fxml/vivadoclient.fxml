@@ -25,7 +25,10 @@
                   </AnchorPane>
                   <TextField HBox.hgrow="ALWAYS" />
                   <Button mnemonicParsing="false" text="浏览" />
-                  <Button mnemonicParsing="false" text="下载" />
+                  <Button mnemonicParsing="false" text="下载">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin></Button>
                </children>
             </HBox>
             <HBox minHeight="0.0" prefHeight="24.0" prefWidth="600.0">
@@ -37,7 +40,10 @@
                   </AnchorPane>
                   <TextField HBox.hgrow="ALWAYS" />
                   <Button mnemonicParsing="false" text="浏览" />
-                  <Button mnemonicParsing="false" text="下载" />
+                  <Button mnemonicParsing="false" text="下载">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin></Button>
                </children>
             </HBox>
             <HBox minHeight="0.0" prefHeight="24.0" prefWidth="600.0">
@@ -49,20 +55,29 @@
                   </AnchorPane>
                   <TextField HBox.hgrow="ALWAYS" />
                   <Button mnemonicParsing="false" text="浏览" />
-                  <Button mnemonicParsing="false" text="下载" />
+                  <Button mnemonicParsing="false" text="下载">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin></Button>
                </children>
             </HBox>
             <HBox alignment="BOTTOM_LEFT" prefHeight="54.0" prefWidth="600.0">
                <children>
                   <VBox alignment="CENTER">
                      <children>
-                        <Button alignment="CENTER" contentDisplay="CENTER" minWidth="120.0" mnemonicParsing="false" onAction="#onNewShell" text="New Shell" />
-                        <Button alignment="CENTER" minWidth="120.0" mnemonicParsing="false" onAction="#onGetRunningShell" text="Get Running Shell" />
+                        <Button styleClass="buttonStyle1" alignment="CENTER" contentDisplay="CENTER" minWidth="120.0" mnemonicParsing="false" onAction="#onNewShell" text="New Shell">
+                           <VBox.margin>
+                              <Insets bottom="2.0" left="20.0" />
+                           </VBox.margin></Button>
+                        <Button styleClass="buttonStyle1"  alignment="CENTER" minWidth="120.0" mnemonicParsing="false" onAction="#onGetRunningShell" text="Get Running Shell">
+                           <VBox.margin>
+                              <Insets left="20.0" top="2.0" />
+                           </VBox.margin></Button>
                      </children>
                   </VBox>
                   <TextField fx:id="tfTcl" prefHeight="23.0" prefWidth="517.0" HBox.hgrow="ALWAYS">
                      <HBox.margin>
-                        <Insets bottom="10.0" />
+                        <Insets bottom="10.0" left="5.0" />
                      </HBox.margin>
                   </TextField>
                   <Button alignment="CENTER" mnemonicParsing="false" onAction="#onTclWrite" style="-fx-border-color: orange;" text="TCL WRITE">
@@ -71,7 +86,7 @@
                      </HBox.margin></Button>
                   <Button mnemonicParsing="false" onAction="#onKillShell" style="-fx-border-color: red;" text="Kill Shell">
                      <HBox.margin>
-                        <Insets bottom="10.0" />
+                        <Insets bottom="10.0" right="20.0" />
                      </HBox.margin></Button>
                </children>
                <padding>

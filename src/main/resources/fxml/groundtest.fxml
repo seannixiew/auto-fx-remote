@@ -31,10 +31,13 @@
                     <children>
                         <TextField prefHeight="23.0" prefWidth="517.0" HBox.hgrow="ALWAYS">
                             <HBox.margin>
-                                <Insets />
+                                <Insets bottom="10.0" left="10.0" />
                             </HBox.margin>
                         </TextField>
-                        <Button alignment="CENTER" mnemonicParsing="false" style="-fx-border-color: orange;" text="发送" />
+                        <Button alignment="CENTER" mnemonicParsing="false" style="-fx-border-color: orange;" text="发送">
+                     <HBox.margin>
+                        <Insets bottom="10.0" />
+                     </HBox.margin></Button>
                     </children>
                 </HBox>
                 <TitledPane animated="false" collapsible="false" maxHeight="1.7976931348623157E308" prefHeight="119.0" prefWidth="600.0" text="地检响应" VBox.vgrow="ALWAYS">

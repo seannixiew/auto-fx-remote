@@ -13,10 +13,10 @@
    <children>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="434.0" prefWidth="608.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" VBox.vgrow="NEVER">
+            <HBox alignment="CENTER" maxHeight="25.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0" VBox.vgrow="NEVER">
                <children>
-                  <CheckBox mnemonicParsing="false" text="实时图" />
-                  <CheckBox mnemonicParsing="false" text="统计图" />
+                  <CheckBox mnemonicParsing="false" text="折线图" />
+                  <CheckBox mnemonicParsing="false" text="饼图" />
                   <Button fx:id="btStartPlot" mnemonicParsing="false" onAction="#onStartPlot" text="数据监测" />
                   <Button fx:id="btEndPlot" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#onEndPlot" text="停止" />
                </children>
@@ -24,10 +24,10 @@
 
             <LineChart fx:id="lineChart" VBox.vgrow="ALWAYS">
               <xAxis>
-                <NumberAxis label="Channel" side="BOTTOM" fx:id="xLine" />
+                <NumberAxis autoRanging="false" label="Channel" minorTickCount="2" minorTickLength="2.0" side="BOTTOM" tickLabelGap="2.0" tickLength="1.0" tickUnit="1.0" upperBound="20.0" fx:id="xLine" />
               </xAxis>
               <yAxis>
-                <NumberAxis fx:id="yLine" label="Value" side="LEFT" />
+                <NumberAxis fx:id="yLine" autoRanging="false" label="Value" lowerBound="-10.0" side="LEFT" upperBound="10.0" />
               </yAxis>
             </LineChart>
             <AnchorPane VBox.vgrow="ALWAYS">

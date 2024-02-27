@@ -4,6 +4,7 @@ import cn.controllers.popup.PopupControllerA;
 import cn.controllers.popup.PopupControllerB;
 import cn.controllers.root.RootController;
 import cn.dispatcher.MainTestDispatcher;
+import cn.handler.ad.DaForTest;
 import cn.instr.DbfClient;
 import cn.model.InstruKind;
 import cn.model.InstruType;
@@ -32,6 +33,7 @@ import org.controlsfx.control.ToggleSwitch;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.locks.LockSupport;
 
 public class RfTestController extends RootController {
 
@@ -93,6 +95,9 @@ public class RfTestController extends RootController {
     @FXML
     public Button btGroundTest;
 
+    public PopupControllerA popupControllerA;
+    public PopupControllerB popupControllerB;
+
 
     public InstrumentClient instru0=new InstrumentClient(InstruKind.vectorSignalGenerator);
     public InstrumentClient instru1=new InstrumentClient(InstruKind.signalAnalyzer);
@@ -130,6 +135,10 @@ public class RfTestController extends RootController {
 
     @FXML
     void onActionBtCustom(){
+        // TODO: 2024/2/27 临时方案，必须处理
+        if(true){
+            LockSupport.unpark(DaForTest.writerAndTester);
+        }
     }
 
 
@@ -351,7 +360,7 @@ public class RfTestController extends RootController {
         FXMLLoader fxmlLoader0=new FXMLLoader();
         fxmlLoader0.setLocation(getClass().getResource("/fxml/popover0.fxml"));
         Pane popRoot0=fxmlLoader0.load();
-        PopupControllerA popupControllerA=fxmlLoader0.getController();
+        popupControllerA=fxmlLoader0.getController();
 
         PopOver popOver0=new PopOver();
         popOver0.setAutoHide(false);
@@ -426,7 +435,7 @@ public class RfTestController extends RootController {
         FXMLLoader fxmlLoader1=new FXMLLoader();
         fxmlLoader1.setLocation(getClass().getResource("/fxml/popover1.fxml"));
         Pane popRoot1=fxmlLoader1.load();
-        PopupControllerB popupControllerB=fxmlLoader1.getController();
+        popupControllerB=fxmlLoader1.getController();
 
         PopOver popOver1=new PopOver();
         popOver1.setAutoHide(false);

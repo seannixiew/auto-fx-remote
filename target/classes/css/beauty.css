@@ -15,6 +15,17 @@
 /*    -fx-background-color:#95CACA;*/
 /*}*/
 
+.buttonStyle1{
+    -fx-background-color:#00BFFF;
+    -fx-effect: innershadow(gaussian, #666666, 5, 0.5, 2, 2)
+}
+
+.buttonStyle1:hover{
+    -fx-background-color:#53a4f0;
+    -fx-font-weight: bold;
+
+}
+
 /*.titled-pane-rftest-0 > .title {*/
 /*    -fx-text-fill: #336699; !* Set title text color 不生效*!*/
 /*    -fx-font-size: 14px; !* Set title font size *!*/

@@ -16,20 +16,80 @@ public class TableViewWithButton extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        TableView<Person> tableView = new TableView<>();
-//        tableView.setTableMenuButtonVisible(false);
-        TableColumn<Person, Void> buttonColumn = new TableColumn<>("Button Column");
-        TableColumn<Person, String> textFieldColumn = new TableColumn<>("TextField Column");
-
-        buttonColumn.setCellFactory(createButtonCellFactory());
-        textFieldColumn.setCellFactory(createTextFieldCellFactory());
+        TableView<CountForTable> tableView = new TableView<>();
 
         // Set up the data model
+        /** 3个Item，会画出3行。 */
         tableView.getItems().addAll(
-                new Person("John", "Doe"),
-                new Person("Jane", "Smith"),
-                new Person("Bob", "Johnson")
+                new CountForTable(1),new CountForTable(2),new CountForTable(3)
         );
+
+//        tableView.setTableMenuButtonVisible(false);
+        TableColumn<CountForTable, Integer> buttonColumn = new TableColumn<>("Button Column");
+        TableColumn<CountForTable, Integer> textFieldColumn = new TableColumn<>("TextField Column");
+
+        buttonColumn.setCellFactory(new Callback<TableColumn<CountForTable, Integer>, TableCell<CountForTable, Integer>>() {
+            @Override
+            public TableCell<CountForTable, Integer> call(TableColumn<CountForTable, Integer> param) {
+                return new TableCell<CountForTable, Integer>() {
+                    private final Button button = new Button("Click me");
+
+                    {
+                        button.setOnAction(event -> {
+                            // Handle button click event
+                            System.out.println("Button clicked for: " + getTableView().getItems().get(getIndex()));
+                        });
+                    }
+
+                    @Override
+                    protected void updateItem(Integer item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            switch (getIndex()){
+                                case 0:
+                                    setGraphic(button);
+                                    break;
+                                case 1:
+                                    setGraphic(new Button("1"));
+                                    break;
+                                case 2:
+                                    setGraphic(new Button("2"));
+                                    break;
+                            }
+                        }
+                    }
+                };
+            }
+        });
+
+        textFieldColumn.setCellFactory(new Callback<TableColumn<CountForTable, Integer>, TableCell<CountForTable, Integer>>() {
+            @Override
+            public TableCell<CountForTable, Integer> call(TableColumn<CountForTable, Integer> param) {
+                return new TableCell<CountForTable, Integer>() {
+                    private final TextField textField = new TextField();
+
+                    {
+                        textField.setOnAction(event -> {
+                            // Handle text field action event
+                            System.out.println("TextField value changed to: " + textField.getText());
+                        });
+                    }
+
+                    @Override
+                    protected void updateItem(Integer item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(textField);
+                        }
+                    }
+                };
+            }
+        });
+
 
         // Add columns to the table
         tableView.getColumns().addAll(buttonColumn, textFieldColumn);
@@ -42,98 +102,20 @@ public class TableViewWithButton extends Application {
         primaryStage.show();
     }
 
-    private Callback<TableColumn<Person, Void>, TableCell<Person, Void>> createButtonCellFactory() {
-        return new Callback<TableColumn<Person, Void>, TableCell<Person, Void>>() {
-            @Override
-            public TableCell<Person, Void> call(TableColumn<Person, Void> param) {
-                return new TableCell<Person, Void>() {
-                    private final Button button = new Button("Click me");
-
-                    {
-                        button.setOnAction(event -> {
-                            // Handle button click event
-                            System.out.println("Button clicked for: " + getTableView().getItems().get(getIndex()));
-                        });
-                    }
-
-                    @Override
-                    protected void updateItem(Void item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            setGraphic(button);
-                        }
-                    }
-                };
-            }
-        };
-    }
-
-    private Callback<TableColumn<Person, String>, TableCell<Person, String>> createTextFieldCellFactory() {
-        return new Callback<TableColumn<Person, String>, TableCell<Person, String>>() {
-            @Override
-            public TableCell<Person, String> call(TableColumn<Person, String> param) {
-                return new TableCell<Person, String>() {
-                    private final TextField textField = new TextField();
-
-                    {
-                        textField.setOnAction(event -> {
-                            // Handle text field action event
-                            System.out.println("TextField value changed to: " + textField.getText());
-                        });
-                    }
-
-                    @Override
-                    protected void updateItem(String item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            textField.setText(item);
-                            setGraphic(textField);
-                        }
-                    }
-                };
-            }
-        };
-    }
 
     public static void main(String[] args) {
         launch(args);
     }
 
-    public static class Person {
-        private final SimpleStringProperty firstName;
-        private final SimpleStringProperty lastName;
+    class CountForTable{
+        public Integer count;
 
-        public Person(String firstName, String lastName) {
-            this.firstName = new SimpleStringProperty(firstName);
-            this.lastName = new SimpleStringProperty(lastName);
+        public CountForTable(Integer i){
+            this.count=i;
         }
 
-        public String getFirstName() {
-            return firstName.get();
-        }
-
-        public SimpleStringProperty firstNameProperty() {
-            return firstName;
-        }
-
-        public void setFirstName(String firstName) {
-            this.firstName.set(firstName);
-        }
-
-        public String getLastName() {
-            return lastName.get();
-        }
-
-        public SimpleStringProperty lastNameProperty() {
-            return lastName;
-        }
-
-        public void setLastName(String lastName) {
-            this.lastName.set(lastName);
+        public Integer getCount() {
+            return count;
         }
     }
 }
