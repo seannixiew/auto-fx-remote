@@ -17,7 +17,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.ToggleSwitch?>
 
 <AnchorPane prefHeight="732.0" prefWidth="1001.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cn.controllers.RfTestController">
@@ -51,20 +50,24 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
                                     <ComboBox fx:id="cbVSG" prefWidth="150.0" promptText="信号源型号..." />
                                     <ComboBox fx:id="cbSA" prefWidth="150.0" promptText="频谱仪型号..." GridPane.rowIndex="1" />
                                     <ComboBox fx:id="cbVNA" prefWidth="150.0" promptText="矢网型号..." GridPane.rowIndex="2" />
                                     <ComboBox fx:id="cbPowerMeter" prefWidth="150.0" promptText="功率计型号..." GridPane.rowIndex="3" />
+                                    <ComboBox prefWidth="150.0" promptText="示波器型号" GridPane.rowIndex="4" />
                                     <TextField fx:id="tf0" promptText="输入IP..." GridPane.columnIndex="1" />
                                     <TextField fx:id="tf1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                     <TextField fx:id="tf2" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                     <TextField fx:id="tf3" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <TextField fx:id="tf4" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                     <Button fx:id="btConnection0" mnemonicParsing="false" onAction="#onActionBtConnection0" text="连接" GridPane.columnIndex="2" />
                                     <Button fx:id="btConnection1" mnemonicParsing="false" onAction="#onActionBtConnection1" text="连接" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                     <Button fx:id="btConnection2" mnemonicParsing="false" onAction="#onActionBtConnection2" text="连接" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                                     <Button fx:id="btConnection3" mnemonicParsing="false" onAction="#onActionBtConnection3" text="连接" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                    <Button fx:id="btConnection4" mnemonicParsing="false" onAction="#onActionBtConnection4" text="连接" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                                  </children>
                               </GridPane>
                               <Separator orientation="VERTICAL" prefHeight="200.0" />
@@ -117,14 +120,21 @@
             </TitledPane>
             <TitledPane animated="false" collapsible="false" maxHeight="200.0" maxWidth="1.7976931348623157E308" prefHeight="166.0" prefWidth="835.0" styleClass="titled-pane-rftest-2" text="操作日志" VBox.vgrow="ALWAYS">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <TextArea fx:id="taLogs" prefHeight="114.0" prefWidth="833.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <font>
-                              <Font name="Microsoft YaHei" size="14.0" />
-                           </font></TextArea>
-                     </children></AnchorPane>
+                  <TextArea fx:id="taLogs" prefHeight="114.0" prefWidth="833.0">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </TextArea>
               </content>
+               <opaqueInsets>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </opaqueInsets>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
             </TitledPane>
          </children>
       </VBox>

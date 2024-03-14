@@ -1,0 +1,100 @@
+#-----------------------------------------------------------
+# Vivado v2018.3.1 (64-bit)
+# SW Build 2489853 on Tue Mar 26 04:20:25 MDT 2019
+# IP Build 2486929 on Tue Mar 26 06:44:21 MDT 2019
+# Start of session at: Thu Mar 14 15:54:01 2024
+# Process ID: 15088
+# Current directory: D:/IDEA_Projects/auto-fx
+# Command line: vivado.exe -mode tcl -source D:\vivado_projects\blank.tcl
+# Log file: D:/IDEA_Projects/auto-fx/vivado.log
+# Journal file: D:/IDEA_Projects/auto-fx\vivado.jou
+#-----------------------------------------------------------
+source {D:\vivado_projects\blank.tcl}
+INFO: [Common 17-206] Exiting Vivado at Thu Mar 14 15:57:09 2024...
+server url TCP:localhost:3121
+open_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c001}
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Xilinx/8080658006c001
+close_hw_target {localhost:3121/xilinx_tcf/Xilinx/80806580073c01}
+INFO: [Labtoolstcl 44-464] Closing hw_target localhost:3121/xilinx_tcf/Xilinx/80806580073c01
+INFO: [Labtoolstcl 44-468] Target hw_target localhost:3121/xilinx_tcf/Xilinx/80806580073c01 is already closed
+close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658007c701}
+INFO: [Labtoolstcl 44-464] Closing hw_target localhost:3121/xilinx_tcf/Xilinx/8080658007c701
+INFO: [Labtoolstcl 44-468] Target hw_target localhost:3121/xilinx_tcf/Xilinx/8080658007c701 is already closed
+close_hw_target {localhost:3121/xilinx_tcf/Xilinx/000018eaffd701}
+INFO: [Labtoolstcl 44-464] Closing hw_target localhost:3121/xilinx_tcf/Xilinx/000018eaffd701
+INFO: [Labtoolstcl 44-468] Target hw_target localhost:3121/xilinx_tcf/Xilinx/000018eaffd701 is already closed
+current_hw_device [get_hw_devices xc7vx690t_0]
+refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]
+INFO: [Labtools 27-2302] Device xc7vx690t (JTAG device index = 0) is programmed with a design that has 1 ILA core(s).
+refresh_hw_device: Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 1250.082 ; gain = 997.688
+set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/DA_impl_Calib_syn_test/DA_top2.ltx} [get_hw_devices xc7vx690t_0]
+set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/DA_impl_Calib_syn_test/DA_top2.ltx} [get_hw_devices xc7vx690t_0]
+set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/0311/DA_impl_Calib_syn_test/DA_top2.bit} [get_hw_devices xc7vx690t_0]
+program_hw_devices [get_hw_devices xc7vx690t_0]
+ERROR: [Labtools 27-3165] End of startup status: LOW
+program_hw_devices: Time (s): cpu = 00:00:34 ; elapsed = 00:00:37 . Memory (MB): peak = 1250.879 ; gain = 0.660
+ERROR: [Common 17-39] 'program_hw_devices' failed due to earlier errors.
+
+INFO: [Common 17-206] Exiting Vivado at Thu Mar 14 15:57:09 2024...
+fresh_hw_device [lindex [get_hw_devices xc7vx690t_0] 0]
+INFO: [Labtools 27-2302] Device xc7vx690t (JTAG device index = 0) is programmed with a design that has 19 ILA core(s).
+INFO: [Labtools 27-2302] Device xc7vx690t (JTAG device index = 0) is programmed with a design that has 6 VIO core(s).
+INFO: [Labtools 27-1889] Uploading output probe values for VIO core [hw_vio_2]
+INFO: [Labtools 27-1889] Uploading output probe values for VIO core [hw_vio_1]
+INFO: [Labtools 27-1889] Uploading output probe values for VIO core [hw_vio_4]
+INFO: [Labtools 27-1889] Uploading output probe values for VIO core [hw_vio_5]
+INFO: [Labtools 27-1889] Uploading output probe values for VIO core [hw_vio_3]
+INFO: [Labtools 27-1889] Uploading output probe values for VIO core [hw_vio_6]
+refresh_hw_device: Time (s): cpu = 00:00:00 ; elapsed = 00:00:11 . Memory (MB): peak = 1260.680 ; gain = 9.082
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_1 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_Calib_result_test/your_instance_name"}]]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_2 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"UUT_HL_YD/beam_out_duc_inst/uut_yd_duc"}]]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_3 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"UUT_HL_YD/uut_54fxt"}]]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_4 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"UUT_HL_YD/uut_bsfp"}]]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_5 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"UUT_HL_YD/uut_fxt_ad/ila_jzAD_ddc_inst"}]]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_6 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"dut_539_para/uut_para539"}]]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_7 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"dut_539_para/uut_para_self"}]]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_8 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"inst_top_gth/uut_ila_gth539"}]]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_9 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"inst_top_gth/uut_ila_gth54"}]]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_10 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"nolabel_line1169/uut_yb_duc"}]]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_11 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"rec_source_inst/ila_calibsource_inst"}]]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_12 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_13 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"uut_adda/ila_addata_inst"}]]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_15 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"uut_gth_link"}]]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_14 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"uut_helu_yb/nolabel_line79/ila_jzAD_ddc_inst"}]]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_16 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"uut_helu_yb/uut_ila_FenLu_YB"}]]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_17 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"uut_helu_yb/uut_ila_yd_out"}]]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_18 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"uut_helu_yb/uut_yb_ila"}]]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_19 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"uut_ila_539add"}]]
+set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o2 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o3 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property INPUT_VALUE_RADIX UNSIGNED [get_hw_probes trans_Calib_test_inst/CNTVALUEOUT_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property INPUT_VALUE_RADIX UNSIGNED [get_hw_probes trans_Calib_test_inst/CNTVALUEOUT_syn_o2 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property INPUT_VALUE_RADIX UNSIGNED [get_hw_probes trans_Calib_test_inst/CNTVALUEOUT_syn_o3 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes trans_Calib_test_inst/LD_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes trans_Calib_test_inst/LD_syn_o2 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+ERROR: [Xicom 50-38] xicom: Unable to connect to debug core(s) on the target device. Check cable connectivity and that the target board is powered up then use the disconnect_hw_server and connect_hw_server to re-initialize the hardware target. Use open_hw_target to re-register the hardware device.
+set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes trans_Calib_test_inst/LD_syn_o3 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+ERROR: [Xicom 50-38] xicom: Unable to connect to debug core(s) on the target device. Check cable connectivity and that the target board is powered up then use the disconnect_hw_server and connect_hw_server to re-initialize the hardware target. Use open_hw_target to re-register the hardware device.
+set_property OUTPUT_VALUE 0 [get_hw_probes trans_Calib_test_inst/LD_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/LD_syn_o1} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio: Time (s): cpu = 00:00:00 ; elapsed = 00:00:08 . Memory (MB): peak = 1266.730 ; gain = 0.000
+set_property OUTPUT_VALUE 1 [get_hw_probes trans_Calib_test_inst/LD_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/LD_syn_o1} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 0 [get_hw_probes trans_Calib_test_inst/LD_syn_o2 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/LD_syn_o2} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 1 [get_hw_probes trans_Calib_test_inst/LD_syn_o2 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/LD_syn_o2} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 0 [get_hw_probes trans_Calib_test_inst/LD_syn_o3 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/LD_syn_o3} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 1 [get_hw_probes trans_Calib_test_inst/LD_syn_o3 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/LD_syn_o3} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property TRIGGER_COMPARE_VALUE eq1'bF [get_hw_probes trans_Calib_test_inst/pps -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]]
+startgroup
+set_property CONTROL.DATA_DEPTH 4096 [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+set_property CONTROL.TRIGGER_POSITION 4095 [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+endgroup
+set_property CONTROL.TRIGGER_POSITION 100 [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+set_property OUTPUT_VALUE 0 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o1} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+INFO: [Common 17-206] Exiting Vivado at Thu Mar 14 15:57:09 2024...

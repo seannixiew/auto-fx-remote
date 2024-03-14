@@ -38,6 +38,7 @@ public class ModuleSequenceStability implements EventHandler {
         }
     }
 
+    //实现串行下载fpga程序
     private static final CountDownLatch cd0=new CountDownLatch(1);
     private static final CountDownLatch cd1=new CountDownLatch(1);
 
@@ -191,15 +192,15 @@ public class ModuleSequenceStability implements EventHandler {
                 writeToProcess(processOutput0, "connect_hw_server" + "\n");
                 Thread.sleep(1000);
 //                writeToProcess(processOutput0, "open_hw_target" + "\n");
-                writeToProcess(processOutput0, "open_hw_target {localhost:3121/xilinx_tcf/Xilinx/80806580066901}" + "\n");
-                writeToProcess(processOutput0, "close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c001}" + "\n");
-                writeToProcess(processOutput0, "close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c101}" + "\n");
+                writeToProcess(processOutput0, "open_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c001}" + "\n");
+                writeToProcess(processOutput0, "close_hw_target {localhost:3121/xilinx_tcf/Xilinx/80806580073c01}" + "\n");
+                writeToProcess(processOutput0, "close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658007c701}" + "\n");
                 Thread.sleep(10000);
                 writeToProcess(processOutput0, "current_hw_device [get_hw_devices xc7vx690t_0]" + "\n");
                 writeToProcess(processOutput0, "refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]" + "\n"); // 6~7s
-                writeToProcess(processOutput0, "set_property PROBES.FILE {E:/wx/1_auto-test/about vivado/bit_file_from_yangjiashuo/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput0, "set_property FULL_PROBES.FILE {E:/wx/1_auto-test/about vivado/bit_file_from_yangjiashuo/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput0, "set_property PROGRAM.FILE {E:/wx/1_auto-test/about vivado/bit_file_from_yangjiashuo/TOP_test2.bit} [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput0, "set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput0, "set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput0, "set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.bit} [get_hw_devices xc7vx690t_0]" + "\n");
 
                 if (btDownload.isSelected()){
                     System.out.println("process0下载...");
@@ -289,17 +290,17 @@ public class ModuleSequenceStability implements EventHandler {
                 System.out.println("process1初始操作...");
                 writeToProcess(processOutput1, "open_hw" + "\n");
                 writeToProcess(processOutput1, "connect_hw_server" + "\n");
-                Thread.sleep(6000);
+                Thread.sleep(6000);// TODO: 2024/3/11 时间修正
 //                writeToProcess(processOutput1, "open_hw_target" + "\n");
-                writeToProcess(processOutput1, "close_hw_target {localhost:3121/xilinx_tcf/Xilinx/80806580066901}" + "\n");
-                writeToProcess(processOutput1, "open_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c001}" + "\n");
-                writeToProcess(processOutput1, "close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c101}" + "\n");
+                writeToProcess(processOutput1, "close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c001}" + "\n");
+                writeToProcess(processOutput1, "open_hw_target {localhost:3121/xilinx_tcf/Xilinx/80806580073c01}" + "\n");
+                writeToProcess(processOutput1, "close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658007c701}" + "\n");
                 Thread.sleep(10000);
                 writeToProcess(processOutput1, "current_hw_device [get_hw_devices xc7vx690t_0]" + "\n");
                 writeToProcess(processOutput1, "refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]" + "\n"); // 6~7s
-                writeToProcess(processOutput1, "set_property PROBES.FILE {E:/wx/1_auto-test/about vivado/bit_file_from_yangjiashuo/TOP_test2_1.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput1, "set_property FULL_PROBES.FILE {E:/wx/1_auto-test/about vivado/bit_file_from_yangjiashuo/TOP_test2_1.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput1, "set_property PROGRAM.FILE {E:/wx/1_auto-test/about vivado/bit_file_from_yangjiashuo/TOP_test2_1.bit} [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput1, "set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput1, "set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput1, "set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.bit} [get_hw_devices xc7vx690t_0]" + "\n");
 
                 if (btDownload.isSelected()){
                     System.out.println("process1下载...");
@@ -390,15 +391,15 @@ public class ModuleSequenceStability implements EventHandler {
                 writeToProcess(processOutput2, "connect_hw_server" + "\n");
                 Thread.sleep(11000);
 //                writeToProcess(processOutput2, "open_hw_target" + "\n");
-                writeToProcess(processOutput2, "close_hw_target {localhost:3121/xilinx_tcf/Xilinx/80806580066901}" + "\n");
                 writeToProcess(processOutput2, "close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c001}" + "\n");
-                writeToProcess(processOutput2, "open_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c101}" + "\n");
+                writeToProcess(processOutput2, "close_hw_target {localhost:3121/xilinx_tcf/Xilinx/80806580073c01}" + "\n");
+                writeToProcess(processOutput2, "open_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658007c701}" + "\n");
                 Thread.sleep(10000);
                 writeToProcess(processOutput2, "current_hw_device [get_hw_devices xc7vx690t_0]" + "\n");
                 writeToProcess(processOutput2, "refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]" + "\n"); // 6~7s
-                writeToProcess(processOutput2, "set_property PROBES.FILE {E:/wx/1_auto-test/about vivado/bit_file_from_yangjiashuo/TOP_test2_2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput2, "set_property FULL_PROBES.FILE {E:/wx/1_auto-test/about vivado/bit_file_from_yangjiashuo/TOP_test2_2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput2, "set_property PROGRAM.FILE {E:/wx/1_auto-test/about vivado/bit_file_from_yangjiashuo/TOP_test2_2.bit} [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput2, "set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput2, "set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput2, "set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.bit} [get_hw_devices xc7vx690t_0]" + "\n");
 
                 if (btDownload.isSelected()){
                     System.out.println("process2下载...");
@@ -503,6 +504,8 @@ public class ModuleSequenceStability implements EventHandler {
                 dbfClient.dbfWrite("EB9005111022AAAAAAAAAA");
                 Thread.sleep(100);
                 dbfClient.dbfWrite("EB9005111033AAAAAAAAAA");
+                Thread.sleep(100);
+                dbfClient.dbfWrite("EB9005111044AAAAAAAAAA");
                 Thread.sleep(100);
                 //设置KL14,pps切内
                 dbfClient.dbfWrite("EB900E111955AAAAAAAAAA");

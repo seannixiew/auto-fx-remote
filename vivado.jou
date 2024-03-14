@@ -2,88 +2,366 @@
 # Vivado v2018.3.1 (64-bit)
 # SW Build 2489853 on Tue Mar 26 04:20:25 MDT 2019
 # IP Build 2486929 on Tue Mar 26 06:44:21 MDT 2019
-# Start of session at: Tue Feb 27 20:26:19 2024
-# Process ID: 14652
+# Start of session at: Thu Mar 14 16:00:18 2024
+# Process ID: 15708
 # Current directory: D:/IDEA_Projects/auto-fx
 # Command line: vivado.exe -mode tcl -source D:\vivado_projects\blank.tcl
 # Log file: D:/IDEA_Projects/auto-fx/vivado.log
 # Journal file: D:/IDEA_Projects/auto-fx\vivado.jou
 #-----------------------------------------------------------
-source {D:\vivado_projects\blank.tcl}
-open_hw
+source {D:\vivado_projects\blank.tcl}oopen_hw
 connect_hw_server
-open_hw_target
+close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c001}
+close_hw_target {localhost:3121/xilinx_tcf/Xilinx/80806580073c01}
+open_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658007c701}
+close_hw_target {localhost:3121/xilinx_tcf/Xilinx/000018eaffd701}
 current_hw_device [get_hw_devices xc7vx690t_0]
 refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]
-set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/AD_impl_Calib_syn_test/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]
-set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/AD_impl_Calib_syn_test/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]
-set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/AD_impl_Calib_syn_test/TOP_test2.bit} [get_hw_devices xc7vx690t_0]
+set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/DA_impl_Calib_syn_test/DA_top2.ltx} [get_hw_devices xc7vx690t_0]
+set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/DA_impl_Calib_syn_test/DA_top2.ltx} [get_hw_devices xc7vx690t_0]
+set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/0311/DA_impl_Calib_syn_test/DA_top2.bit} [get_hw_devices xc7vx690t_0]
+program_hw_devices [get_hw_devices xc7vx690t_0]
 refresh_hw_device [lindex [get_hw_devices xc7vx690t_0] 0]
 display_hw_ila_data [ get_hw_ila_data hw_ila_data_1 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/AD_SPI_inst/ila_spi_inst"}]]
 display_hw_ila_data [ get_hw_ila_data hw_ila_data_2 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/DA_SPI_INST/ila_daspi_INST"}]]
 display_hw_ila_data [ get_hw_ila_data hw_ila_data_3 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]]
-display_hw_ila_data [ get_hw_ila_data hw_ila_data_4 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ila_freq_change_syn"}]]
-display_hw_ila_data [ get_hw_ila_data hw_ila_data_5 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"TCTM_INST/ila_tctm_inst"}]]
-display_hw_ila_data [ get_hw_ila_data hw_ila_data_6 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"rec_Calib_inst/ila_rec_calib_syntest_inst"}]]
-set_property OUTPUT_VALUE 0 [get_hw_probes pps_t_ctrl -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
-commit_hw_vio [get_hw_probes {pps_t_ctrl} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
-set_property OUTPUT_VALUE 1 [get_hw_probes pps_t_ctrl -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
-commit_hw_vio [get_hw_probes {pps_t_ctrl} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
-set_property OUTPUT_VALUE 1 [get_hw_probes rst_in_t -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
-commit_hw_vio [get_hw_probes {rst_in_t} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
-set_property OUTPUT_VALUE 0 [get_hw_probes rst_in_t -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
-commit_hw_vio [get_hw_probes {rst_in_t} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
-set_property OUTPUT_VALUE 1 [get_hw_probes rst_in_t -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
-commit_hw_vio [get_hw_probes {rst_in_t} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
-set_property OUTPUT_VALUE 1 [get_hw_probes pps_t -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
-commit_hw_vio [get_hw_probes {pps_t} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
-set_property OUTPUT_VALUE 0 [get_hw_probes pps_t -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
-commit_hw_vio [get_hw_probes {pps_t} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"vio_rstctl_inst"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}] -trigger_now
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
-upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
-write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\AD_impl_Calib_syn_test\105MHz_0.0.csv} hw_ila_data_3
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}] -trigger_now
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
-upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
-write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\AD_impl_Calib_syn_test\132.5MHz_0.0.csv} hw_ila_data_3
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}] -trigger_now
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
-upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
-write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\AD_impl_Calib_syn_test\160MHz_0.0.csv} hw_ila_data_3
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}] -trigger_now
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
-upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
-write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\AD_impl_Calib_syn_test\105MHz_-6.0.csv} hw_ila_data_3
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}] -trigger_now
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
-upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
-write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\AD_impl_Calib_syn_test\132.5MHz_-6.0.csv} hw_ila_data_3
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}] -trigger_now
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
-upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
-write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\AD_impl_Calib_syn_test\160MHz_-6.0.csv} hw_ila_data_3
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}] -trigger_now
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
-upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
-write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\AD_impl_Calib_syn_test\105MHz_-30.0.csv} hw_ila_data_3
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}] -trigger_now
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
-upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
-write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\AD_impl_Calib_syn_test\132.5MHz_-30.0.csv} hw_ila_data_3
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}] -trigger_now
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
-upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
-write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\AD_impl_Calib_syn_test\160MHz_-30.0.csv} hw_ila_data_3
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}] -trigger_now
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
-upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
-write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\AD_impl_Calib_syn_test\105MHz_-60.0.csv} hw_ila_data_3
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}] -trigger_now
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
-upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
-write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\AD_impl_Calib_syn_test\132.5MHz_-60.0.csv} hw_ila_data_3
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}] -trigger_now
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
-upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]
-write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\AD_impl_Calib_syn_test\160MHz_-60.0.csv} hw_ila_data_3
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_4 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"mcu_spi_top_2_inst/ila_spi_line_inst"}]]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_5 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"nolabel_line1248/ila_tctm_inst"}]]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_6 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]]
+set_property TRIGGER_COMPARE_VALUE eq1'bF [get_hw_probes trans_source_inst/pps -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]]
+startgroup
+set_property CONTROL.DATA_DEPTH 4096 [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+set_property CONTROL.TRIGGER_POSITION 4095 [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+endgroup
+set_property CONTROL.TRIGGER_POSITION 100 [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]rrun_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]wwait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]uupload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]wwrite_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process0_0.csv} hw_ila_data_6rrun_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+uupload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]wwrite_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process0_1.csv} hw_ila_data_6run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+wwait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]uupload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]wwrite_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process0_2.csv} hw_ila_data_6rrun_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]wwait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process1_3.csv} hw_ila_data_6
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+wwait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]uupload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]wwrite_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process0_4.csv} hw_ila_data_6rrun_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]wwait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]uupload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]wwrite_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process0_5.csv} hw_ila_data_6rrun_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+wwrite_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process0_6.csv} hw_ila_data_6rrun_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+uupload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process1_7.csv} hw_ila_data_6
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process1_8.csv} hw_ila_data_6
+rrun_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]wwait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]uupload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]wwrite_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process0_9.csv} hw_ila_data_6rrun_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process1_10.csv} hw_ila_data_6
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process1_11.csv} hw_ila_data_6
+rrun_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]wwait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]uupload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]wwrite_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process0_12.csv} hw_ila_data_6run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process1_13.csv} hw_ila_data_6
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process1_14.csv} hw_ila_data_6
+rrun_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]wwait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]uupload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]wwrite_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process0_15.csv} hw_ila_data_6run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+uupload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process1_16.csv} hw_ila_data_6
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process1_17.csv} hw_ila_data_6
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+wwait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]uupload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process1_18.csv} hw_ila_data_6
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+wwait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]uupload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]wwrite_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process0_19.csv} hw_ila_data_6run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+wwrite_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process0_20.csv} hw_ila_data_6run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process1_21.csv} hw_ila_data_6
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+wwait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]uupload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process1_22.csv} hw_ila_data_6
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+wwrite_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process0_23.csv} hw_ila_data_6run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+wwait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]uupload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]wwrite_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process0_24.csv} hw_ila_data_6rrun_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+uupload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]wwrite_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process0_25.csv} hw_ila_data_6run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+uupload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]wwrite_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process0_26.csv} hw_ila_data_6run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+wwait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]uupload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]wwrite_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process0_27.csv} hw_ila_data_6rrun_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+wwrite_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process0_28.csv} hw_ila_data_6rrun_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process1_29.csv} hw_ila_data_6
+rrun_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+wwrite_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process0_30.csv} hw_ila_data_6run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_source_inst/ILA_trans_source_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process1_31.csv} hw_ila_data_6
+
+probes {trans_Calib_test_inst/CNTVALUEIN_syn_o3} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process3_5.csv} hw_ila_data_12
+set_property OUTPUT_VALUE 6 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o1} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 6 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o2 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o2} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 6 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o3 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o3} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process3_6.csv} hw_ila_data_12
+set_property OUTPUT_VALUE 7 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o1} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 7 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o2 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o2} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 7 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o3 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o3} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process3_7.csv} hw_ila_data_12
+set_property OUTPUT_VALUE 8 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o1} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 8 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o2 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o2} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 8 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o3 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o3} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process3_8.csv} hw_ila_data_12
+set_property OUTPUT_VALUE 9 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o1} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 9 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o2 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o2} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 9 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o3 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o3} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process3_9.csv} hw_ila_data_12
+set_property OUTPUT_VALUE 10 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o1} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 10 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o2 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o2} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 10 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o3 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o3} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process3_10.csv} hw_ila_data_12
+set_property OUTPUT_VALUE 11 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o1} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 11 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o2 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o2} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 11 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o3 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o3} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process3_11.csv} hw_ila_data_12
+set_property OUTPUT_VALUE 12 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o1} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 12 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o2 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o2} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 12 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o3 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o3} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process3_12.csv} hw_ila_data_12
+set_property OUTPUT_VALUE 13 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o1} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 13 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o2 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o2} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 13 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o3 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o3} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process3_13.csv} hw_ila_data_12
+set_property OUTPUT_VALUE 14 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o1} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 14 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o2 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o2} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 14 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o3 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o3} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process3_14.csv} hw_ila_data_12
+set_property OUTPUT_VALUE 15 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o1} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 15 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o2 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o2} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 15 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o3 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o3} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process3_15.csv} hw_ila_data_12
+set_property OUTPUT_VALUE 16 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o1} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 16 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o2 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o2} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 16 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o3 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o3} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process3_16.csv} hw_ila_data_12
+set_property OUTPUT_VALUE 17 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o1} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 17 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o2 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o2} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 17 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o3 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o3} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process3_17.csv} hw_ila_data_12
+set_property OUTPUT_VALUE 18 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o1} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 18 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o2 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o2} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 18 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o3 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o3} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process3_18.csv} hw_ila_data_12
+set_property OUTPUT_VALUE 19 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o1} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 19 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o2 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o2} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 19 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o3 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o3} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process3_19.csv} hw_ila_data_12
+set_property OUTPUT_VALUE 20 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o1} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 20 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o2 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o2} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 20 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o3 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o3} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process3_20.csv} hw_ila_data_12
+set_property OUTPUT_VALUE 21 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o1} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 21 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o2 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o2} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 21 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o3 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o3} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process3_21.csv} hw_ila_data_12
+set_property OUTPUT_VALUE 22 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o1} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 22 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o2 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o2} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 22 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o3 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o3} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process3_22.csv} hw_ila_data_12
+set_property OUTPUT_VALUE 23 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o1} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 23 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o2 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o2} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 23 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o3 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o3} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process3_23.csv} hw_ila_data_12
+set_property OUTPUT_VALUE 24 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o1} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 24 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o2 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o2} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 24 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o3 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o3} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process3_24.csv} hw_ila_data_12
+set_property OUTPUT_VALUE 25 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o1} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 25 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o2 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o2} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 25 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o3 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o3} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process3_25.csv} hw_ila_data_12
+set_property OUTPUT_VALUE 26 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o1} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 26 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o2 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o2} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 26 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o3 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o3} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process3_26.csv} hw_ila_data_12
+set_property OUTPUT_VALUE 27 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o1} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 27 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o2 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o2} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 27 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o3 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o3} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process3_27.csv} hw_ila_data_12
+set_property OUTPUT_VALUE 28 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o1} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 28 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o2 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o2} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 28 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o3 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o3} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process3_28.csv} hw_ila_data_12
+set_property OUTPUT_VALUE 29 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o1} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 29 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o2 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o2} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 29 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o3 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o3} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process3_29.csv} hw_ila_data_12
+set_property OUTPUT_VALUE 30 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o1} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 30 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o2 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o2} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 30 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o3 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o3} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process3_30.csv} hw_ila_data_12
+set_property OUTPUT_VALUE 31 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o1 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o1} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 31 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o2 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o2} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+set_property OUTPUT_VALUE 31 [get_hw_probes trans_Calib_test_inst/CNTVALUEIN_syn_o3 -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+commit_hw_vio [get_hw_probes {trans_Calib_test_inst/CNTVALUEIN_syn_o3} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/vio_delay_transCalib_inst"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\L payload\vivado files\0311\0caishu\process3_31.csv} hw_ila_data_12

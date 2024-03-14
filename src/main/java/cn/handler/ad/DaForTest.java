@@ -239,7 +239,7 @@ public class DaForTest implements EventHandler {
                     instru1.writeCmd("BAND 100 KHz");
                     instru1.writeCmd("BAND:VIDeo 100 KHz");
                     Thread.sleep(12000);
-                    String imgPath3=":MMEMory:STORe:SCReen 'D:\\3188\\20240227\\"+DateFormat.FORFILENAME.format(new Date())+".png'";
+                      String imgPath3=":MMEMory:STORe:SCReen 'D:\\3188\\20240227\\"+DateFormat.FORFILENAME.format(new Date())+".png'";
                     instru1.writeCmd(imgPath3);
 
 

@@ -12,4 +12,6 @@ public class InstruKind {
 
     public static final int powerMetre=3;
 
+    public static final int Oscilloscope=4;
+
 }

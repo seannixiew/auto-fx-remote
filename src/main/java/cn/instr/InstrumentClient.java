@@ -55,6 +55,31 @@ public class InstrumentClient {
         return true;
     }
 
+    public boolean openUsb(String deviceType, String address) {
+        VISA32 visa32 = VISA32.INSTANCE;
+
+        defaultSession = new LongByReference(0);
+        int result = visa32.viOpenDefaultRM(defaultSession);
+        if (result != VISA32.VI_SUCCESS) {
+            return false;
+        }
+
+        vipSession = new LongByReference(0);
+        String cmd = "USB0::0x0957::0x17A8::MY54310455::0::INSTR";
+        NativeLong a = new NativeLong(defaultSession.getValue());
+        NativeLong b = new NativeLong(0);
+        result = visa32.viOpen(a, cmd, b, b, vipSession);
+        if (result != VISA32.VI_SUCCESS) {
+            System.out.println("open fail:"+result);
+            return false;
+        }
+        //连接成功才会设置
+        isConnected=true;
+        instruType=deviceType;
+        return true;
+    }
+
+
     public boolean openHislip(String deviceType, String ip) {
         VISA32 visa32 = VISA32.INSTANCE;
 

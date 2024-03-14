@@ -54,27 +54,35 @@ public class TestItems {
 
     public static final TestItemModel adInModuleSequenceStability=new TestItemModel(17,"整机-AD时序稳定性","cn.handler.ad.ModuleSequenceStability");
 
-    public static final TestItemModel da40FuncAndPerformanceAndIso=new TestItemModel(18,"40路DA功能及性能、隔离度测试");
+    public static final TestItemModel adInModuleCalSynSignal=new TestItemModel(18,"整机-AD校正同步信号测试","cn.handler.ad.ModuleCalSynSignal");
 
-    public static final TestItemModel daTestADFuncAndPerformance=new TestItemModel(19,"测试AD接口功能及性能测试");
+    public static final TestItemModel adInModuleConsistency=new TestItemModel(19,"整机-AD通道间一致性","cn.handler.ad.ModuleConsistency");
 
-    public static final TestItemModel da40Power=new TestItemModel(20,"40路DA输出功率测试");
+    public static final TestItemModel adInModulePpsSyn=new TestItemModel(20,"整机-PPS板间同步","cn.handler.ad.ModulePpsSyn");
 
-    public static final TestItemModel da40Consistency=new TestItemModel(21,"40路DA一致性测试");
+    public static final TestItemModel da40FuncAndPerformanceAndIso=new TestItemModel(21,"40路DA功能及性能、隔离度测试");
+
+    public static final TestItemModel daTestADFuncAndPerformance=new TestItemModel(22,"测试AD接口功能及性能测试");
+
+    public static final TestItemModel da40Power=new TestItemModel(23,"40路DA输出功率测试");
+
+    public static final TestItemModel da40Consistency=new TestItemModel(24,"40路DA一致性测试");
+
+    public static final TestItemModel daInModuleCalSynSignal=new TestItemModel(25,"整机-DA校正同步信号测试","cn.handler.da.ModuleCalSynSignal");
 
     /** 系统组 */
 
     public static final TestItemModel dbf=new TestItemModel(-1,"系统联测");
 
-    public static final TestItemModel daAndRf=new TestItemModel(22,"DA板+RF");
+    public static final TestItemModel daAndRf=new TestItemModel(25,"DA板+RF");
 
-    public static final TestItemModel adAndRf=new TestItemModel(23,"AD板+RF");
+    public static final TestItemModel adAndRf=new TestItemModel(26,"AD板+RF");
 
-    public static final TestItemModel dbfAndRfTxPower=new TestItemModel(24,"DBF+RF-发射功率","cn.handler.union.PowerTx");
+    public static final TestItemModel dbfAndRfTxPower=new TestItemModel(27,"DBF+RF-发射功率","cn.handler.union.PowerTx");
 
-    public static final TestItemModel dbfAndRfTxConsistency=new TestItemModel(25,"DBF+RF-发射一致性","cn.handler.union.ConsistencyTx");
+    public static final TestItemModel dbfAndRfTxConsistency=new TestItemModel(28,"DBF+RF-发射一致性","cn.handler.union.ConsistencyTx");
 
-    public static final TestItemModel dbfAndRfRxConsistency=new TestItemModel(26,"DBF+RF-接收一致性","cn.handler.union.ConsistencyRx");
+    public static final TestItemModel dbfAndRfRxConsistency=new TestItemModel(29,"DBF+RF-接收一致性","cn.handler.union.ConsistencyRx");
 
 
     /***********************************************************************************************/

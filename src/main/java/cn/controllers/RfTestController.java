@@ -103,6 +103,7 @@ public class RfTestController extends RootController {
     public InstrumentClient instru1=new InstrumentClient(InstruKind.signalAnalyzer);
     public InstrumentClient instru2=new InstrumentClient(InstruKind.vna);
     public InstrumentClient instru3=new InstrumentClient(InstruKind.powerMetre);
+    public InstrumentClient instru4=new InstrumentClient(InstruKind.Oscilloscope);
     public MatrixClient matrix0=new MatrixClient();
     public MatrixClient matrix1=new MatrixClient();
     public DbfClient dbfClient=new DbfClient();
@@ -270,6 +271,30 @@ public class RfTestController extends RootController {
         }).start();
     }
 
+    @FXML
+    void onActionBtConnection4(){
+        new Thread(()->{
+            // TODO: 2024/3/13 临时方案
+            boolean isOpen= instru4.openUsb("","");
+            if(!isOpen){
+                System.out.println("connecting failed.");
+                Platform.runLater(()->{
+                    taLogs.appendText(DateFormat.FORLOG.format(new Date())+"示波器连接失败...\n");
+                });
+                return;
+            }
+            instru4.writeCmd("*IDN?");
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {}
+            String s = instru4.readResult();
+            System.out.println(s);
+            Platform.runLater(()->{
+                taLogs.appendText(DateFormat.FORLOG.format(new Date())+s);
+            });
+        }).start();
+    }
+
     public void initialize() throws Exception{
 
         CheckBoxTreeItem<TestItemModel> node0 = new CheckBoxTreeItem<TestItemModel>(TestItems.tx);
@@ -300,15 +325,18 @@ public class RfTestController extends RootController {
                 new CheckBoxTreeItem<TestItemModel>(TestItems.adTestDAFuncAndPerformance),
                 new CheckBoxTreeItem<TestItemModel>(TestItems.ad40Isolation),
                 new CheckBoxTreeItem<TestItemModel>(TestItems.ad40Consistency),
-                new CheckBoxTreeItem<TestItemModel>(TestItems.adInModuleSequenceStability));
-
+                new CheckBoxTreeItem<TestItemModel>(TestItems.adInModuleSequenceStability),
+                new CheckBoxTreeItem<TestItemModel>(TestItems.adInModuleCalSynSignal),
+                new CheckBoxTreeItem<TestItemModel>(TestItems.adInModuleConsistency),
+                new CheckBoxTreeItem<TestItemModel>(TestItems.adInModulePpsSyn));
         CheckBoxTreeItem<TestItemModel> node3 = new CheckBoxTreeItem<TestItemModel>(TestItems.da);
         node3.setExpanded(true);
         node3.getChildren().addAll(
                 new CheckBoxTreeItem<TestItemModel>(TestItems.da40FuncAndPerformanceAndIso),
                 new CheckBoxTreeItem<TestItemModel>(TestItems.daTestADFuncAndPerformance),
                 new CheckBoxTreeItem<TestItemModel>(TestItems.da40Power),
-                new CheckBoxTreeItem<TestItemModel>(TestItems.da40Consistency));
+                new CheckBoxTreeItem<TestItemModel>(TestItems.da40Consistency),
+                new CheckBoxTreeItem<TestItemModel>(TestItems.daInModuleCalSynSignal));
 
         CheckBoxTreeItem<TestItemModel> node4 = new CheckBoxTreeItem<TestItemModel>(TestItems.dbf);
         node4.setExpanded(true);

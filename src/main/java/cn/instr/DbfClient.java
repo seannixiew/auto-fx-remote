@@ -12,10 +12,11 @@ public class DbfClient {
     public String connect(String ip, long port){
         try {
             System.out.println("connecting...");
-//            socket = new Socket("127.0.0.1", 12001);
-            socket = new Socket("192.168.1.114", 12001);
-            System.out.println("dbf client connection success");
-            return "dbf client connection success";
+            socket = new Socket("127.0.0.1", 12001);
+            // TODO: 2024/3/11 ip修改支持
+//            socket = new Socket("192.168.1.114", 12001);
+            System.out.println("dbf client connection success\n");
+            return "dbf client connection success\n";
         }catch (Exception e){
             e.printStackTrace();
         }
