@@ -1,5 +1,8 @@
 package cn;
 
+import cn.controllers.PropertiesController;
+import cn.controllers.RfTestController;
+import cn.controllers.VivadoClientController;
 import cn.controllers.outline.ViewController;
 import cn.utils.ControllersManager;
 import javafx.application.Application;
@@ -31,19 +34,29 @@ public class Main extends Application {
         fxmlLoader.setLocation(getClass().getResource("/fxml/view.fxml"));
         Pane root=fxmlLoader.load();
         Scene scene=new Scene(root,1200,680);
+/*
+//        可行但不优雅
+//        ViewController controller = fxmlLoader.getController();
+//        controller.getPropertiesPaneController().bt0.setOnAction(event -> {
+//            new Thread(()->{
+//                FileChooser fileChooser=new FileChooser();
+//                FileChooser.ExtensionFilter extensionFilter=new FileChooser.ExtensionFilter("CSV Files","*.csv","XLS Files","*.xls","XLSX Files","*.xlsx");
+//                fileChooser.getExtensionFilters().add(extensionFilter);
+//                Platform.runLater(()->{
+//                    File file=fileChooser.showOpenDialog(primaryStage);
+//                    System.out.println(file);
+//                });
+//            }).start();
+//        });
+*/
+        //better
+        PropertiesController propertiesController =(PropertiesController) ControllersManager.CONTROLLERS.get(PropertiesController.class.getSimpleName());
+        propertiesController.setPrimaryStageAndBoundAction(primaryStage);
 
-        ViewController controller = fxmlLoader.getController();
-        controller.getPropertiesPaneController().bt0.setOnAction(event -> {
-            new Thread(()->{
-                FileChooser fileChooser=new FileChooser();
-                FileChooser.ExtensionFilter extensionFilter=new FileChooser.ExtensionFilter("CSV Files","*.csv","XLS Files","*.xls","XLSX Files","*.xlsx");
-                fileChooser.getExtensionFilters().add(extensionFilter);
-                Platform.runLater(()->{
-                    File file=fileChooser.showOpenDialog(primaryStage);
-                    System.out.println(file);
-                });
-            }).start();
-        });
+        //前提是对应fxml此时已加载完成
+        //★ 用于在controller中使用primaryStage（由于该方法在main调用，所以顺序是：生成controller（执行完initialize）---main调用获取primayStage，所以不能在initialize中使用primaryStage）
+        VivadoClientController vivadoClientController =(VivadoClientController) ControllersManager.CONTROLLERS.get(VivadoClientController.class.getSimpleName());
+        vivadoClientController.setPrimaryStage(primaryStage);
 
 
 //        new JMetro(Style.LIGHT).setScene(scene);  //暂时无法灵活调整细节

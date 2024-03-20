@@ -17,12 +17,12 @@
 
 .buttonStyle1{
     -fx-background-color:#00BFFF;
-    -fx-effect: innershadow(gaussian, #666666, 5, 0.5, 2, 2)
+    -fx-font-weight: bold;
 }
 
 .buttonStyle1:hover{
     -fx-background-color:#53a4f0;
-    -fx-font-weight: bold;
+    -fx-effect: innershadow(gaussian, #666666, 5, 0.5, 2, 2)
 
 }
 

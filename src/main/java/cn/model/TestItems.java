@@ -44,21 +44,21 @@ public class TestItems {
 
     public static final TestItemModel da=new TestItemModel(-1,"DA板");
 
-    public static final TestItemModel ad40FuncAndPerformance=new TestItemModel(13,"AD功率线性度测试（40路）","cn.handler.ad.PowerAndLinearity");
+    public static final TestItemModel ad40FuncAndPerformance=new TestItemModel(13,"AD功率线性度测试（40路）","cn.handler.ad.PowerAndLinearityAd");
 
     public static final TestItemModel adTestDAFuncAndPerformance=new TestItemModel(14,"测试DA接口功能及性能测试","cn.handler.ad.DaForTest");
 
-    public static final TestItemModel ad40Isolation=new TestItemModel(15,"AD隔离度测试（40路）","cn.handler.ad.Isolation");
+    public static final TestItemModel ad40Isolation=new TestItemModel(15,"AD隔离度测试（40路）","cn.handler.ad.IsolationAd");
 
     public static final TestItemModel ad40Consistency=new TestItemModel(16,"AD一致性测试（40路）");
 
-    public static final TestItemModel adInModuleSequenceStability=new TestItemModel(17,"整机-AD时序稳定性","cn.handler.ad.ModuleSequenceStability");
+    public static final TestItemModel adInModuleSequenceStability=new TestItemModel(17,"整机-AD时序稳定性","cn.handler.ad.ModuleSequenceStabilityAd");
 
-    public static final TestItemModel adInModuleCalSynSignal=new TestItemModel(18,"整机-AD校正同步信号测试","cn.handler.ad.ModuleCalSynSignal");
+    public static final TestItemModel adInModuleCalSynSignal=new TestItemModel(18,"整机-AD校正同步信号测试","cn.handler.ad.ModuleCalSynSignalAd");
 
-    public static final TestItemModel adInModuleConsistency=new TestItemModel(19,"整机-AD通道间一致性","cn.handler.ad.ModuleConsistency");
+    public static final TestItemModel adInModuleConsistency=new TestItemModel(19,"整机-AD通道间一致性","cn.handler.ad.ModuleConsistencyAd");
 
-    public static final TestItemModel adInModulePpsSyn=new TestItemModel(20,"整机-PPS板间同步","cn.handler.ad.ModulePpsSyn");
+    public static final TestItemModel adInModulePpsSyn=new TestItemModel(20,"整机-PPS板间同步","cn.handler.ad.ModulePpsSynAd");
 
     public static final TestItemModel da40FuncAndPerformanceAndIso=new TestItemModel(21,"40路DA功能及性能、隔离度测试");
 
@@ -68,7 +68,9 @@ public class TestItems {
 
     public static final TestItemModel da40Consistency=new TestItemModel(24,"40路DA一致性测试");
 
-    public static final TestItemModel daInModuleCalSynSignal=new TestItemModel(25,"整机-DA校正同步信号测试","cn.handler.da.ModuleCalSynSignal");
+    public static final TestItemModel daInModuleCalSynSignal=new TestItemModel(25,"整机-DA校正同步信号测试","cn.handler.da.ModuleCalSynSignalDa");
+
+    public static final TestItemModel daInModuleFreqSwitchSynSignal=new TestItemModel(25,"整机-DA频率切换同步信号测试","cn.handler.da.ModuleFreqSwitchSynSignalDa");
 
     /** 系统组 */
 

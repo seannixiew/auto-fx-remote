@@ -1,12 +1,17 @@
 package cn.controllers;
 
 import cn.controllers.root.RootController;
-import cn.handler.ad.PowerAndLinearity;
+import cn.handler.ad.PowerAndLinearityAd;
 import cn.utils.ControllersManager;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.*;
+import java.util.List;
+import java.util.Properties;
 
 public class VivadoClientController  extends RootController {
 
@@ -19,9 +24,80 @@ public class VivadoClientController  extends RootController {
 
     BufferedWriter processOutput;
 
+    Stage primaryStage;
+
+    List<File> files0;
+    List<File> files1;
+    List<File> files2;
+    List<File> files3;
+
+    Properties properties=new Properties();
+
+    //★ 用于在controller中使用primaryStage（由于该方法在main调用，所以顺序是：生成controller（执行完initialize）---main调用获取primayStage---调用事件函数使用primaryStage。注意不能在initialize中使用primaryStage）
+    public void setPrimaryStage(Stage primaryStage){
+        this.primaryStage=primaryStage;
 
 
+    }
 
+
+    @FXML
+    public void onBrowse0(){
+        FileChooser fileChooser=new FileChooser();
+        FileChooser.ExtensionFilter extensionFilter=new FileChooser.ExtensionFilter("program files","*.bit","*.ltx");
+        fileChooser.getExtensionFilters().add(extensionFilter);
+        Platform.runLater(()->{
+            files0=fileChooser.showOpenMultipleDialog(primaryStage);
+            System.out.println(files0);
+        });
+    }
+    @FXML
+    public void onBrowse1(){
+        FileChooser fileChooser=new FileChooser();
+        FileChooser.ExtensionFilter extensionFilter=new FileChooser.ExtensionFilter("program files","*.bit","*.ltx");
+        fileChooser.getExtensionFilters().add(extensionFilter);
+        Platform.runLater(()->{
+            files1=fileChooser.showOpenMultipleDialog(primaryStage);
+            System.out.println(files1);
+        });
+    }
+    @FXML
+    public void onBrowse2(){
+        FileChooser fileChooser=new FileChooser();
+        FileChooser.ExtensionFilter extensionFilter=new FileChooser.ExtensionFilter("program files","*.bit","*.ltx");
+        fileChooser.getExtensionFilters().add(extensionFilter);
+        Platform.runLater(()->{
+            files2=fileChooser.showOpenMultipleDialog(primaryStage);
+            System.out.println(files2);
+        });
+    }
+    @FXML
+    public void onBrowse3(){
+        FileChooser fileChooser=new FileChooser();
+        FileChooser.ExtensionFilter extensionFilter=new FileChooser.ExtensionFilter("program files","*.bit","*.ltx");
+        fileChooser.getExtensionFilters().add(extensionFilter);
+        Platform.runLater(()->{
+            files3=fileChooser.showOpenMultipleDialog(primaryStage);
+            System.out.println(files3);
+        });
+    }
+
+    @FXML
+    public void onDownload0(){
+
+    }
+    @FXML
+    public void onDownload1(){
+
+    }
+    @FXML
+    public void onDownload2(){
+
+    }
+    @FXML
+    public void onDownload3(){
+
+    }
 
     @FXML
     public void onTclWrite(){
@@ -37,7 +113,7 @@ public class VivadoClientController  extends RootController {
         // TODO: 2024/1/14 增加分支从其他handlerInstance中获取实例
 
         RfTestController rfTestController=(RfTestController)ControllersManager.CONTROLLERS.get("RfTestController");
-        PowerAndLinearity handlerInstance = (PowerAndLinearity) rfTestController.mainTestDispatcher.HandlerInstance;
+        PowerAndLinearityAd handlerInstance = (PowerAndLinearityAd) rfTestController.mainTestDispatcher.HandlerInstance;
         processOutput=handlerInstance.processOutput;
     }
 
@@ -105,5 +181,8 @@ public class VivadoClientController  extends RootController {
         System.out.println(s);
 //        } while (processInput.ready());
 
+    }
+
+    public void initialize(){
     }
 }

@@ -20,12 +20,27 @@
                <children>
                   <AnchorPane prefHeight="36.0" prefWidth="74.0">
                      <children>
+                        <Label alignment="CENTER" prefHeight="24.0" prefWidth="74.0" text="FPGA0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+                  <TextField HBox.hgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" onAction="#onBrowse0" text="浏览" />
+                  <Button mnemonicParsing="false" onAction="#onDownload0" text="下载">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin></Button>
+               </children>
+            </HBox>
+            <HBox minHeight="0.0" prefHeight="24.0" prefWidth="600.0">
+               <children>
+                  <AnchorPane prefHeight="36.0" prefWidth="74.0">
+                     <children>
                         <Label alignment="CENTER" prefHeight="24.0" prefWidth="74.0" text="FPGA1" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                   <TextField HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" text="浏览" />
-                  <Button mnemonicParsing="false" text="下载">
+                  <Button mnemonicParsing="false" onAction="#onBrowse1" text="浏览" />
+                  <Button mnemonicParsing="false" onAction="#onDownload1" text="下载">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin></Button>
@@ -39,8 +54,8 @@
                      </children>
                   </AnchorPane>
                   <TextField HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" text="浏览" />
-                  <Button mnemonicParsing="false" text="下载">
+                  <Button mnemonicParsing="false" onAction="#onBrowse2" text="浏览" />
+                  <Button mnemonicParsing="false" onAction="#onDownload2" text="下载">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin></Button>
@@ -54,22 +69,23 @@
                      </children>
                   </AnchorPane>
                   <TextField HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" text="浏览" />
-                  <Button mnemonicParsing="false" text="下载">
+                  <Button mnemonicParsing="false" onAction="#onBrowse3" text="浏览" />
+                  <Button mnemonicParsing="false" onAction="#onDownload3" text="下载">
                      <HBox.margin>
                         <Insets right="10.0" />
-                     </HBox.margin></Button>
+                     </HBox.margin>
+                  </Button>
                </children>
             </HBox>
             <HBox alignment="BOTTOM_LEFT" prefHeight="54.0" prefWidth="600.0">
                <children>
                   <VBox alignment="CENTER">
                      <children>
-                        <Button styleClass="buttonStyle1" alignment="CENTER" contentDisplay="CENTER" minWidth="120.0" mnemonicParsing="false" onAction="#onNewShell" text="New Shell">
+                        <Button alignment="CENTER" contentDisplay="CENTER" minWidth="120.0" mnemonicParsing="false" onAction="#onNewShell" styleClass="buttonStyle1" text="New Shell">
                            <VBox.margin>
                               <Insets bottom="2.0" left="20.0" />
                            </VBox.margin></Button>
-                        <Button styleClass="buttonStyle1"  alignment="CENTER" minWidth="120.0" mnemonicParsing="false" onAction="#onGetRunningShell" text="Get Running Shell">
+                        <Button alignment="CENTER" minWidth="120.0" mnemonicParsing="false" onAction="#onGetRunningShell" styleClass="buttonStyle1" text="Get Running Shell">
                            <VBox.margin>
                               <Insets left="20.0" top="2.0" />
                            </VBox.margin></Button>

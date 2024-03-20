@@ -1,6 +1,8 @@
 package cn.controllers;
 
+import cn.controllers.outline.ViewController;
 import cn.controllers.root.RootController;
+import javafx.application.Platform;
 import javafx.beans.property.Property;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -9,7 +11,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Callback;
+
+import java.io.File;
 
 public class PropertiesController extends RootController {
 
@@ -26,6 +32,22 @@ public class PropertiesController extends RootController {
 
     public Button bt4=new Button("浏览");
 
+    Stage primaryStage;
+
+    //★ 用于在controller中使用primaryStage（由于该方法在main调用，所以顺序是：生成controller（执行完initialize）---main调用获取primayStage---获取的同时使用primaryStage。注意不能在initialize中使用primaryStage）
+    public void setPrimaryStageAndBoundAction(Stage primaryStage){
+        this.primaryStage=primaryStage;
+
+        bt0.setOnAction(event -> {
+            FileChooser fileChooser=new FileChooser();
+            FileChooser.ExtensionFilter extensionFilter=new FileChooser.ExtensionFilter("CSV Files","*.csv","*.xls","*.xlsx");
+            fileChooser.getExtensionFilters().add(extensionFilter);
+            Platform.runLater(()->{
+                File file=fileChooser.showOpenDialog(primaryStage);
+                System.out.println(file);
+            });
+        });
+    }
 
     @FXML
     public void initialize(){

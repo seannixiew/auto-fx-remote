@@ -336,7 +336,8 @@ public class RfTestController extends RootController {
                 new CheckBoxTreeItem<TestItemModel>(TestItems.daTestADFuncAndPerformance),
                 new CheckBoxTreeItem<TestItemModel>(TestItems.da40Power),
                 new CheckBoxTreeItem<TestItemModel>(TestItems.da40Consistency),
-                new CheckBoxTreeItem<TestItemModel>(TestItems.daInModuleCalSynSignal));
+                new CheckBoxTreeItem<TestItemModel>(TestItems.daInModuleCalSynSignal),
+                new CheckBoxTreeItem<TestItemModel>(TestItems.daInModuleFreqSwitchSynSignal));
 
         CheckBoxTreeItem<TestItemModel> node4 = new CheckBoxTreeItem<TestItemModel>(TestItems.dbf);
         node4.setExpanded(true);
