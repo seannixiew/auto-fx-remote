@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<wave_config>
+	<wave_state>
+	</wave_state>
+	<db_ref_list>
+		<db_ref path="D:/IDEA_Projects/auto-fx/.Xil/Vivado-18764-LAPTOP-DELL/hw_1/wave/hw_ila_data_5/hw_ila_data_5.wdb" id="1" type="auto">
+			<top_modules>
+				<top_module name="top">
+				</top_module>
+			</top_modules>
+		</db_ref>
+	</db_ref_list>
+	<WVObjectSize size="14">
+	</WVObjectSize>
+	<wvobject fp_name="mcu_spi_top_2_inst/data_TM_addr" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">mcu_spi_top_2_inst/data_TM_addr[15:0]</obj_property>
+		<obj_property name="ObjectShortName">data_TM_addr[15:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="mcu_spi_top_2_inst/sum_right_flag" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">mcu_spi_top_2_inst/sum_right_flag</obj_property>
+		<obj_property name="ObjectShortName">sum_right_flag</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="mcu_spi_top_2_inst/rx_err_code" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">mcu_spi_top_2_inst/rx_err_code[1:0]</obj_property>
+		<obj_property name="ObjectShortName">rx_err_code[1:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="mcu_spi_top_2_inst/rx_err_en" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">mcu_spi_top_2_inst/rx_err_en</obj_property>
+		<obj_property name="ObjectShortName">rx_err_en</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="mcu_spi_top_2_inst/spi_somi" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">mcu_spi_top_2_inst/spi_somi</obj_property>
+		<obj_property name="ObjectShortName">spi_somi</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="mcu_spi_top_2_inst/spi_simo" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">mcu_spi_top_2_inst/spi_simo</obj_property>
+		<obj_property name="ObjectShortName">spi_simo</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="mcu_spi_top_2_inst/spi_clk" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">mcu_spi_top_2_inst/spi_clk</obj_property>
+		<obj_property name="ObjectShortName">spi_clk</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="mcu_spi_top_2_inst/spi_cs" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">mcu_spi_top_2_inst/spi_cs</obj_property>
+		<obj_property name="ObjectShortName">spi_cs</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="mcu_spi_top_2_inst/current_state" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">mcu_spi_top_2_inst/current_state[3:0]</obj_property>
+		<obj_property name="ObjectShortName">current_state[3:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="mcu_spi_top_2_inst/rx_byte_en_sig" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">mcu_spi_top_2_inst/rx_byte_en_sig</obj_property>
+		<obj_property name="ObjectShortName">rx_byte_en_sig</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="mcu_spi_top_2_inst/rx_spi_data_sig" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">mcu_spi_top_2_inst/rx_spi_data_sig[15:0]</obj_property>
+		<obj_property name="ObjectShortName">rx_spi_data_sig[15:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="mcu_spi_top_2_inst/wr_fifo_done" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">mcu_spi_top_2_inst/wr_fifo_done</obj_property>
+		<obj_property name="ObjectShortName">wr_fifo_done</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="mcu_spi_top_2_inst/rx_data_len_o" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">mcu_spi_top_2_inst/rx_data_len_o[15:0]</obj_property>
+		<obj_property name="ObjectShortName">rx_data_len_o[15:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="mcu_spi_top_2_inst/rx_data_sel" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">mcu_spi_top_2_inst/rx_data_sel[15:0]</obj_property>
+		<obj_property name="ObjectShortName">rx_data_sel[15:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+</wave_config>
+

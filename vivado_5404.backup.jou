@@ -1,0 +1,126 @@
+#-----------------------------------------------------------
+# Vivado v2018.3.1 (64-bit)
+# SW Build 2489853 on Tue Mar 26 04:20:25 MDT 2019
+# IP Build 2486929 on Tue Mar 26 06:44:21 MDT 2019
+# Start of session at: Mon Mar 25 23:15:07 2024
+# Process ID: 5404
+# Current directory: D:/IDEA_Projects/auto-fx
+# Command line: vivado.exe -mode tcl -source D:\vivado_projects\blank.tcl
+# Log file: D:/IDEA_Projects/auto-fx/vivado.log
+# Journal file: D:/IDEA_Projects/auto-fx\vivado.jou
+#-----------------------------------------------------------
+source {D:\vivado_projects\blank.tcl}
+oopen_hw
+connect_hw_server
+close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c001}
+close_hw_target {localhost:3121/xilinx_tcf/Xilinx/80806580073c01}
+open_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658007c701}
+close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c101}
+current_hw_device [get_hw_devices xc7vx690t_0]
+refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]
+set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0325/AD_impl_pps_r_added/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]
+set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0325/AD_impl_pps_r_added/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]
+set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/0325/AD_impl_pps_r_added/TOP_test2.bit} [get_hw_devices xc7vx690t_0]
+refresh_hw_device [lindex [get_hw_devices xc7vx690t_0] 0]
+start_gui
+stop_gui
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_1 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/AD_SPI_inst/ila_spi_inst"}]]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_2 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/DA_SPI_INST/ila_daspi_INST"}]]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_3 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_4 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ila_freq_change_syn"}]]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_5 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"TCTM_INST/ila_tctm_inst"}]]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_6 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"rec_Calib_inst/ila_rec_calset_property OUTPUT_VALUE 0 [get_hw_probes Inst_freq_change_syn/LD -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_freq_vio_syn"}]]
+commit_hw_vio [get_hw_probes {Inst_freq_change_syn/LD} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_freq_vio_syn"}]]
+set_property OUTPUT_VALUE 1 [get_hw_probes Inst_freq_change_syn/LD -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_freq_vio_syn"}]]
+commit_hw_vio [get_hw_probes {Inst_freq_change_syn/LD} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_freq_vio_syn"}]]
+set_property TRIGGER_COMPARE_VALUE eq1'bR [get_hw_probes Inst_freq_change_syn/IO_syn_iddr -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ila_freq_change_syn"}]]
+set_property CONTROL.TRIGGER_POSITION 100 [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ila_freq_change_syn"}]
+set_property INPUT_VALUE_RADIX UNSIGNED [get_hw_probes Inst_freq_change_syn/CNTVALUEOUT -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_freq_vio_syn"}]]
+set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes Inst_freq_change_syn/CNTVALUEIN -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_freq_vio_syn"}]]
+set_property OUTPUT_VALUE 0 [get_hw_probes Inst_freq_change_syn/CNTVALUEIN -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_freq_vio_syn"}]]
+commit_hw_vio [get_hw_probes {Inst_freq_change_syn/CNTVALUEIN} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_freq_vio_syn"}]]
+run_hw_ila [get_hw_irun_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ilawait_on_hw_ila [get_wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ilaupload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ila_freq_change_syn"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\caishu\AD\process0_0#0.csv} hw_ila_data_4
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ila_freq_change_syn"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ila_freq_change_syn"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ila_freq_change_syn"}]
+write_hw_ila_data -cwrite_hw_ila_data -csv_file {E:\wx\2_projects\caishu\AD\process2_0#1run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ila_freq_change_syn"}]
+wait_on_hw_ila [get_wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ilaupload_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ilawrite_hw_ila_data -cwrite_hw_ila_data -csv_file {E:\wx\2_projects\caishu\AD\process2_0#2set_property OUTPUT_VALUE 1 [get_hw_probes Inst_freq_change_syn/CNTVALUEIN -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_freq_vio_syn"}]]
+commit_hw_vio [get_hw_probes {Inst_freq_change_syn/CNTVALUEIN} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_freq_vio_syn"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ila_freq_change_syn"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ila_freq_change_syn"}]
+upload_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ilawrite_hw_ila_data -csv_file {E:\wx\2_projects\caishu\AD\process0_1#0.csv} hw_ila_data_4
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ila_freq_change_syn"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ila_freq_change_syn"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ila_freq_change_syn"}]
+write_hw_ila_data -cwrite_hw_ila_data -csv_file {E:\wx\2_projects\caishu\AD\process2_1#1run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ila_freq_change_syn"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ila_freq_change_syn"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ila_freq_change_syn"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\caishu\AD\process1_1#2.csv} hw_ila_data_4
+set_property OUTPUT_VALUE 2 [get_hw_probes Inst_freq_change_syn/CNTVALUEIN -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_freq_vio_syn"}]]
+commit_hw_vio [get_hw_probes {Inst_freq_change_syn/CNTVALUEIN} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_freq_vio_syn"}]]
+run_hw_ila [get_hw_irun_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ilawait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ila_freq_change_syn"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ila_freq_change_syn"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\caishu\AD\process0_2#0.csv} hw_ila_data_4
+run_hw_ila [get_hw_irun_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ilawait_on_hw_ila [get_wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ilaupload_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ilawrite_hw_ila_data -csv_file {E:\wx\2_projects\caishu\AD\process1_2#1.csv} hw_ila_data_4
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ila_freq_change_syn"}]
+wait_on_hw_ila [get_wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ilaupload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ila_freq_change_syn"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\caishu\AD\process1_2#2.csv} hw_ila_data_4
+set_property OUTPUT_VALUE 3 [get_hw_probes Inst_freq_change_syn/CNTVALUEIN -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_freq_vio_syn"}]]
+commit_hw_vio [get_hcommit_hw_vio [get_hw_probes {Inst_freq_change_syn/CNTVALUEIN} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inrun_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ila_freq_change_syn"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ila_freq_change_syn"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_syn/Inst_ila_freq_change_syn"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\caishu\AD\process0_3#0.csv} hw_ila_data_4
+.csv} hw_ila_data_4
+get_hw_probes rec_freq_change_flag -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_flag"}]]
+commit_hw_vio [get_hw_probes {rec_freq_change_flag} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_flag"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_rec_freq_change_syn/Inst_ila_rec_freq_change_syn"}]
+set_property OUTPUT_VALUE 1 [get_hw_probes rec_freq_change_flag -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_flag"}]]
+commit_hw_vio [get_hw_probes {rec_freq_change_flag} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_flag"}]]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_rec_freq_change_syn/Inst_ila_rec_freq_change_syn"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_rec_freq_change_syn/Inst_ila_rec_freq_change_syn"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\caishu\AD\process3_1#1.csv} hw_ila_data_2
+set_property OUTPUT_VALUE 0 [get_hw_probes rec_freq_change_flag -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_flag"}]]
+commit_hw_vio [get_hw_probes {rec_freq_change_flag} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_flag"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_rec_freq_change_syn/Inst_ila_rec_freq_change_syn"}]
+set_property OUTPUT_VALUE 1 [get_hw_probes rec_freq_change_flag -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_flag"}]]
+commit_hw_vio [get_hw_probes {rec_freq_change_flag} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_flag"}]]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_rec_freq_change_syn/Inst_ila_rec_freq_change_syn"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_rec_freq_change_syn/Inst_ila_rec_freq_change_syn"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\caishu\AD\process3_1#2.csv} hw_ila_data_2
+set_property OUTPUT_VALUE 0 [get_hw_probes rec_freq_change_flag -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_flag"}]]
+commit_hw_vio [get_hw_probes {rec_freq_change_flag} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_flag"}]]
+set_property OUTPUT_VALUE 0 [get_hw_probes rec_freq_change_flag -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_flag"}]]
+commit_hw_vio [get_hw_probes {rec_freq_change_flag} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_flag"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_rec_freq_change_syn/Inst_ila_rec_freq_change_syn"}]
+set_property OUTPUT_VALUE 1 [get_hw_probes rec_freq_change_flag -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_flag"}]]
+commit_hw_vio [get_hw_probes {rec_freq_change_flag} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_flag"}]]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_rec_freq_change_syn/Inst_ila_rec_freq_change_syn"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_rec_freq_change_syn/Inst_ila_rec_freq_change_syn"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\caishu\AD\process3_2#0.csv} hw_ila_data_2
+set_property OUTPUT_VALUE 0 [get_hw_probes rec_freq_change_flag -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_flag"}]]
+commit_hw_vio [get_hw_probes {rec_freq_change_flag} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_flag"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_rec_freq_change_syn/Inst_ila_rec_freq_change_syn"}]
+set_property OUTPUT_VALUE 1 [get_hw_probes rec_freq_change_flag -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_flag"}]]
+commit_hw_vio [get_hw_probes {rec_freq_change_flag} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_flag"}]]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_rec_freq_change_syn/Inst_ila_rec_freq_change_syn"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_rec_freq_change_syn/Inst_ila_rec_freq_change_syn"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\caishu\AD\process3_2#1.csv} hw_ila_data_2
+set_property OUTPUT_VALUE 0 [get_hw_probes rec_freq_change_flag -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_flag"}]]
+commit_hw_vio [get_hw_probes {rec_freq_change_flag} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_flag"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_rec_freq_change_syn/Inst_ila_rec_freq_change_syn"}]
+set_property OUTPUT_VALUE 1 [get_hw_probes rec_freq_change_flag -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_flag"}]]
+commit_hw_vio [get_hw_probes {rec_freq_change_flag} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_flag"}]]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_rec_freq_change_syn/Inst_ila_rec_freq_change_syn"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_rec_freq_change_syn/Inst_ila_rec_freq_change_syn"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\caishu\AD\process3_2#2.csv} hw_ila_data_2
+set_property OUTPUT_VALUE 0 [get_hw_probes rec_freq_change_flag -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_flag"}]]
+commit_hw_vio [get_hw_probes {rec_freq_change_flag} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_flag"}]]
+set_property OUTPUT_VALUE 0 [get_hw_probes rec_freq_change_flag -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_flag"}]]
+commit_hw_vio [get_hw_probes {rec_freq_change_flag} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_flag"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_rec_freq_change_syn/Inst_ila_rec_freq_change_syn"}]
+set_property OUTPUT_VALUE 1 [get_hw_probes rec_freq_change_flag -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_flag"}]]
+commit_hw_vio [get_hw_probes {rec_freq_change_flag} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_freq_change_flag"}]]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_rec_freq_change_syn/Inst_ila_rec_freq_change_syn"}]
+upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"Inst_rec_freq_change_syn/Inst_ila_rec_freq_change_syn"}]
+write_hw_ila_data -csv_file {E:\wx\2_projects\caishu\AD\process3_3#0.csv} hw_ila_data_2

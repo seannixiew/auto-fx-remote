@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<wave_config>
+	<wave_state>
+	</wave_state>
+	<db_ref_list>
+		<db_ref path="D:/IDEA_Projects/auto-fx/.Xil/Vivado-7108-LAPTOP-DELL/hw_1/wave/hw_ila_data_15/hw_ila_data_15.wdb" id="1" type="auto">
+			<top_modules>
+				<top_module name="top">
+				</top_module>
+			</top_modules>
+		</db_ref>
+	</db_ref_list>
+	<WVObjectSize size="9">
+	</WVObjectSize>
+	<wvobject fp_name="uut_adda/DA" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_adda/DA[12:0]</obj_property>
+		<obj_property name="ObjectShortName">DA[12:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_adda/pps_r" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_adda/pps_r[2:0]</obj_property>
+		<obj_property name="ObjectShortName">pps_r[2:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_adda/DA_A_o" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_adda/DA_A_o[13:0]</obj_property>
+		<obj_property name="ObjectShortName">DA_A_o[13:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_adda/DB" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_adda/DB[12:0]</obj_property>
+		<obj_property name="ObjectShortName">DB[12:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_adda/&lt;const0&gt;" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_adda/&lt;const0&gt;</obj_property>
+		<obj_property name="ObjectShortName">&lt;const0&gt;</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_adda/yd_yb_fxt_da" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_adda/yd_yb_fxt_da[13:0]</obj_property>
+		<obj_property name="ObjectShortName">yd_yb_fxt_da[13:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_adda/dbf_data_yb" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_adda/dbf_data_yb[13:0]</obj_property>
+		<obj_property name="ObjectShortName">dbf_data_yb[13:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_adda/test_mode_en" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_adda/test_mode_en</obj_property>
+		<obj_property name="ObjectShortName">test_mode_en</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_adda/dbf_test_mode_en" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_adda/dbf_test_mode_en</obj_property>
+		<obj_property name="ObjectShortName">dbf_test_mode_en</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+</wave_config>
+

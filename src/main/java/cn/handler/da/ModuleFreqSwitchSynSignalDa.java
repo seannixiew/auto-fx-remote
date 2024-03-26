@@ -1,9 +1,11 @@
 package cn.handler.da;
 
 import cn.controllers.RfTestController;
+import cn.handler.base.BaseHandler;
 import cn.instr.DbfClient;
 import cn.utils.ControllersManager;
 import cn.utils.DateFormat;
+import cn.utils.SystemUtils;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -12,10 +14,11 @@ import javafx.scene.control.ToggleButton;
 
 import java.io.*;
 import java.util.Date;
+import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.locks.LockSupport;
 
-public class ModuleFreqSwitchSynSignalDa implements EventHandler {
+public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHandler {
 
 
     RfTestController rfTestController =(RfTestController) ControllersManager.CONTROLLERS.get(RfTestController.class.getSimpleName());
@@ -60,10 +63,10 @@ public class ModuleFreqSwitchSynSignalDa implements EventHandler {
     Process process1;
     Process process2;
     Process process3;
-    public BufferedWriter processOutput0;
-    public BufferedWriter processOutput1;
-    public BufferedWriter processOutput2;
-    public BufferedWriter processOutput3;
+//    public BufferedWriter processOutput0;
+//    public BufferedWriter processOutput1;
+//    public BufferedWriter processOutput2;
+//    public BufferedWriter processOutput3;
     BufferedReader processInput0;
     BufferedReader processInput1;
     BufferedReader processInput2;
@@ -87,18 +90,30 @@ public class ModuleFreqSwitchSynSignalDa implements EventHandler {
     boolean programming2;
     boolean programming3;
 
+    boolean readerRunning0=true;
+    boolean readerRunning1=true;
+    boolean readerRunning2=true;
+    boolean readerRunning3=true;
+
     static int readCounter0=0;
     static int readCounter1=0;
     static int readCounter2=0;
     static int readCounter3=0;
 
+    Properties properties =new Properties();
+
     @Override
     public void handle(Event event) {
-        System.out.println("执行（整机）AD校正同步信号测试...");
+        System.out.println("执行（整机）DA校正同步信号测试...");
         Platform.runLater(() -> {
-            taLogs.appendText("开始执行（整机）AD校正同步信号测试...");
+            taLogs.appendText("开始执行（整机）DA校正同步信号测试...");
         });
 
+        try {
+            properties.load(new FileInputStream("src/main/resources/configs/vivado.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         try {
             String vivadoPath = "D:\\Xilinx\\Vivado\\2018.3\\bin\\vivado.bat";
@@ -130,7 +145,7 @@ public class ModuleFreqSwitchSynSignalDa implements EventHandler {
                 processInput0 = new BufferedReader(new InputStreamReader(process0.getInputStream(), "UTF-8"));
                 processError0 = new BufferedReader(new InputStreamReader(process0.getInputStream()));
 
-                while (true) {
+                while (readerRunning0) {
                     Thread.sleep(1000);
                     String echo = readFromProcess(processInput0,"reader0",0);
                     String error = readErrorFromProcess(processError0);
@@ -156,7 +171,7 @@ public class ModuleFreqSwitchSynSignalDa implements EventHandler {
                 processInput1 = new BufferedReader(new InputStreamReader(process1.getInputStream(), "UTF-8"));
                 processError1 = new BufferedReader(new InputStreamReader(process1.getInputStream()));
 
-                while (true) {
+                while (readerRunning1) {
                     Thread.sleep(1000);
                     String echo = readFromProcess(processInput1,"reader1",1);
                     String error = readErrorFromProcess(processError1);
@@ -182,7 +197,7 @@ public class ModuleFreqSwitchSynSignalDa implements EventHandler {
                 processInput2 = new BufferedReader(new InputStreamReader(process2.getInputStream(), "UTF-8"));
                 processError2 = new BufferedReader(new InputStreamReader(process2.getInputStream()));
 
-                while (true) {
+                while (readerRunning2) {
                     Thread.sleep(1000);
                     String echo = readFromProcess(processInput2,"reader2",2);
                     String error = readErrorFromProcess(processError2);
@@ -208,7 +223,7 @@ public class ModuleFreqSwitchSynSignalDa implements EventHandler {
                 processInput3 = new BufferedReader(new InputStreamReader(process3.getInputStream(), "UTF-8"));
                 processError3 = new BufferedReader(new InputStreamReader(process3.getInputStream()));
 
-                while (true) {
+                while (readerRunning3) {
                     Thread.sleep(1000);
                     String echo = readFromProcess(processInput3,"reader3",3);
                     String error = readErrorFromProcess(processError3);
@@ -247,16 +262,17 @@ public class ModuleFreqSwitchSynSignalDa implements EventHandler {
                 writeToProcess(processOutput0, 0,"connect_hw_server" + "\n");
                 Thread.sleep(1000);
 //                writeToProcess(processOutput0, "open_hw_target" + "\n");
-                writeToProcess(processOutput0, 0,"open_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c001}" + "\n");
-                writeToProcess(processOutput0, 0,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/80806580073c01}" + "\n");
-                writeToProcess(processOutput0, 0,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658007c701}" + "\n");
-                writeToProcess(processOutput0, 0,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/000018eaffd701}" + "\n");
+                writeToProcess(processOutput0, 0,"open_hw_target "+properties.getProperty("ModuleFreqSwitchSynSignalDa.boxNum0") + "\n");
+                writeToProcess(processOutput0, 0,"close_hw_target "+properties.getProperty("ModuleFreqSwitchSynSignalDa.boxNum1") + "\n");
+                writeToProcess(processOutput0, 0,"close_hw_target "+properties.getProperty("ModuleFreqSwitchSynSignalDa.boxNum2") + "\n");
+                writeToProcess(processOutput0, 0,"close_hw_target "+properties.getProperty("ModuleFreqSwitchSynSignalDa.boxNum3") + "\n");
                 Thread.sleep(10000);
                 writeToProcess(processOutput0, 0,"current_hw_device [get_hw_devices xc7vx690t_0]" + "\n");
                 writeToProcess(processOutput0, 0,"refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]" + "\n"); // 6~7s
-                writeToProcess(processOutput0, 0,"set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0315/impl_freq_syn_added_DA1/DA_top2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput0, 0,"set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0315/impl_freq_syn_added_DA1/DA_top2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput0, 0,"set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/0315/impl_freq_syn_added_DA1/DA_top2.bit} [get_hw_devices xc7vx690t_0]" + "\n");
+                Thread.sleep(20000);
+                writeToProcess(processOutput0, 0,"set_property PROBES.FILE "+properties.getProperty("ModuleFreqSwitchSynSignalDa.probesPath0")+" [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput0, 0,"set_property FULL_PROBES.FILE "+properties.getProperty("ModuleFreqSwitchSynSignalDa.probesPath0")+" [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput0, 0,"set_property PROGRAM.FILE "+properties.getProperty("ModuleFreqSwitchSynSignalDa.programPath0")+" [get_hw_devices xc7vx690t_0]" + "\n");
 
                 if (btDownload.isSelected()){
                     System.out.println("process0下载...");
@@ -309,13 +325,13 @@ public class ModuleFreqSwitchSynSignalDa implements EventHandler {
 
                     writeToProcess(processOutput0,0,"wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"Inst_freq_change_syn_DA1/Inst_ila_freq_change_syn_DA1\"}]"+"\n");
                     writeToProcess(processOutput0,0,"upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"Inst_freq_change_syn_DA1/Inst_ila_freq_change_syn_DA1\"}]"+"\n");
-                    writeToProcess(processOutput0,0, "write_hw_ila_data -csv_file {E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"
+                    writeToProcess(processOutput0,0, "write_hw_ila_data -csv_file {"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")
                             +"process0"+"_"+datadelay+"#0"+".csv} hw_ila_data_4" + "\n");
 //                    writeToProcess(processOutput0,"start_gui");
-                    File file=new File("E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process0"+"_"+datadelay+"#0"+".csv");
+                    File file=new File(properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process0"+"_"+datadelay+"#0"+".csv");
                     while (true){
                         if (file.exists()){
-                            System.out.println("已生成文件"+"E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process0"+"_"+datadelay+"#0"+".csv");
+                            System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process0"+"_"+datadelay+"#0"+".csv");
                             break;
                         }
                     }
@@ -334,13 +350,13 @@ public class ModuleFreqSwitchSynSignalDa implements EventHandler {
 
                     writeToProcess(processOutput0,0,"wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"Inst_freq_change_syn_DA1/Inst_ila_freq_change_syn_DA1\"}]"+"\n");
                     writeToProcess(processOutput0,0,"upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"Inst_freq_change_syn_DA1/Inst_ila_freq_change_syn_DA1\"}]"+"\n");
-                    writeToProcess(processOutput0,0, "write_hw_ila_data -csv_file {E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"
+                    writeToProcess(processOutput0,0, "write_hw_ila_data -csv_file {"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")
                             +"process0"+"_"+datadelay+"#1"+".csv} hw_ila_data_4" + "\n");
 //                    writeToProcess(processOutput0,"start_gui");
-                    file=new File("E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process0"+"_"+datadelay+"#1"+".csv");
+                    file=new File(properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process0"+"_"+datadelay+"#1"+".csv");
                     while (true){
                         if (file.exists()){
-                            System.out.println("已生成文件"+"E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process0"+"_"+datadelay+"#1"+".csv");
+                            System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process0"+"_"+datadelay+"#1"+".csv");
                             break;
                         }
                     }
@@ -359,13 +375,13 @@ public class ModuleFreqSwitchSynSignalDa implements EventHandler {
 
                     writeToProcess(processOutput0,0,"wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"Inst_freq_change_syn_DA1/Inst_ila_freq_change_syn_DA1\"}]"+"\n");
                     writeToProcess(processOutput0,0,"upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"Inst_freq_change_syn_DA1/Inst_ila_freq_change_syn_DA1\"}]"+"\n");
-                    writeToProcess(processOutput0,0, "write_hw_ila_data -csv_file {E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"
+                    writeToProcess(processOutput0,0, "write_hw_ila_data -csv_file {"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")
                             +"process0"+"_"+datadelay+"#2"+".csv} hw_ila_data_4" + "\n");
 //                    writeToProcess(processOutput0,"start_gui");
-                    file=new File("E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process0"+"_"+datadelay+"#2"+".csv");
+                    file=new File(properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process0"+"_"+datadelay+"#2"+".csv");
                     while (true){
                         if (file.exists()){
-                            System.out.println("已生成文件"+"E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process0"+"_"+datadelay+"#2"+".csv");
+                            System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process0"+"_"+datadelay+"#2"+".csv");
                             break;
                         }
                     }
@@ -374,8 +390,10 @@ public class ModuleFreqSwitchSynSignalDa implements EventHandler {
                     countDownLatchs2[datadelay].countDown();
                     LockSupport.park();
                     System.out.println("process0通过检查点三，被唤起...执行下个循环");
-
                 }
+                readerRunning0=false;
+                System.out.println("关闭process0的vivado...");
+                SystemUtils.killProcessTree(process0);
             }catch (Exception e){}
         }).start();
         new Thread(()->{
@@ -387,16 +405,17 @@ public class ModuleFreqSwitchSynSignalDa implements EventHandler {
                 writeToProcess(processOutput1, 1,"connect_hw_server" + "\n");
                 Thread.sleep(1000);
 //                writeToProcess(processOutput1, "open_hw_target" + "\n");
-                writeToProcess(processOutput1, 1,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c001}" + "\n");
-                writeToProcess(processOutput1, 1,"open_hw_target {localhost:3121/xilinx_tcf/Xilinx/80806580073c01}" + "\n");
-                writeToProcess(processOutput1, 1,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658007c701}" + "\n");
-                writeToProcess(processOutput1, 1,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/000018eaffd701}" + "\n");
+                writeToProcess(processOutput1, 1,"close_hw_target "+properties.getProperty("ModuleFreqSwitchSynSignalDa.boxNum0") + "\n");
+                writeToProcess(processOutput1, 1,"open_hw_target "+properties.getProperty("ModuleFreqSwitchSynSignalDa.boxNum1") + "\n");
+                writeToProcess(processOutput1, 1,"close_hw_target "+properties.getProperty("ModuleFreqSwitchSynSignalDa.boxNum2") + "\n");
+                writeToProcess(processOutput1, 1,"close_hw_target "+properties.getProperty("ModuleFreqSwitchSynSignalDa.boxNum3") + "\n");
                 Thread.sleep(10000);
                 writeToProcess(processOutput1, 1,"current_hw_device [get_hw_devices xc7vx690t_0]" + "\n");
                 writeToProcess(processOutput1, 1,"refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]" + "\n"); // 6~7s
-                writeToProcess(processOutput1, 1,"set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0315/impl_freq_syn_added_DA2/DA_top2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput1, 1,"set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0315/impl_freq_syn_added_DA2/DA_top2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput1, 1,"set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/0315/impl_freq_syn_added_DA2/DA_top2.bit} [get_hw_devices xc7vx690t_0]" + "\n");
+                Thread.sleep(20000);
+                writeToProcess(processOutput1, 1,"set_property PROBES.FILE "+properties.getProperty("ModuleFreqSwitchSynSignalDa.probesPath1")+" [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput1, 1,"set_property FULL_PROBES.FILE "+properties.getProperty("ModuleFreqSwitchSynSignalDa.probesPath1")+" [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput1, 1,"set_property PROGRAM.FILE "+properties.getProperty("ModuleFreqSwitchSynSignalDa.programPath1")+" [get_hw_devices xc7vx690t_0]" + "\n");
 
                 if (btDownload.isSelected()){
                     System.out.println("process1下载...");
@@ -449,13 +468,13 @@ public class ModuleFreqSwitchSynSignalDa implements EventHandler {
 
                     writeToProcess(processOutput1,1,"wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"Inst_freq_change_syn_DA2/Inst_ila_freq_change_syn_DA2\"}]"+"\n");
                     writeToProcess(processOutput1,1,"upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"Inst_freq_change_syn_DA2/Inst_ila_freq_change_syn_DA2\"}]"+"\n");
-                    writeToProcess(processOutput1,1, "write_hw_ila_data -csv_file {E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"
+                    writeToProcess(processOutput1,1, "write_hw_ila_data -csv_file {"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")
                             +"process1"+"_"+datadelay+"#0"+".csv} hw_ila_data_4" + "\n");
 //                    writeToProcess(processOutput0,"start_gui");
-                    File file=new File("E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process1"+"_"+datadelay+"#0"+".csv");
+                    File file=new File(properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process1"+"_"+datadelay+"#0"+".csv");
                     while (true){
                         if (file.exists()){
-                            System.out.println("已生成文件"+"E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process1"+"_"+datadelay+"#0"+".csv");
+                            System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process1"+"_"+datadelay+"#0"+".csv");
                             break;
                         }
                     }
@@ -474,13 +493,13 @@ public class ModuleFreqSwitchSynSignalDa implements EventHandler {
 
                     writeToProcess(processOutput1,1,"wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"Inst_freq_change_syn_DA2/Inst_ila_freq_change_syn_DA2\"}]"+"\n");
                     writeToProcess(processOutput1,1,"upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"Inst_freq_change_syn_DA2/Inst_ila_freq_change_syn_DA2\"}]"+"\n");
-                    writeToProcess(processOutput1,1, "write_hw_ila_data -csv_file {E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"
+                    writeToProcess(processOutput1,1, "write_hw_ila_data -csv_file {"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")
                             +"process1"+"_"+datadelay+"#1"+".csv} hw_ila_data_4" + "\n");
 //                    writeToProcess(processOutput0,"start_gui");
-                    file=new File("E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process1"+"_"+datadelay+"#1"+".csv");
+                    file=new File(properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process1"+"_"+datadelay+"#1"+".csv");
                     while (true){
                         if (file.exists()){
-                            System.out.println("已生成文件"+"E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process1"+"_"+datadelay+"#1"+".csv");
+                            System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process1"+"_"+datadelay+"#1"+".csv");
                             break;
                         }
                     }
@@ -499,13 +518,13 @@ public class ModuleFreqSwitchSynSignalDa implements EventHandler {
 
                     writeToProcess(processOutput1,1,"wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"Inst_freq_change_syn_DA2/Inst_ila_freq_change_syn_DA2\"}]"+"\n");
                     writeToProcess(processOutput1,1,"upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"Inst_freq_change_syn_DA2/Inst_ila_freq_change_syn_DA2\"}]"+"\n");
-                    writeToProcess(processOutput1,1, "write_hw_ila_data -csv_file {E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"
+                    writeToProcess(processOutput1,1, "write_hw_ila_data -csv_file {"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")
                             +"process1"+"_"+datadelay+"#2"+".csv} hw_ila_data_4" + "\n");
 //                    writeToProcess(processOutput0,"start_gui");
-                    file=new File("E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process1"+"_"+datadelay+"#2"+".csv");
+                    file=new File(properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process1"+"_"+datadelay+"#2"+".csv");
                     while (true){
                         if (file.exists()){
-                            System.out.println("已生成文件"+"E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process1"+"_"+datadelay+"#2"+".csv");
+                            System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process1"+"_"+datadelay+"#2"+".csv");
                             break;
                         }
                     }
@@ -514,8 +533,10 @@ public class ModuleFreqSwitchSynSignalDa implements EventHandler {
                     countDownLatchs2[datadelay].countDown();
                     LockSupport.park();
                     System.out.println("process1通过检查点三，被唤起...执行下个循环");
-
                 }
+                readerRunning1=false;
+                System.out.println("关闭process1的vivado...");
+                SystemUtils.killProcessTree(process1);
             }catch (Exception e){}
         }).start();
         new Thread(()->{
@@ -527,16 +548,17 @@ public class ModuleFreqSwitchSynSignalDa implements EventHandler {
                 writeToProcess(processOutput2, 2,"connect_hw_server" + "\n");
                 Thread.sleep(1000);
 //                writeToProcess(processOutput2, "open_hw_target" + "\n");
-                writeToProcess(processOutput2, 2,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c001}" + "\n");
-                writeToProcess(processOutput2, 2,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/80806580073c01}" + "\n");
-                writeToProcess(processOutput2, 2,"open_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658007c701}" + "\n");
-                writeToProcess(processOutput2, 2,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/000018eaffd701}" + "\n");
+                writeToProcess(processOutput2, 2,"close_hw_target "+properties.getProperty("ModuleFreqSwitchSynSignalDa.boxNum0") + "\n");
+                writeToProcess(processOutput2, 2,"close_hw_target "+properties.getProperty("ModuleFreqSwitchSynSignalDa.boxNum1") + "\n");
+                writeToProcess(processOutput2, 2,"open_hw_target "+properties.getProperty("ModuleFreqSwitchSynSignalDa.boxNum2") + "\n");
+                writeToProcess(processOutput2, 2,"close_hw_target "+properties.getProperty("ModuleFreqSwitchSynSignalDa.boxNum3") + "\n");
                 Thread.sleep(10000);
                 writeToProcess(processOutput2, 2,"current_hw_device [get_hw_devices xc7vx690t_0]" + "\n");
                 writeToProcess(processOutput2, 2,"refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]" + "\n"); // 6~7s
-                writeToProcess(processOutput2, 2,"set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0315/impl_freq_syn_added_DA3/DA_top2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput2, 2,"set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0315/impl_freq_syn_added_DA3/DA_top2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput2, 2,"set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/0315/impl_freq_syn_added_DA3/DA_top2.bit} [get_hw_devices xc7vx690t_0]" + "\n");
+                Thread.sleep(20000);
+                writeToProcess(processOutput2, 2,"set_property PROBES.FILE "+properties.getProperty("ModuleFreqSwitchSynSignalDa.probesPath2")+" [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput2, 2,"set_property FULL_PROBES.FILE "+properties.getProperty("ModuleFreqSwitchSynSignalDa.probesPath2")+" [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput2, 2,"set_property PROGRAM.FILE "+properties.getProperty("ModuleFreqSwitchSynSignalDa.programPath2")+" [get_hw_devices xc7vx690t_0]" + "\n");
 
                 if (btDownload.isSelected()){
                     System.out.println("process2下载...");
@@ -589,13 +611,13 @@ public class ModuleFreqSwitchSynSignalDa implements EventHandler {
 
                     writeToProcess(processOutput2,2,"wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"Inst_freq_change_syn_DA3/Inst_ila_freq_change_syn_DA3\"}]"+"\n");
                     writeToProcess(processOutput2,2,"upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"Inst_freq_change_syn_DA3/Inst_ila_freq_change_syn_DA3\"}]"+"\n");
-                    writeToProcess(processOutput2,2, "write_hw_ila_data -csv_file {E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"
+                    writeToProcess(processOutput2,2, "write_hw_ila_data -csv_file {"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")
                             +"process2"+"_"+datadelay+"#0"+".csv} hw_ila_data_4" + "\n");
 //                    writeToProcess(processOutput0,"start_gui");
-                    File file=new File("E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process2"+"_"+datadelay+"#0"+".csv");
+                    File file=new File(properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process2"+"_"+datadelay+"#0"+".csv");
                     while (true){
                         if (file.exists()){
-                            System.out.println("已生成文件"+"E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process2"+"_"+datadelay+"#0"+".csv");
+                            System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process2"+"_"+datadelay+"#0"+".csv");
                             break;
                         }
                     }
@@ -614,13 +636,13 @@ public class ModuleFreqSwitchSynSignalDa implements EventHandler {
 
                     writeToProcess(processOutput2,2,"wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"Inst_freq_change_syn_DA3/Inst_ila_freq_change_syn_DA3\"}]"+"\n");
                     writeToProcess(processOutput2,2,"upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"Inst_freq_change_syn_DA3/Inst_ila_freq_change_syn_DA3\"}]"+"\n");
-                    writeToProcess(processOutput2,2, "write_hw_ila_data -csv_file {E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"
+                    writeToProcess(processOutput2,2, "write_hw_ila_data -csv_file {"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")
                             +"process2"+"_"+datadelay+"#1"+".csv} hw_ila_data_4" + "\n");
 //                    writeToProcess(processOutput0,"start_gui");
-                    file=new File("E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process2"+"_"+datadelay+"#1"+".csv");
+                    file=new File(properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process2"+"_"+datadelay+"#1"+".csv");
                     while (true){
                         if (file.exists()){
-                            System.out.println("已生成文件"+"E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process2"+"_"+datadelay+"#1"+".csv");
+                            System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process2"+"_"+datadelay+"#1"+".csv");
                             break;
                         }
                     }
@@ -639,13 +661,13 @@ public class ModuleFreqSwitchSynSignalDa implements EventHandler {
 
                     writeToProcess(processOutput2,2,"wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"Inst_freq_change_syn_DA3/Inst_ila_freq_change_syn_DA3\"}]"+"\n");
                     writeToProcess(processOutput2,2,"upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"Inst_freq_change_syn_DA3/Inst_ila_freq_change_syn_DA3\"}]"+"\n");
-                    writeToProcess(processOutput2,2, "write_hw_ila_data -csv_file {E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"
+                    writeToProcess(processOutput2,2, "write_hw_ila_data -csv_file {"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")
                             +"process2"+"_"+datadelay+"#2"+".csv} hw_ila_data_4" + "\n");
 //                    writeToProcess(processOutput0,"start_gui");
-                    file=new File("E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process2"+"_"+datadelay+"#2"+".csv");
+                    file=new File(properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process2"+"_"+datadelay+"#2"+".csv");
                     while (true){
                         if (file.exists()){
-                            System.out.println("已生成文件"+"E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process2"+"_"+datadelay+"#2"+".csv");
+                            System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process2"+"_"+datadelay+"#2"+".csv");
                             break;
                         }
                     }
@@ -654,8 +676,10 @@ public class ModuleFreqSwitchSynSignalDa implements EventHandler {
                     countDownLatchs2[datadelay].countDown();
                     LockSupport.park();
                     System.out.println("process2通过检查点三，被唤起...执行下个循环");
-
                 }
+                readerRunning2=false;
+                System.out.println("关闭process2的vivado...");
+                SystemUtils.killProcessTree(process2);
             }catch (Exception e){}
         }).start();
         new Thread(()->{
@@ -665,17 +689,17 @@ public class ModuleFreqSwitchSynSignalDa implements EventHandler {
                 writeToProcess(processOutput3, 3,"open_hw" + "\n");
                 writeToProcess(processOutput3, 3,"connect_hw_server" + "\n");
                 Thread.sleep(1000);
-                writeToProcess(processOutput3, 3,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c001}" + "\n");
-                writeToProcess(processOutput3, 3,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/80806580073c01}" + "\n");
-                writeToProcess(processOutput3, 3,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658007c701}" + "\n");
-                writeToProcess(processOutput3, 3,"open_hw_target {localhost:3121/xilinx_tcf/Xilinx/000018eaffd701}" + "\n");
+                writeToProcess(processOutput3, 3,"close_hw_target "+properties.getProperty("ModuleFreqSwitchSynSignalDa.boxNum0") + "\n");
+                writeToProcess(processOutput3, 3,"close_hw_target "+properties.getProperty("ModuleFreqSwitchSynSignalDa.boxNum1") + "\n");
+                writeToProcess(processOutput3, 3,"close_hw_target "+properties.getProperty("ModuleFreqSwitchSynSignalDa.boxNum2") + "\n");
+                writeToProcess(processOutput3, 3,"open_hw_target "+properties.getProperty("ModuleFreqSwitchSynSignalDa.boxNum3") + "\n");
                 Thread.sleep(10000);
                 writeToProcess(processOutput3, 3,"current_hw_device [get_hw_devices xc7vx690t_0]" + "\n");
                 writeToProcess(processOutput3, 3,"refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]" + "\n"); // 6~7s
-                Thread.sleep(10000);
-                writeToProcess(processOutput3, 3,"set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0315/HL_impl_freq_syn_added/TOP_HL_SELF.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput3, 3,"set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0315/HL_impl_freq_syn_added/TOP_HL_SELF.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput3, 3,"set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/0315/HL_impl_freq_syn_added/TOP_HL_SELF.bit} [get_hw_devices xc7vx690t_0]" + "\n");
+                Thread.sleep(20000);
+                writeToProcess(processOutput3, 3,"set_property PROBES.FILE "+properties.getProperty("ModuleFreqSwitchSynSignalDa.probesPath3")+" [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput3, 3,"set_property FULL_PROBES.FILE "+properties.getProperty("ModuleFreqSwitchSynSignalDa.probesPath3")+" [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput3, 3,"set_property PROGRAM.FILE "+properties.getProperty("ModuleFreqSwitchSynSignalDa.programPath3")+" [get_hw_devices xc7vx690t_0]" + "\n");
 
                 if (btDownload.isSelected()){
                     System.out.println("process3下载...");
@@ -714,7 +738,7 @@ public class ModuleFreqSwitchSynSignalDa implements EventHandler {
                 LockSupport.park();
                 System.out.println("process3设置vio_delay_ld及上升沿触发...");
                 writeToProcess(processOutput3,3, "set_property TRIGGER_COMPARE_VALUE eq1'bR [get_hw_probes Inst_trans_freq_change_syn/IO_syn -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"Inst_trans_freq_change_syn/Inst_ila_trans_freq_change_syn\"}]]"+"\n");
-                writeToProcess(processOutput3,3, "commit_hw_vio [get_hw_probes {trans_freq_change_flag} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"Inst_freq_change_flag\"}]]"+"\n");
+                writeToProcess(processOutput3,3, "set_property CONTROL.TRIGGER_POSITION 100 [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"Inst_trans_freq_change_syn/Inst_ila_trans_freq_change_syn\"}]"+"\n");
 
 
                 for(int datadelay=0;datadelay<32;datadelay++){
@@ -743,12 +767,12 @@ public class ModuleFreqSwitchSynSignalDa implements EventHandler {
 
                     writeToProcess(processOutput3,3,"wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"Inst_trans_freq_change_syn/Inst_ila_trans_freq_change_syn\"}]"+"\n");
                     writeToProcess(processOutput3,3,"upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"Inst_trans_freq_change_syn/Inst_ila_trans_freq_change_syn\"}]"+"\n");
-                    writeToProcess(processOutput3,3, "write_hw_ila_data -csv_file {E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"
+                    writeToProcess(processOutput3,3, "write_hw_ila_data -csv_file {"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")
                             +"process3"+"_"+datadelay+"#0"+".csv} hw_ila_data_3" + "\n");
-                    File file=new File("E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process3"+"_"+datadelay+"#0"+".csv");
+                    File file=new File(properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process3"+"_"+datadelay+"#0"+".csv");
                     while (true){
                         if (file.exists()){
-                            System.out.println("已生成文件"+"E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process3"+"_"+datadelay+"#0"+".csv");
+                            System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process3"+"_"+datadelay+"#0"+".csv");
                             break;
                         }
                     }
@@ -777,12 +801,12 @@ public class ModuleFreqSwitchSynSignalDa implements EventHandler {
 
                     writeToProcess(processOutput3,3,"wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"Inst_trans_freq_change_syn/Inst_ila_trans_freq_change_syn\"}]"+"\n");
                     writeToProcess(processOutput3,3,"upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"Inst_trans_freq_change_syn/Inst_ila_trans_freq_change_syn\"}]"+"\n");
-                    writeToProcess(processOutput3,3, "write_hw_ila_data -csv_file {E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"
+                    writeToProcess(processOutput3,3, "write_hw_ila_data -csv_file {"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")
                             +"process3"+"_"+datadelay+"#1"+".csv} hw_ila_data_3" + "\n");
-                    file=new File("E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process3"+"_"+datadelay+"#1"+".csv");
+                    file=new File(properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process3"+"_"+datadelay+"#1"+".csv");
                     while (true){
                         if (file.exists()){
-                            System.out.println("已生成文件"+"E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process3"+"_"+datadelay+"#1"+".csv");
+                            System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process3"+"_"+datadelay+"#1"+".csv");
                             break;
                         }
                     }
@@ -811,12 +835,12 @@ public class ModuleFreqSwitchSynSignalDa implements EventHandler {
 
                     writeToProcess(processOutput3,3,"wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"Inst_trans_freq_change_syn/Inst_ila_trans_freq_change_syn\"}]"+"\n");
                     writeToProcess(processOutput3,3,"upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"Inst_trans_freq_change_syn/Inst_ila_trans_freq_change_syn\"}]"+"\n");
-                    writeToProcess(processOutput3,3, "write_hw_ila_data -csv_file {E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"
+                    writeToProcess(processOutput3,3, "write_hw_ila_data -csv_file {"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")
                             +"process3"+"_"+datadelay+"#2"+".csv} hw_ila_data_3" + "\n");
-                    file=new File("E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process3"+"_"+datadelay+"#2"+".csv");
+                    file=new File(properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process3"+"_"+datadelay+"#2"+".csv");
                     while (true){
                         if (file.exists()){
-                            System.out.println("已生成文件"+"E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process3"+"_"+datadelay+"#2"+".csv");
+                            System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process3"+"_"+datadelay+"#2"+".csv");
                             break;
                         }
                     }
@@ -828,6 +852,9 @@ public class ModuleFreqSwitchSynSignalDa implements EventHandler {
                     LockSupport.park();
                     System.out.println("process3通过检查点三，被唤起...执行下个循环"); 
                 }
+                readerRunning3=false;
+                System.out.println("关闭process3的vivado...");
+                SystemUtils.killProcessTree(process3);
             }catch (Exception e){}
         }).start();
 

@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<wave_config>
+	<wave_state>
+	</wave_state>
+	<db_ref_list>
+		<db_ref path="D:/IDEA_Projects/auto-fx/.Xil/Vivado-26864-LAPTOP-DELL/hw_1/wave/hw_ila_data_17/hw_ila_data_17.wdb" id="1" type="auto">
+			<top_modules>
+				<top_module name="top">
+				</top_module>
+			</top_modules>
+		</db_ref>
+	</db_ref_list>
+	<WVObjectSize size="11">
+	</WVObjectSize>
+	<wvobject fp_name="uut_helu_yb/nolabel_line79/pps_r" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_helu_yb/nolabel_line79/pps_r[2:0]</obj_property>
+		<obj_property name="ObjectShortName">pps_r[2:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_helu_yb/nolabel_line79/GX_jzDS_I_Q_valid" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_helu_yb/nolabel_line79/GX_jzDS_I_Q_valid</obj_property>
+		<obj_property name="ObjectShortName">GX_jzDS_I_Q_valid</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_helu_yb/nolabel_line79/dds_valid_reg" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_helu_yb/nolabel_line79/dds_valid_reg</obj_property>
+		<obj_property name="ObjectShortName">dds_valid_reg</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_helu_yb/nolabel_line79/pps_syn" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_helu_yb/nolabel_line79/pps_syn</obj_property>
+		<obj_property name="ObjectShortName">pps_syn</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_helu_yb/nolabel_line79/cos" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_helu_yb/nolabel_line79/cos[15:0]</obj_property>
+		<obj_property name="ObjectShortName">cos[15:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_helu_yb/nolabel_line79/negsin" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_helu_yb/nolabel_line79/negsin[15:0]</obj_property>
+		<obj_property name="ObjectShortName">negsin[15:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_helu_yb/nolabel_line79/jzAD_input" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_helu_yb/nolabel_line79/jzAD_input[13:0]</obj_property>
+		<obj_property name="ObjectShortName">jzAD_input[13:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_helu_yb/nolabel_line79/GX_jzMixOut_I" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_helu_yb/nolabel_line79/GX_jzMixOut_I[13:0]</obj_property>
+		<obj_property name="ObjectShortName">GX_jzMixOut_I[13:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_helu_yb/nolabel_line79/GX_jzFilt_I" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_helu_yb/nolabel_line79/GX_jzFilt_I[31:0]</obj_property>
+		<obj_property name="ObjectShortName">GX_jzFilt_I[31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_helu_yb/nolabel_line79/GX_jzDS_Q" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_helu_yb/nolabel_line79/GX_jzDS_Q[7:0]</obj_property>
+		<obj_property name="ObjectShortName">GX_jzDS_Q[7:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_helu_yb/nolabel_line79/GX_jzDS_I" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_helu_yb/nolabel_line79/GX_jzDS_I[7:0]</obj_property>
+		<obj_property name="ObjectShortName">GX_jzDS_I[7:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+</wave_config>
+

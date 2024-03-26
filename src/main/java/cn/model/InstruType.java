@@ -19,4 +19,7 @@ public class InstruType {
     //功率计
     public static final String NRP="R&S NRP";
 
+    //示波器
+    public static final String MSOX3014A="InfiniiVision MSO-X 3014A";
+
 }

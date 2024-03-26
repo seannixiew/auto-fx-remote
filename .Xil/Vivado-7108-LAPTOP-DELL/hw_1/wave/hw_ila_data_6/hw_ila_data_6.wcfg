@@ -1,0 +1,442 @@
+<?xml version="1.0"?>
+<wave_config>
+	<wave_state>
+	</wave_state>
+	<db_ref_list>
+		<db_ref path="D:/IDEA_Projects/auto-fx/.Xil/Vivado-7108-LAPTOP-DELL/hw_1/wave/hw_ila_data_6/hw_ila_data_6.wdb" id="1" type="auto">
+			<top_modules>
+				<top_module name="top">
+				</top_module>
+			</top_modules>
+		</db_ref>
+	</db_ref_list>
+	<WVObjectSize size="71">
+	</WVObjectSize>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_3[0]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_3[0][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_3[0][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_2[0]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_2[0][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_2[0][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_3[1]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_3[1][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_3[1][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_2[1]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_2[1][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_2[1][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_3[2]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_3[2][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_3[2][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_2[2]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_2[2][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_2[2][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_3[3]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_3[3][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_3[3][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_2[3]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_2[3][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_2[3][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_3[4]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_3[4][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_3[4][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_2[4]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_2[4][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_2[4][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_3[5]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_3[5][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_3[5][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_2[5]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_2[5][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_2[5][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_3[6]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_3[6][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_3[6][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_2[6]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_2[6][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_2[6][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_3[7]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_3[7][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_3[7][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_2[7]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_2[7][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_2[7][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_3[8]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_3[8][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_3[8][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_2[8]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_2[8][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_2[8][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_3[9]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_3[9][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_3[9][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_2[9]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_2[9][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_2[9][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_1[0]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_1[0][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_1[0][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_3[42]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_3[42][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_3[42][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_1[1]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_1[1][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_1[1][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data[3]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data[3][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data[3][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_1[2]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_1[2][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_1[2][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_3[44]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_3[44][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_3[44][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_1[3]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_1[3][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_1[3][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_3[45]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_3[45][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_3[45][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_1[4]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_1[4][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_1[4][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_3[46]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_3[46][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_3[46][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_1[5]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_1[5][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_1[5][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_3[47]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_3[47][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_3[47][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_1[6]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_1[6][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_1[6][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_3[48]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_3[48][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_3[48][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_1[7]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_1[7][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_1[7][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_3[49]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_3[49][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_3[49][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_1[8]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_1[8][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_1[8][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_3[50]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_3[50][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_3[50][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_1[9]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_1[9][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_1[9][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_3[51]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_3[51][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_3[51][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_2[42]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_2[42][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_2[42][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/YD_Beam_data" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/YD_Beam_data[31:0]</obj_property>
+		<obj_property name="ObjectShortName">YD_Beam_data[31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_2[43]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_2[43][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_2[43][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_1[43]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_1[43][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_1[43][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_2[44]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_2[44][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_2[44][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_1[44]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_1[44][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_1[44][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_2[45]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_2[45][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_2[45][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data[1]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data[1][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data[1][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data[2]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data[2][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data[2][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_1[46]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_1[46][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_1[46][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_2[47]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_2[47][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_2[47][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_1[47]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_1[47][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_1[47][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_2[48]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_2[48][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_2[48][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_1[48]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_1[48][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_1[48][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_2[49]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_2[49][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_2[49][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_1[49]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_1[49][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_1[49][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_2[50]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_2[50][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_2[50][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_1[50]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_1[50][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_1[50][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_2[51]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_2[51][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_2[51][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_1[51]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_1[51][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_1[51][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_3[30]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_3[30][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_3[30][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data_1[30]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data_1[30][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data_1[30][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data[51]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data[51][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data[51][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Data[0]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Data[0][31:0]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Data[0][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/pps_r_1" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/pps_r_1[2:0]</obj_property>
+		<obj_property name="ObjectShortName">pps_r_1[2:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Valid_1" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Valid_1[0:18]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Valid_1[0:18]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Valid_2" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Valid_2[0:20]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Valid_2[0:20]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/FenLu_YD_Valid_3" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/FenLu_YD_Valid_3[0:20]</obj_property>
+		<obj_property name="ObjectShortName">FenLu_YD_Valid_3[0:20]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/compare12_54" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/compare12_54[0:51]</obj_property>
+		<obj_property name="ObjectShortName">compare12_54[0:51]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/compare13_54" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/compare13_54[0:51]</obj_property>
+		<obj_property name="ObjectShortName">compare13_54[0:51]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/compare23_54" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/compare23_54[0:51]</obj_property>
+		<obj_property name="ObjectShortName">compare23_54[0:51]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+</wave_config>
+

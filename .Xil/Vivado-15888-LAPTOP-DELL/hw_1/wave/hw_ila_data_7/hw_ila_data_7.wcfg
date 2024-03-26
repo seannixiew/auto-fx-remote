@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<wave_config>
+	<wave_state>
+	</wave_state>
+	<db_ref_list>
+		<db_ref path="D:/IDEA_Projects/auto-fx/.Xil/Vivado-15888-LAPTOP-DELL/hw_1/wave/hw_ila_data_7/hw_ila_data_7.wdb" id="1" type="auto">
+			<top_modules>
+				<top_module name="top">
+				</top_module>
+			</top_modules>
+		</db_ref>
+	</db_ref_list>
+	<WVObjectSize size="8">
+	</WVObjectSize>
+	<wvobject fp_name="trans_source_inst/trans_Calib_en" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">trans_source_inst/trans_Calib_en</obj_property>
+		<obj_property name="ObjectShortName">trans_Calib_en</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="trans_source_inst/Source_syn" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">trans_source_inst/Source_syn</obj_property>
+		<obj_property name="ObjectShortName">Source_syn</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="trans_source_inst/Source_syn_A" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">trans_source_inst/Source_syn_A</obj_property>
+		<obj_property name="ObjectShortName">Source_syn_A</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="trans_source_inst/DDS_en" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">trans_source_inst/DDS_en</obj_property>
+		<obj_property name="ObjectShortName">DDS_en</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="trans_source_inst/check_cos" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">trans_source_inst/check_cos[13:0]</obj_property>
+		<obj_property name="ObjectShortName">check_cos[13:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="trans_source_inst/pps" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">trans_source_inst/pps</obj_property>
+		<obj_property name="ObjectShortName">pps</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="trans_source_inst/pps_syn" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">trans_source_inst/pps_syn</obj_property>
+		<obj_property name="ObjectShortName">pps_syn</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="trans_source_inst/test_cnt" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">trans_source_inst/test_cnt[63:0]</obj_property>
+		<obj_property name="ObjectShortName">test_cnt[63:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+</wave_config>
+

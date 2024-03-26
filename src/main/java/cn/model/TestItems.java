@@ -60,6 +60,8 @@ public class TestItems {
 
     public static final TestItemModel adInModulePpsSyn=new TestItemModel(20,"整机-PPS板间同步","cn.handler.ad.ModulePpsSynAd");
 
+    public static final TestItemModel adInModuleFreqSwitchSynSignal=new TestItemModel(25,"整机-AD频率切换同步信号测试","cn.handler.ad.ModuleFreqSwitchSynSignalAd");
+
     public static final TestItemModel da40FuncAndPerformanceAndIso=new TestItemModel(21,"40路DA功能及性能、隔离度测试");
 
     public static final TestItemModel daTestADFuncAndPerformance=new TestItemModel(22,"测试AD接口功能及性能测试");

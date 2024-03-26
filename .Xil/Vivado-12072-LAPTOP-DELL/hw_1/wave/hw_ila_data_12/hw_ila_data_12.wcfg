@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<wave_config>
+	<wave_state>
+	</wave_state>
+	<db_ref_list>
+		<db_ref path="D:/IDEA_Projects/auto-fx/.Xil/Vivado-12072-LAPTOP-DELL/hw_1/wave/hw_ila_data_12/hw_ila_data_12.wdb" id="1" type="auto">
+			<top_modules>
+				<top_module name="top">
+				</top_module>
+			</top_modules>
+		</db_ref>
+	</db_ref_list>
+	<WVObjectSize size="8">
+	</WVObjectSize>
+	<wvobject fp_name="nolabel_line1178/triple_interplt_i" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">nolabel_line1178/triple_interplt_i[15:0]</obj_property>
+		<obj_property name="ObjectShortName">triple_interplt_i[15:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="nolabel_line1178/beam_input_valid" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">nolabel_line1178/beam_input_valid</obj_property>
+		<obj_property name="ObjectShortName">beam_input_valid</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="nolabel_line1178/GX_sig_bf_syn_q" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">nolabel_line1178/GX_sig_bf_syn_q[7:0]</obj_property>
+		<obj_property name="ObjectShortName">GX_sig_bf_syn_q[7:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="nolabel_line1178/GX_sig_bf_syn_i" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">nolabel_line1178/GX_sig_bf_syn_i[7:0]</obj_property>
+		<obj_property name="ObjectShortName">GX_sig_bf_syn_i[7:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="nolabel_line1178/GX_rx_neg_sin" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">nolabel_line1178/GX_rx_neg_sin[15:0]</obj_property>
+		<obj_property name="ObjectShortName">GX_rx_neg_sin[15:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="nolabel_line1178/GX_rx_cos" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">nolabel_line1178/GX_rx_cos[15:0]</obj_property>
+		<obj_property name="ObjectShortName">GX_rx_cos[15:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="nolabel_line1178/GX_beam_dac" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">nolabel_line1178/GX_beam_dac[21:8]</obj_property>
+		<obj_property name="ObjectShortName">GX_beam_dac[21:8]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="nolabel_line1178/pps_r_1" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">nolabel_line1178/pps_r_1[2:0]</obj_property>
+		<obj_property name="ObjectShortName">pps_r_1[2:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+</wave_config>
+

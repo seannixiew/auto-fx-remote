@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<wave_config>
+	<wave_state>
+	</wave_state>
+	<db_ref_list>
+		<db_ref path="D:/IDEA_Projects/auto-fx/.Xil/Vivado-10612-LAPTOP-DELL/hw_1/wave/hw_ila_data_1/hw_ila_data_1.wdb" id="1" type="auto">
+			<top_modules>
+				<top_module name="top">
+				</top_module>
+			</top_modules>
+		</db_ref>
+	</db_ref_list>
+	<WVObjectSize size="17">
+	</WVObjectSize>
+	<wvobject fp_name="ADandDA_inst/AD_SPI_inst/state_i_1" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">ADandDA_inst/AD_SPI_inst/state_i_1[1:0]</obj_property>
+		<obj_property name="ObjectShortName">state_i_1[1:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="ADandDA_inst/AD_SPI_inst/clk_en2_1" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">ADandDA_inst/AD_SPI_inst/clk_en2_1</obj_property>
+		<obj_property name="ObjectShortName">clk_en2_1</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="ADandDA_inst/AD_SPI_inst/clk_en2" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">ADandDA_inst/AD_SPI_inst/clk_en2</obj_property>
+		<obj_property name="ObjectShortName">clk_en2</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="ADandDA_inst/AD_SPI_inst/Register_d_r" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">ADandDA_inst/AD_SPI_inst/Register_d_r[7:0]</obj_property>
+		<obj_property name="ObjectShortName">Register_d_r[7:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="ADandDA_inst/AD_SPI_inst/yc_adreg_errocnt_t" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">ADandDA_inst/AD_SPI_inst/yc_adreg_errocnt_t[7:0]</obj_property>
+		<obj_property name="ObjectShortName">yc_adreg_errocnt_t[7:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="ADandDA_inst/AD_SPI_inst/cnt_register" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">ADandDA_inst/AD_SPI_inst/cnt_register[7:0]</obj_property>
+		<obj_property name="ObjectShortName">cnt_register[7:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="ADandDA_inst/AD_SPI_inst/cnt_register_i" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">ADandDA_inst/AD_SPI_inst/cnt_register_i[7:0]</obj_property>
+		<obj_property name="ObjectShortName">cnt_register_i[7:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="ADandDA_inst/AD_SPI_inst/cnt_register_r" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">ADandDA_inst/AD_SPI_inst/cnt_register_r[7:0]</obj_property>
+		<obj_property name="ObjectShortName">cnt_register_r[7:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="ADandDA_inst/AD_SPI_inst/flag_end" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">ADandDA_inst/AD_SPI_inst/flag_end</obj_property>
+		<obj_property name="ObjectShortName">flag_end</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="ADandDA_inst/AD_SPI_inst/flag_erro" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">ADandDA_inst/AD_SPI_inst/flag_erro</obj_property>
+		<obj_property name="ObjectShortName">flag_erro</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="ADandDA_inst/AD_SPI_inst/state_ii" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">ADandDA_inst/AD_SPI_inst/state_ii[1:0]</obj_property>
+		<obj_property name="ObjectShortName">state_ii[1:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="ADandDA_inst/AD_SPI_inst/state_i" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">ADandDA_inst/AD_SPI_inst/state_i[1:0]</obj_property>
+		<obj_property name="ObjectShortName">state_i[1:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="ADandDA_inst/AD_SPI_inst/SEN_t" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">ADandDA_inst/AD_SPI_inst/SEN_t</obj_property>
+		<obj_property name="ObjectShortName">SEN_t</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="ADandDA_inst/AD_SPI_inst/SDATA_t" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">ADandDA_inst/AD_SPI_inst/SDATA_t</obj_property>
+		<obj_property name="ObjectShortName">SDATA_t</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="ADandDA_inst/AD_SPI_inst/SCLK_t" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">ADandDA_inst/AD_SPI_inst/SCLK_t</obj_property>
+		<obj_property name="ObjectShortName">SCLK_t</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="ADandDA_inst/AD_SPI_inst/SOUT" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">ADandDA_inst/AD_SPI_inst/SOUT[9:0]</obj_property>
+		<obj_property name="ObjectShortName">SOUT[9:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="ADandDA_inst/AD_SPI_inst/yc_adreg_sucess_t" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">ADandDA_inst/AD_SPI_inst/yc_adreg_sucess_t</obj_property>
+		<obj_property name="ObjectShortName">yc_adreg_sucess_t</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+</wave_config>
+

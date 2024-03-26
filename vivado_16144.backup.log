@@ -1,0 +1,50 @@
+#-----------------------------------------------------------
+# Vivado v2018.3.1 (64-bit)
+# SW Build 2489853 on Tue Mar 26 04:20:25 MDT 2019
+# IP Build 2486929 on Tue Mar 26 06:44:21 MDT 2019
+# Start of session at: Mon Mar 25 22:47:55 2024
+# Process ID: 16144
+# Current directory: D:/IDEA_Projects/auto-fx
+# Command line: vivado.exe -mode tcl -source D:\vivado_projects\blank.tcl
+# Log file: D:/IDEA_Projects/auto-fx/vivado.log
+# Journal file: D:/IDEA_Projects/auto-fx\vivado.jou
+#-----------------------------------------------------------ssource {D:\vivado_projects\blank.tcl}IINFO: [Common 17-206] Exiting Vivado at Mon Mar 25 22:48:18 2024...
+server url TCP:localhost:3121
+INFO: [Labtools 27-2222] Launching hw_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+****** Xilinx hw_server v2018.3.1
+  **** Build date : Mar 26 2019-05:02:51
+    ** Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+
+
+close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c001}
+INFO: [Labtoolstcl 44-464] Closing hw_target localhost:3121/xilinx_tcf/Xilinx/8080658006c001
+INFO: [Labtoolstcl 44-468] Target hw_target localhost:3121/xilinx_tcf/Xilinx/8080658006c001 is already closed
+close_hw_target {localhost:3121/xilinx_tcf/Xilinx/80806580073c01}
+INFO: [Labtoolstcl 44-464] Closing hw_target localhost:3121/xilinx_tcf/Xilinx/80806580073c01
+INFO: [Labtoolstcl 44-468] Target hw_target localhost:3121/xilinx_tcf/Xilinx/80806580073c01 is already closed
+close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658007c701}
+INFO: [Labtoolstcl 44-464] Closing hw_target localhost:3121/xilinx_tcf/Xilinx/8080658007c701
+INFO: [Labtoolstcl 44-468] Target hw_target localhost:3121/xilinx_tcf/Xilinx/8080658007c701 is already closed
+open_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c101}
+ERROR: [Labtoolstcl 44-140] Invalid option value, specified for 'hw_target'.
+
+current_hw_device [get_hw_devices xc7vx690t_0]
+WARNING: [Labtoolstcl 44-128] No matching hw_devices were found.
+
+refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]
+WARNING: [Labtoolstcl 44-128] No matching hw_devices were found.
+ERROR: [Labtools 27-112] Target is not connected
+
+set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0325/HL_impl_freq_syn_added/TOP_HL_SELF.ltx} [get_hw_devices xc7vx690t_0]
+WARNING: [Labtoolstcl 44-128] No matching hw_devices were found.
+ERROR: [Common 17-55] 'set_property' expects at least one object.
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+
+set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0325/HL_impl_freq_syn_added/TOP_HL_SELF.ltx} [get_hw_devices xc7vx690t_0]
+WARNING: [Labtoolstcl 44-128] No matching hw_devices were found.
+ERROR: [Common 17-55] 'set_property' expects at least one object.
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+
+INFO: [Common 17-206] Exiting Vivado at Mon Mar 25 22:48:18 2024...

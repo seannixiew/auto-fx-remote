@@ -57,6 +57,8 @@ public class RfTestController extends RootController {
     @FXML
     public ComboBox cbPowerMeter;
     @FXML
+    public ComboBox cbOsc;
+    @FXML
     public ToggleSwitch tsA;
     @FXML
     public ToggleSwitch tsB;
@@ -84,6 +86,8 @@ public class RfTestController extends RootController {
     public TextField tf2;
     @FXML
     public TextField tf3;
+    @FXML
+    public TextField tf4;
     @FXML
     public Button btStart;
     @FXML
@@ -274,24 +278,52 @@ public class RfTestController extends RootController {
     @FXML
     void onActionBtConnection4(){
         new Thread(()->{
-            // TODO: 2024/3/13 临时方案
-            boolean isOpen= instru4.openUsb("","");
-            if(!isOpen){
-                System.out.println("connecting failed.");
+
+            if(cbOsc.getValue().toString().equals(InstruType.MSOX3014A)){
+                //专门适配InfiniiVision MSO-X 3014A
+                tf4.setEditable(false);
+                tf4.setText("USB0::0x0957::0x17A8::MY54310455::0::INSTR");
+
+                String ip=tf4.getText().trim();
+                boolean isOpen= instru4.openUsb("",ip);
+                if(!isOpen){
+                    System.out.println("connecting failed.");
+                    Platform.runLater(()->{
+                        taLogs.appendText(DateFormat.FORLOG.format(new Date())+"示波器连接失败...\n");
+                    });
+                    return;
+                }
+                instru4.writeCmd("*IDN?");
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {}
+                String s = instru4.readResult();
+                System.out.println(s);
                 Platform.runLater(()->{
-                    taLogs.appendText(DateFormat.FORLOG.format(new Date())+"示波器连接失败...\n");
+                    taLogs.appendText(DateFormat.FORLOG.format(new Date())+s);
                 });
-                return;
+            }else {
+                String ip=tf4.getText().trim();
+                if (ip.isEmpty()){
+                    System.out.println("ip为空！");
+                    CommonUtils.warningDialog("ip异常","ip地址为空！");
+                    return;
+                }
+                boolean isOpen=instru4.open("",ip);
+                if(!isOpen){
+                    System.out.println("connecting failed.");
+                    Platform.runLater(()->{
+                        taLogs.appendText(DateFormat.FORLOG.format(new Date())+"示波器连接失败...\n");
+                    });
+                    return;
+                }
+                instru4.writeCmd("*IDN?");
+                String s = instru4.readResult();
+                System.out.println(s);
+                Platform.runLater(()->{
+                    taLogs.appendText(DateFormat.FORLOG.format(new Date())+s);
+                });
             }
-            instru4.writeCmd("*IDN?");
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {}
-            String s = instru4.readResult();
-            System.out.println(s);
-            Platform.runLater(()->{
-                taLogs.appendText(DateFormat.FORLOG.format(new Date())+s);
-            });
         }).start();
     }
 
@@ -328,7 +360,8 @@ public class RfTestController extends RootController {
                 new CheckBoxTreeItem<TestItemModel>(TestItems.adInModuleSequenceStability),
                 new CheckBoxTreeItem<TestItemModel>(TestItems.adInModuleCalSynSignal),
                 new CheckBoxTreeItem<TestItemModel>(TestItems.adInModuleConsistency),
-                new CheckBoxTreeItem<TestItemModel>(TestItems.adInModulePpsSyn));
+                new CheckBoxTreeItem<TestItemModel>(TestItems.adInModulePpsSyn),
+                new CheckBoxTreeItem<TestItemModel>(TestItems.adInModuleFreqSwitchSynSignal));
         CheckBoxTreeItem<TestItemModel> node3 = new CheckBoxTreeItem<TestItemModel>(TestItems.da);
         node3.setExpanded(true);
         node3.getChildren().addAll(
@@ -382,6 +415,7 @@ public class RfTestController extends RootController {
         cbSA.setItems(FXCollections.observableArrayList(InstruType.FSW,InstruType.N9040B,InstruType.FSU));
         cbVNA.setItems(FXCollections.observableArrayList(InstruType.ZNB));
         cbPowerMeter.setItems(FXCollections.observableArrayList(InstruType.NRP));
+        cbOsc.setItems(FXCollections.observableArrayList(InstruType.MSOX3014A));
 //        cbVSG.setStyle("-fx-background-color: red");
 //        cbVSG.setMouseTransparent(true);    用于校验
 

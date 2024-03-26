@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<wave_config>
+	<wave_state>
+	</wave_state>
+	<db_ref_list>
+		<db_ref path="D:/IDEA_Projects/auto-fx/.Xil/Vivado-12072-LAPTOP-DELL/hw_1/wave/hw_ila_data_4/hw_ila_data_4.wdb" id="1" type="auto">
+			<top_modules>
+				<top_module name="top">
+				</top_module>
+			</top_modules>
+		</db_ref>
+	</db_ref_list>
+	<WVObjectSize size="7">
+	</WVObjectSize>
+	<wvobject fp_name="UUT_HL_YD/beam_out_duc_inst/beam_input_valid" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/beam_out_duc_inst/beam_input_valid</obj_property>
+		<obj_property name="ObjectShortName">beam_input_valid</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/beam_out_duc_inst/YD_sig_bf_syn_q" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/beam_out_duc_inst/YD_sig_bf_syn_q[15:0]</obj_property>
+		<obj_property name="ObjectShortName">YD_sig_bf_syn_q[15:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/beam_out_duc_inst/YD_sig_bf_syn_i" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/beam_out_duc_inst/YD_sig_bf_syn_i[15:0]</obj_property>
+		<obj_property name="ObjectShortName">YD_sig_bf_syn_i[15:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/beam_out_duc_inst/lo_q" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/beam_out_duc_inst/lo_q[15:0]</obj_property>
+		<obj_property name="ObjectShortName">lo_q[15:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/beam_out_duc_inst/lo_i" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/beam_out_duc_inst/lo_i[15:0]</obj_property>
+		<obj_property name="ObjectShortName">lo_i[15:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/beam_out_duc_inst/YD_beam_dac" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/beam_out_duc_inst/YD_beam_dac[21:8]</obj_property>
+		<obj_property name="ObjectShortName">YD_beam_dac[21:8]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="UUT_HL_YD/beam_out_duc_inst/pps_r_2" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">UUT_HL_YD/beam_out_duc_inst/pps_r_2[2:0]</obj_property>
+		<obj_property name="ObjectShortName">pps_r_2[2:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+</wave_config>
+

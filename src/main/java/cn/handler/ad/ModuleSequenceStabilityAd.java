@@ -197,6 +197,7 @@ public class ModuleSequenceStabilityAd implements EventHandler {
                 Thread.sleep(10000);
                 writeToProcess(processOutput0, "current_hw_device [get_hw_devices xc7vx690t_0]" + "\n");
                 writeToProcess(processOutput0, "refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]" + "\n"); // 6~7s
+                Thread.sleep(10000);
                 writeToProcess(processOutput0, "set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
                 writeToProcess(processOutput0, "set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
                 writeToProcess(processOutput0, "set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.bit} [get_hw_devices xc7vx690t_0]" + "\n");
@@ -289,7 +290,7 @@ public class ModuleSequenceStabilityAd implements EventHandler {
                 System.out.println("process1初始操作...");
                 writeToProcess(processOutput1, "open_hw" + "\n");
                 writeToProcess(processOutput1, "connect_hw_server" + "\n");
-                Thread.sleep(6000);// TODO: 2024/3/11 时间修正
+                Thread.sleep(1000);
 //                writeToProcess(processOutput1, "open_hw_target" + "\n");
                 writeToProcess(processOutput1, "close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c001}" + "\n");
                 writeToProcess(processOutput1, "open_hw_target {localhost:3121/xilinx_tcf/Xilinx/80806580073c01}" + "\n");
@@ -297,6 +298,7 @@ public class ModuleSequenceStabilityAd implements EventHandler {
                 Thread.sleep(10000);
                 writeToProcess(processOutput1, "current_hw_device [get_hw_devices xc7vx690t_0]" + "\n");
                 writeToProcess(processOutput1, "refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]" + "\n"); // 6~7s
+                Thread.sleep(10000);
                 writeToProcess(processOutput1, "set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
                 writeToProcess(processOutput1, "set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
                 writeToProcess(processOutput1, "set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.bit} [get_hw_devices xc7vx690t_0]" + "\n");
@@ -389,7 +391,7 @@ public class ModuleSequenceStabilityAd implements EventHandler {
                 System.out.println("process2初始操作...");
                 writeToProcess(processOutput2, "open_hw" + "\n");
                 writeToProcess(processOutput2, "connect_hw_server" + "\n");
-                Thread.sleep(11000);
+                Thread.sleep(1000);
 //                writeToProcess(processOutput2, "open_hw_target" + "\n");
                 writeToProcess(processOutput2, "close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c001}" + "\n");
                 writeToProcess(processOutput2, "close_hw_target {localhost:3121/xilinx_tcf/Xilinx/80806580073c01}" + "\n");
@@ -397,6 +399,7 @@ public class ModuleSequenceStabilityAd implements EventHandler {
                 Thread.sleep(10000);
                 writeToProcess(processOutput2, "current_hw_device [get_hw_devices xc7vx690t_0]" + "\n");
                 writeToProcess(processOutput2, "refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]" + "\n"); // 6~7s
+                Thread.sleep(10000);
                 writeToProcess(processOutput2, "set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
                 writeToProcess(processOutput2, "set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
                 writeToProcess(processOutput2, "set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.bit} [get_hw_devices xc7vx690t_0]" + "\n");

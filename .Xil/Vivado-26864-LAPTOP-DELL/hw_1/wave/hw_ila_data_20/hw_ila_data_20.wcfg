@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<wave_config>
+	<wave_state>
+	</wave_state>
+	<db_ref_list>
+		<db_ref path="D:/IDEA_Projects/auto-fx/.Xil/Vivado-26864-LAPTOP-DELL/hw_1/wave/hw_ila_data_20/hw_ila_data_20.wdb" id="1" type="auto">
+			<top_modules>
+				<top_module name="top">
+				</top_module>
+			</top_modules>
+		</db_ref>
+	</db_ref_list>
+	<WVObjectSize size="3">
+	</WVObjectSize>
+	<wvobject fp_name="uut_helu_yb/s_axi_tx_tvalid_6" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_helu_yb/s_axi_tx_tvalid_6</obj_property>
+		<obj_property name="ObjectShortName">s_axi_tx_tvalid_6</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_helu_yb/s_axi_tx_tready_6" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_helu_yb/s_axi_tx_tready_6</obj_property>
+		<obj_property name="ObjectShortName">s_axi_tx_tready_6</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_helu_yb/s_axi_tx_tdata_6" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_helu_yb/s_axi_tx_tdata_6[127:0]</obj_property>
+		<obj_property name="ObjectShortName">s_axi_tx_tdata_6[127:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+</wave_config>
+

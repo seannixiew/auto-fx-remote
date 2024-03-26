@@ -65,7 +65,7 @@ public class InstrumentClient {
         }
 
         vipSession = new LongByReference(0);
-        String cmd = "USB0::0x0957::0x17A8::MY54310455::0::INSTR";
+        String cmd = address;
         NativeLong a = new NativeLong(defaultSession.getValue());
         NativeLong b = new NativeLong(0);
         result = visa32.viOpen(a, cmd, b, b, vipSession);

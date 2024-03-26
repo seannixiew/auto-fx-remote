@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<wave_config>
+	<wave_state>
+	</wave_state>
+	<db_ref_list>
+		<db_ref path="D:/IDEA_Projects/auto-fx/.Xil/Vivado-12072-LAPTOP-DELL/hw_1/wave/hw_ila_data_19/hw_ila_data_19.wdb" id="1" type="auto">
+			<top_modules>
+				<top_module name="top">
+				</top_module>
+			</top_modules>
+		</db_ref>
+	</db_ref_list>
+	<WVObjectSize size="17">
+	</WVObjectSize>
+	<wvobject fp_name="uut_helu_yb/rd_en_all" type="logic" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_helu_yb/rd_en_all</obj_property>
+		<obj_property name="ObjectShortName">rd_en_all</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_helu_yb/Beam_data_in[0]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_helu_yb/Beam_data_in[0][31:0]</obj_property>
+		<obj_property name="ObjectShortName">Beam_data_in[0][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_helu_yb/Beam_data_in[1]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_helu_yb/Beam_data_in[1][31:0]</obj_property>
+		<obj_property name="ObjectShortName">Beam_data_in[1][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_helu_yb/Beam_data_in[2]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_helu_yb/Beam_data_in[2][31:0]</obj_property>
+		<obj_property name="ObjectShortName">Beam_data_in[2][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_helu_yb/Beam_data_in[3]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_helu_yb/Beam_data_in[3][31:0]</obj_property>
+		<obj_property name="ObjectShortName">Beam_data_in[3][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_helu_yb/Beam_data_in[4]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_helu_yb/Beam_data_in[4][31:0]</obj_property>
+		<obj_property name="ObjectShortName">Beam_data_in[4][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_helu_yb/Beam_data_in[5]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_helu_yb/Beam_data_in[5][31:0]</obj_property>
+		<obj_property name="ObjectShortName">Beam_data_in[5][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_helu_yb/Beam_data_in[6]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_helu_yb/Beam_data_in[6][31:0]</obj_property>
+		<obj_property name="ObjectShortName">Beam_data_in[6][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_helu_yb/Beam_data_in[7]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_helu_yb/Beam_data_in[7][31:0]</obj_property>
+		<obj_property name="ObjectShortName">Beam_data_in[7][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_helu_yb/Beam_data_in[8]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_helu_yb/Beam_data_in[8][31:0]</obj_property>
+		<obj_property name="ObjectShortName">Beam_data_in[8][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_helu_yb/Beam_data_in[9]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_helu_yb/Beam_data_in[9][31:0]</obj_property>
+		<obj_property name="ObjectShortName">Beam_data_in[9][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_helu_yb/Beam_data_in[10]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_helu_yb/Beam_data_in[10][31:0]</obj_property>
+		<obj_property name="ObjectShortName">Beam_data_in[10][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_helu_yb/Beam_data_in[11]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_helu_yb/Beam_data_in[11][31:0]</obj_property>
+		<obj_property name="ObjectShortName">Beam_data_in[11][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_helu_yb/Beam_data_in[12]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_helu_yb/Beam_data_in[12][31:0]</obj_property>
+		<obj_property name="ObjectShortName">Beam_data_in[12][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_helu_yb/Beam_data_in[13]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_helu_yb/Beam_data_in[13][31:0]</obj_property>
+		<obj_property name="ObjectShortName">Beam_data_in[13][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_helu_yb/Beam_data_in[14]" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_helu_yb/Beam_data_in[14][31:0]</obj_property>
+		<obj_property name="ObjectShortName">Beam_data_in[14][31:0]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+	<wvobject fp_name="uut_helu_yb/Beam_valid_in" type="array" db_ref_id="1">
+		<obj_property name="ElementShortName">uut_helu_yb/Beam_valid_in[0:14]</obj_property>
+		<obj_property name="ObjectShortName">Beam_valid_in[0:14]</obj_property>
+		<obj_property name="DisplayName">FullPathName</obj_property>
+		<obj_property name="Radix">HEXRADIX</obj_property>
+	</wvobject>
+</wave_config>
+

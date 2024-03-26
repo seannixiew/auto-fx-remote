@@ -57,7 +57,7 @@
                                     <ComboBox fx:id="cbSA" prefWidth="150.0" promptText="频谱仪型号..." GridPane.rowIndex="1" />
                                     <ComboBox fx:id="cbVNA" prefWidth="150.0" promptText="矢网型号..." GridPane.rowIndex="2" />
                                     <ComboBox fx:id="cbPowerMeter" prefWidth="150.0" promptText="功率计型号..." GridPane.rowIndex="3" />
-                                    <ComboBox prefWidth="150.0" promptText="示波器型号" GridPane.rowIndex="4" />
+                                    <ComboBox fx:id="cbOsc" prefWidth="150.0" promptText="示波器型号" GridPane.rowIndex="4" />
                                     <TextField fx:id="tf0" promptText="输入IP..." GridPane.columnIndex="1" />
                                     <TextField fx:id="tf1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                     <TextField fx:id="tf2" GridPane.columnIndex="1" GridPane.rowIndex="2" />
