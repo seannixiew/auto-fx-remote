@@ -33,7 +33,7 @@ public class PowerSupplyClient {
             int length=is.read(buffer);
             if(length!=-1){
                 echo=new String(buffer,0,length);
-                System.out.println(echo);
+//                System.out.println(echo);
             }
         }catch (Exception e){
             e.printStackTrace();

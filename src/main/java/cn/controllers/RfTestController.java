@@ -59,13 +59,9 @@ public class RfTestController extends RootController {
     @FXML
     public ComboBox cbOsc;
     @FXML
-    public ToggleSwitch tsA;
+    public ToggleSwitch tsMatrix0;
     @FXML
-    public ToggleSwitch tsB;
-    @FXML
-    public ToggleSwitch tsDividerIf;
-    @FXML
-    public ToggleSwitch tsDividerRf;
+    public ToggleSwitch tsMatrix1;
     @FXML
     public TextArea taResults;
     @FXML
@@ -99,6 +95,9 @@ public class RfTestController extends RootController {
     @FXML
     public Button btGroundTest;
 
+    @FXML
+    public ComboBox<String> cbLoop;
+
     public PopupControllerA popupControllerA;
     public PopupControllerB popupControllerB;
 
@@ -112,8 +111,8 @@ public class RfTestController extends RootController {
     public MatrixClient matrix1=new MatrixClient();
     public DbfClient dbfClient=new DbfClient();
 
-    public List<String> offeredChannelsA;
-    public List<String> offeredChannelsB;
+    public List<String> offeredChannels0;
+    public List<String> offeredChannels1;
 
     public MainTestDispatcher mainTestDispatcher;
 
@@ -327,6 +326,7 @@ public class RfTestController extends RootController {
         }).start();
     }
 
+
     public void initialize() throws Exception{
 
         CheckBoxTreeItem<TestItemModel> node0 = new CheckBoxTreeItem<TestItemModel>(TestItems.tx);
@@ -419,6 +419,17 @@ public class RfTestController extends RootController {
 //        cbVSG.setStyle("-fx-background-color: red");
 //        cbVSG.setMouseTransparent(true);    用于校验
 
+        btDownload.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(newValue){
+                    btDownload.setStyle("-fx-effect: innershadow(gaussian, #666666, 5, 0.5, 2, 2)");
+                }else {
+                    btDownload.setStyle(null);
+                }
+            }
+        });
+
 
         FXMLLoader fxmlLoader0=new FXMLLoader();
         fxmlLoader0.setLocation(getClass().getResource("/fxml/popover0.fxml"));
@@ -432,67 +443,67 @@ public class RfTestController extends RootController {
         popOver0.setCloseButtonEnabled(true);
         popOver0.setContentNode(popRoot0);
 
-        tsA.selectedProperty().addListener(new ChangeListener<Boolean>() {
+        tsMatrix0.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldVal, Boolean newVal) {
                 if(newVal==true) {
-                    taLogs.appendText(DateFormat.FORLOG.format(new Date())+"X Involved！测试中将遍历操作矩阵X！\n");
+                    taLogs.appendText(DateFormat.FORLOG.format(new Date())+"矩阵0 Involved！\n");
                     popOver0.setArrowLocation(PopOver.ArrowLocation.TOP_RIGHT);
-                    popOver0.show(tsA);
+                    popOver0.show(tsMatrix0);
 
                 }
                 if(newVal==false){
-                    taLogs.appendText(DateFormat.FORLOG.format(new Date())+"X Excluded！不对矩阵X进行操作！\n");
+                    taLogs.appendText(DateFormat.FORLOG.format(new Date())+"矩阵0 Excluded！\n");
                     popOver0.hide();
                 }
             }
         });
 
-
-        popupControllerA.btConnection.setOnAction(event -> {
-            new Thread(()-> {
-                long port = 3000; //不必支持修改端口，可以使用配置文件
-                String ip = popupControllerA.tfIP.getText().trim();
-                if (ip.isEmpty()){
-                    System.out.println("ip为空！");
-                    CommonUtils.warningDialog("ip异常","ip地址为空！");
-                    return;
-                }
-                if (matrix0.connect(ip, port) == 1) {
-                    Platform.runLater(()->{
-                        taLogs.appendText(DateFormat.FORLOG.format(new Date())+"Matrix X 已连接" + "\n");
-                    });
-                } else {
-                    Platform.runLater(()->{
-                        taLogs.appendText(DateFormat.FORLOG.format(new Date())+"超时！Matrix X" + "\n");
-                    });
-                }
-            }).start();
-        });
-
-        popupControllerA.btInputAll.setOnAction(event -> {
-            Platform.runLater(()->{
-                popupControllerA.taChannels.setText("1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 " +
-                        "25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 " +
-                        "55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 " +
-                        "85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 " +
-                        "111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128");
-            });
-        });
-
-        popupControllerA.btConfirm.setOnAction(event -> {
-            String text=popupControllerA.taChannels.getText().trim();
-            String[] channels=text.split("\\s+");
-            offeredChannelsA=new ArrayList<>();
-            for(String channel:channels){
-                channel="A"+channel.trim();
-                offeredChannelsA.add(channel);
-            }
-            Platform.runLater(()->{
-                taLogs.appendText(DateFormat.FORLOG.format(new Date())+"即将遍历操作的通道为："+text+"\n");
-                System.out.println("即将遍历操作的通道为："+text);
-            });
-        });
+//
+//        popupControllerA.btConnection.setOnAction(event -> {
+//            new Thread(()-> {
+//                long port = 3000; //不必支持修改端口，可以使用配置文件
+//                String ip = popupControllerA.tfIP.getText().trim();
+//                if (ip.isEmpty()){
+//                    System.out.println("ip为空！");
+//                    CommonUtils.warningDialog("ip异常","ip地址为空！");
+//                    return;
+//                }
+//                if (matrix0.connect(ip, port) == 1) {
+//                    Platform.runLater(()->{
+//                        taLogs.appendText(DateFormat.FORLOG.format(new Date())+"Matrix0 已连接" + "\n");
+//                    });
+//                } else {
+//                    Platform.runLater(()->{
+//                        taLogs.appendText(DateFormat.FORLOG.format(new Date())+"超时！Matrix0" + "\n");
+//                    });
+//                }
+//            }).start();
+//        });
+//
+//        popupControllerA.btInputAll.setOnAction(event -> {
+//            Platform.runLater(()->{
+//                popupControllerA.taChannels.setText("1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 " +
+//                        "25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 " +
+//                        "55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 " +
+//                        "85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 " +
+//                        "111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128");
+//            });
+//        });
+//
+//        popupControllerA.btConfirm.setOnAction(event -> {
+//            String text=popupControllerA.taChannels.getText().trim();
+//            String[] channels=text.split("\\s+");
+//            offeredChannels0=new ArrayList<>();
+//            for(String channel:channels){
+//                channel="A"+channel.trim();
+//                offeredChannels0.add(channel);
+//            }
+//            Platform.runLater(()->{
+//                taLogs.appendText(DateFormat.FORLOG.format(new Date())+"即将遍历操作的通道为："+text+"\n");
+//                System.out.println("即将遍历操作的通道为："+text);
+//            });
+//        });
 
 
         FXMLLoader fxmlLoader1=new FXMLLoader();
@@ -507,66 +518,70 @@ public class RfTestController extends RootController {
         popOver1.setCloseButtonEnabled(true);
         popOver1.setContentNode(popRoot1);
 
-        tsB.selectedProperty().addListener(new ChangeListener<Boolean>() {
+        tsMatrix1.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldVal, Boolean newVal) {
                 if(newVal==true) {
-                    taLogs.appendText(DateFormat.FORLOG.format(new Date())+"Y Involved！测试中将遍历操作矩阵Y！\n");
+                    taLogs.appendText(DateFormat.FORLOG.format(new Date())+"矩阵1 Involved！\n");
                     popOver1.setArrowLocation(PopOver.ArrowLocation.TOP_RIGHT);
-                    popOver1.show(tsB);
+                    popOver1.show(tsMatrix1);
 
                 }
                 if(newVal==false){
-                    taLogs.appendText(DateFormat.FORLOG.format(new Date())+"Y Excluded！不对矩阵Y进行操作！\n");
+                    taLogs.appendText(DateFormat.FORLOG.format(new Date())+"矩阵1 Excluded！\n");
                     popOver1.hide();
                 }
             }
         });
+//
+//
+//        popupControllerB.btConnection.setOnAction(event -> {
+//            new Thread(()-> {
+//                long port = 3000; //不必支持修改端口，可以使用配置文件
+//                String ip = popupControllerB.tfIP.getText().trim();
+//                if (ip.isEmpty()){
+//                    System.out.println("ip为空！");
+//                    CommonUtils.warningDialog("ip异常","ip地址为空！");
+//                    return;
+//                }
+//                if (matrix1.connect(ip, port) == 1) {
+//                    Platform.runLater(()->{
+//                        taLogs.appendText(DateFormat.FORLOG.format(new Date())+"Matrix1 已连接" + "\n");
+//                    });
+//                } else {
+//                    Platform.runLater(()->{
+//                        taLogs.appendText(DateFormat.FORLOG.format(new Date())+"超时！Matrix1" + "\n");
+//                    });
+//                }
+//            }).start();
+//        });
+//
+//        popupControllerB.btInputAll.setOnAction(event -> {
+//            Platform.runLater(()->{
+//                popupControllerB.taChannels.setText("1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 " +
+//                        "25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 " +
+//                        "55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 " +
+//                        "85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 " +
+//                        "111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128");
+//            });
+//        });
+//
+//        popupControllerB.btConfirm.setOnAction(event -> {
+//            String text=popupControllerB.taChannels.getText().trim();
+//            String[] channels=text.split("\\s+");
+//            offeredChannels1=new ArrayList<>();
+//            for(String channel:channels){
+//                channel="A"+channel.trim();
+//                offeredChannels1.add(channel);
+//            }
+//            Platform.runLater(()->{
+//                taLogs.appendText(DateFormat.FORLOG.format(new Date())+"即将遍历操作的通道为："+text+"\n");
+//                System.out.println("即将遍历操作的通道为："+text);
+//            });
+//        });
 
-
-        popupControllerB.btConnection.setOnAction(event -> {
-            new Thread(()-> {
-                long port = 3000; //不必支持修改端口，可以使用配置文件
-                String ip = popupControllerB.tfIP.getText().trim();
-                if (ip.isEmpty()){
-                    System.out.println("ip为空！");
-                    CommonUtils.warningDialog("ip异常","ip地址为空！");
-                    return;
-                }
-                if (matrix1.connect(ip, port) == 1) {
-                    Platform.runLater(()->{
-                        taLogs.appendText(DateFormat.FORLOG.format(new Date())+"Matrix Y 已连接" + "\n");
-                    });
-                } else {
-                    Platform.runLater(()->{
-                        taLogs.appendText(DateFormat.FORLOG.format(new Date())+"超时！Matrix Y" + "\n");
-                    });
-                }
-            }).start();
-        });
-
-        popupControllerB.btInputAll.setOnAction(event -> {
-            Platform.runLater(()->{
-                popupControllerB.taChannels.setText("1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 " +
-                        "25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 " +
-                        "55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 " +
-                        "85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 " +
-                        "111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128");
-            });
-        });
-
-        popupControllerB.btConfirm.setOnAction(event -> {
-            String text=popupControllerB.taChannels.getText().trim();
-            String[] channels=text.split("\\s+");
-            offeredChannelsB=new ArrayList<>();
-            for(String channel:channels){
-                channel="A"+channel.trim();
-                offeredChannelsB.add(channel);
-            }
-            Platform.runLater(()->{
-                taLogs.appendText(DateFormat.FORLOG.format(new Date())+"即将遍历操作的通道为："+text+"\n");
-                System.out.println("即将遍历操作的通道为："+text);
-            });
-        });
+        cbLoop.getItems().addAll("遍历模式：0","遍历模式：1","遍历模式：2","遍历模式：3","遍历模式：4","遍历模式：5");
+        cbLoop.getSelectionModel().select(0);
     }
+
 }

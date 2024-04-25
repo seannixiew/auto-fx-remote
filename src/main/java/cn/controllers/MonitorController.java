@@ -47,6 +47,7 @@ public class MonitorController extends RootController {
     @FXML
     TextArea taScpiReader;
 
+    boolean[] monitorings={false,false,false};
 
     PowerSupplyClient[] powerSupplyClient=new PowerSupplyClient[3];
 
@@ -63,6 +64,8 @@ public class MonitorController extends RootController {
 
     public  void initialize(){
 
+        Timer[] timers=new Timer[3];
+        TimerTask[] timerTasks=new TimerTask[3];
 
         tcIp.setCellFactory(new Callback<TableColumn, TableCell>() {
             @Override
@@ -115,33 +118,53 @@ public class MonitorController extends RootController {
                             btStartArray[getIndex()].setOnAction(new EventHandler<ActionEvent>() {
                                 @Override
                                 public void handle(ActionEvent event) {
-                                    powerSupplyClient[getIndex()]=new PowerSupplyClient();
-                                    String ip=tfIpArray[getIndex()].getText().trim();
-                                    int port=Integer.parseInt(tfPortArray[getIndex()].getText());
-                                    if(!powerSupplyClient[getIndex()].connect(ip,port)){
-                                        System.out.println("电源连接失败...");
-                                        Platform.runLater(()->{
-                                            taScpiReader.appendText("电源连接失败...");
-                                        });
-                                        return;
-                                    }
-                                    Platform.runLater(()->{
-                                        taScpiReader.appendText(powerSupplyClient[getIndex()].writeAndRead("*IDN?"));
-                                    });
 
-                                    Timer timer=new Timer(true);
-                                    timer.schedule(new TimerTask() {
-                                        @Override
-                                        public void run() {
-                                            String current=powerSupplyClient[getIndex()].writeAndRead("MEASure:CURRent?");
-                                            String voltage=powerSupplyClient[getIndex()].writeAndRead("MEASure:VOLTage?");
-                                            System.out.println("voltage:"+voltage);
-                                            System.out.println("current:"+current);
-                                            data[getIndex()].setVoltage(voltage);
-                                            data[getIndex()].setCurrent(current);
-                                            btStartArray[getIndex()].setStyle("-fx-background-color: green");
+                                    monitorings[getIndex()]=!monitorings[getIndex()];
+
+                                    if(monitorings[getIndex()]) {
+
+                                        powerSupplyClient[getIndex()] = new PowerSupplyClient();
+                                        String ip = tfIpArray[getIndex()].getText().trim();
+                                        int port = Integer.parseInt(tfPortArray[getIndex()].getText());
+
+                                        if (!powerSupplyClient[getIndex()].connect(ip, port)) {
+                                            System.out.println("电源连接失败...");
+                                            Platform.runLater(() -> {
+                                                taScpiReader.appendText("电源连接失败...");
+                                            });
+                                            return;
                                         }
-                                    }, 1000, 500);
+
+                                        Platform.runLater(() -> {
+                                            taScpiReader.appendText(powerSupplyClient[getIndex()].writeAndRead("*IDN?"));
+                                        });
+
+                                        timers[getIndex()] = new Timer(true);
+                                        timerTasks[getIndex()] =new TimerTask() {
+                                            @Override
+                                            public void run() {
+                                                String current = powerSupplyClient[getIndex()].writeAndRead("MEASure:CURRent?");
+                                                String voltage = powerSupplyClient[getIndex()].writeAndRead("MEASure:VOLTage?");
+                                                System.out.println("voltage:" + voltage.trim() + "; current:" + current.trim());
+                                                data[getIndex()].setVoltage(voltage);
+                                                data[getIndex()].setCurrent(current);
+                                            }
+                                        };
+                                        timers[getIndex()].schedule(timerTasks[getIndex()], 1000, 500);
+                                        btStartArray[getIndex()].setStyle("-fx-background-color: green");
+                                        btStartArray[getIndex()].setText("停      止");
+                                    }else {
+                                        if(timerTasks[getIndex()]!=null) {
+                                            timerTasks[getIndex()].cancel();
+                                        }
+                                        if(timers[getIndex()]!=null) {
+                                            timers[getIndex()].purge();
+                                            timers[getIndex()].cancel();
+                                        }
+                                        btStartArray[getIndex()].setStyle(null);
+                                        btStartArray[getIndex()].setText("Monitor");
+                                    }
+
                                 }
                             });
                         }
@@ -195,7 +218,7 @@ public class MonitorController extends RootController {
             }
         });
 
-        tcCurrent.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<PowerSupplyModel, String>, ObservableValue<String>>() {
+        tcCurrent.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<PowerSupplyModel, String>, ObservableValue<String>>() { //ObservableValue是Property的基类
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<PowerSupplyModel, String> param) {
                 return param.getValue().currentProperty();
@@ -203,6 +226,16 @@ public class MonitorController extends RootController {
         });
 
         tv0.getItems().addAll(data[0],data[1],data[2]);
+
+//new Thread(()->{
+//    try {
+//
+//        Thread.sleep(10000);
+//        data[0].setVoltage("999");
+//        Thread.sleep(3000);
+//        data[0].setVoltage("777");
+//    }catch (Exception e){}
+//}).start();
 
     }
 }

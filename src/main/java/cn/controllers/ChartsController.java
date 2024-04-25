@@ -65,9 +65,11 @@ public class ChartsController extends RootController {
     void initialize(){
 
 /** 模拟专用代码 */
-        new Thread(()-> {
+        Thread thread=new Thread(()-> {
             new ChartsDataGenerateDemo().test();
-        }).start();
+        });
+        thread.setDaemon(true);
+        thread.start();
 
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
                 new PieChart.Data("正常", 0),

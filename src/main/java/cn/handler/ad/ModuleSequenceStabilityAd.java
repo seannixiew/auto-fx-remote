@@ -12,9 +12,11 @@ import javafx.scene.control.ToggleButton;
 
 import java.io.*;
 import java.util.Date;
+import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.locks.LockSupport;
 
+// TODO: 2024/4/23 不下载程序运行出现error
 public class ModuleSequenceStabilityAd implements EventHandler {
 
     RfTestController rfTestController =(RfTestController) ControllersManager.CONTROLLERS.get(RfTestController.class.getSimpleName());
@@ -70,6 +72,8 @@ public class ModuleSequenceStabilityAd implements EventHandler {
     static int readCounter1=0;
     static int readCounter2=0;
 
+    Properties properties=new Properties();
+
     @Override
     public void handle(Event event) {
         System.out.println("执行（整机）AD时序稳定性测试...");
@@ -77,6 +81,11 @@ public class ModuleSequenceStabilityAd implements EventHandler {
             taLogs.appendText("开始执行（整机）AD时序稳定性测试...");
         });
 
+        try {
+            properties.load(new FileInputStream("src/main/resources/configs/vivado.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         try {
             String vivadoPath = "D:\\Xilinx\\Vivado\\2018.3\\bin\\vivado.bat";
@@ -191,16 +200,16 @@ public class ModuleSequenceStabilityAd implements EventHandler {
                 writeToProcess(processOutput0, "connect_hw_server" + "\n");
                 Thread.sleep(1000);
 //                writeToProcess(processOutput0, "open_hw_target" + "\n");
-                writeToProcess(processOutput0, "open_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c001}" + "\n");
-                writeToProcess(processOutput0, "close_hw_target {localhost:3121/xilinx_tcf/Xilinx/80806580073c01}" + "\n");
-                writeToProcess(processOutput0, "close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658007c701}" + "\n");
+                writeToProcess(processOutput0, "open_hw_target " +properties.getProperty("ModuleSequenceStabilityAd.boxNum0") + "\n");
+                writeToProcess(processOutput0, "close_hw_target "+properties.getProperty("ModuleSequenceStabilityAd.boxNum1") + "\n");
+                writeToProcess(processOutput0, "close_hw_target "+properties.getProperty("ModuleSequenceStabilityAd.boxNum2") + "\n");
                 Thread.sleep(10000);
                 writeToProcess(processOutput0, "current_hw_device [get_hw_devices xc7vx690t_0]" + "\n");
                 writeToProcess(processOutput0, "refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]" + "\n"); // 6~7s
                 Thread.sleep(10000);
-                writeToProcess(processOutput0, "set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput0, "set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput0, "set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.bit} [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput0,      "set_property PROBES.FILE "+properties.getProperty("ModuleSequenceStabilityAd.probesPath0")+ " [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput0, "set_property FULL_PROBES.FILE "+properties.getProperty("ModuleSequenceStabilityAd.probesPath0")+ " [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput0,     "set_property PROGRAM.FILE "+properties.getProperty("ModuleSequenceStabilityAd.programPath0")+" [get_hw_devices xc7vx690t_0]" + "\n");
 
                 if (btDownload.isSelected()){
                     System.out.println("process0下载...");
@@ -270,13 +279,13 @@ public class ModuleSequenceStabilityAd implements EventHandler {
                     Thread.sleep(3000); //触发余量
                     writeToProcess(processOutput0,"wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/ila_addata_inst\"}]"+"\n");
                     writeToProcess(processOutput0,"upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/ila_addata_inst\"}]"+"\n");
-                    writeToProcess(processOutput0, "write_hw_ila_data -csv_file {E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"
+                    writeToProcess(processOutput0, "write_hw_ila_data -csv_file {"+properties.getProperty("ModuleSequenceStabilityAd.samplePath")
                             +"process0"+"_"+datadelay+".csv} hw_ila_data_3" + "\n");
 //                    writeToProcess(processOutput0,"start_gui");
-                    File file=new File("E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process0"+"_"+datadelay+".csv");
+                    File file=new File(properties.getProperty("ModuleSequenceStabilityAd.samplePath")+"process0"+"_"+datadelay+".csv");
                     while (true){
                         if (file.exists()){
-                            System.out.println("已生成文件"+"E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process0"+"_"+datadelay+".csv");
+                            System.out.println("已生成文件"+properties.getProperty("ModuleSequenceStabilityAd.samplePath")+"process0"+"_"+datadelay+".csv");
                             break;
                         }
                     }
@@ -292,16 +301,16 @@ public class ModuleSequenceStabilityAd implements EventHandler {
                 writeToProcess(processOutput1, "connect_hw_server" + "\n");
                 Thread.sleep(1000);
 //                writeToProcess(processOutput1, "open_hw_target" + "\n");
-                writeToProcess(processOutput1, "close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c001}" + "\n");
-                writeToProcess(processOutput1, "open_hw_target {localhost:3121/xilinx_tcf/Xilinx/80806580073c01}" + "\n");
-                writeToProcess(processOutput1, "close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658007c701}" + "\n");
+                writeToProcess(processOutput1, "close_hw_target "+properties.getProperty("ModuleSequenceStabilityAd.boxNum0") + "\n");
+                writeToProcess(processOutput1,  "open_hw_target "+properties.getProperty("ModuleSequenceStabilityAd.boxNum1") + "\n");
+                writeToProcess(processOutput1, "close_hw_target "+properties.getProperty("ModuleSequenceStabilityAd.boxNum2") + "\n");
                 Thread.sleep(10000);
                 writeToProcess(processOutput1, "current_hw_device [get_hw_devices xc7vx690t_0]" + "\n");
                 writeToProcess(processOutput1, "refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]" + "\n"); // 6~7s
                 Thread.sleep(10000);
-                writeToProcess(processOutput1, "set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput1, "set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput1, "set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.bit} [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput1,      "set_property PROBES.FILE "+properties.getProperty("ModuleSequenceStabilityAd.probesPath1")+ " [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput1, "set_property FULL_PROBES.FILE "+properties.getProperty("ModuleSequenceStabilityAd.probesPath1")+ " [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput1,     "set_property PROGRAM.FILE "+properties.getProperty("ModuleSequenceStabilityAd.programPath1")+" [get_hw_devices xc7vx690t_0]" + "\n");
 
                 if (btDownload.isSelected()){
                     System.out.println("process1下载...");
@@ -371,13 +380,13 @@ public class ModuleSequenceStabilityAd implements EventHandler {
                     Thread.sleep(3000); //触发余量
                     writeToProcess(processOutput1,"wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/ila_addata_inst\"}]"+"\n");
                     writeToProcess(processOutput1,"upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/ila_addata_inst\"}]"+"\n");
-                    writeToProcess(processOutput1, "write_hw_ila_data -csv_file {E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"
+                    writeToProcess(processOutput1, "write_hw_ila_data -csv_file {"+properties.getProperty("ModuleSequenceStabilityAd.samplePath")
                             +"process1"+"_"+datadelay+".csv} hw_ila_data_3" + "\n");
 //                    writeToProcess(processOutput1,"start_gui");
-                    File file=new File("E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process1"+"_"+datadelay+".csv");
+                    File file=new File(properties.getProperty("ModuleSequenceStabilityAd.samplePath")+"process1"+"_"+datadelay+".csv");
                     while (true){
                         if (file.exists()){
-                            System.out.println("已生成文件"+"E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process1"+"_"+datadelay+".csv");
+                            System.out.println("已生成文件"+properties.getProperty("ModuleSequenceStabilityAd.samplePath")+"process1"+"_"+datadelay+".csv");
                             break;
                         }
                     }
@@ -393,16 +402,16 @@ public class ModuleSequenceStabilityAd implements EventHandler {
                 writeToProcess(processOutput2, "connect_hw_server" + "\n");
                 Thread.sleep(1000);
 //                writeToProcess(processOutput2, "open_hw_target" + "\n");
-                writeToProcess(processOutput2, "close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c001}" + "\n");
-                writeToProcess(processOutput2, "close_hw_target {localhost:3121/xilinx_tcf/Xilinx/80806580073c01}" + "\n");
-                writeToProcess(processOutput2, "open_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658007c701}" + "\n");
+                writeToProcess(processOutput2, "close_hw_target "+properties.getProperty("ModuleSequenceStabilityAd.boxNum0") + "\n");
+                writeToProcess(processOutput2, "close_hw_target "+properties.getProperty("ModuleSequenceStabilityAd.boxNum1") + "\n");
+                writeToProcess(processOutput2,  "open_hw_target "+properties.getProperty("ModuleSequenceStabilityAd.boxNum2") + "\n");
                 Thread.sleep(10000);
                 writeToProcess(processOutput2, "current_hw_device [get_hw_devices xc7vx690t_0]" + "\n");
                 writeToProcess(processOutput2, "refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]" + "\n"); // 6~7s
                 Thread.sleep(10000);
-                writeToProcess(processOutput2, "set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput2, "set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput2, "set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.bit} [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput2,      "set_property PROBES.FILE "+properties.getProperty("ModuleSequenceStabilityAd.probesPath2")+ " [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput2, "set_property FULL_PROBES.FILE "+properties.getProperty("ModuleSequenceStabilityAd.probesPath2")+ " [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput2,     "set_property PROGRAM.FILE "+properties.getProperty("ModuleSequenceStabilityAd.programPath2")+" [get_hw_devices xc7vx690t_0]" + "\n");
 
                 if (btDownload.isSelected()){
                     System.out.println("process2下载...");
@@ -472,13 +481,13 @@ public class ModuleSequenceStabilityAd implements EventHandler {
                     Thread.sleep(3000); //触发余量
                     writeToProcess(processOutput2,"wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/ila_addata_inst\"}]"+"\n");
                     writeToProcess(processOutput2,"upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/ila_addata_inst\"}]"+"\n");
-                    writeToProcess(processOutput2, "write_hw_ila_data -csv_file {E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"
+                    writeToProcess(processOutput2, "write_hw_ila_data -csv_file {"+properties.getProperty("ModuleSequenceStabilityAd.samplePath")
                             +"process2"+"_"+datadelay+".csv} hw_ila_data_3" + "\n");
 //                    writeToProcess(processOutput2,"start_gui");
-                    File file=new File("E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process2"+"_"+datadelay+".csv");
+                    File file=new File(properties.getProperty("ModuleSequenceStabilityAd.samplePath")+"process2"+"_"+datadelay+".csv");
                     while (true){
                         if (file.exists()){
-                            System.out.println("已生成文件"+"E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process2"+"_"+datadelay+".csv");
+                            System.out.println("已生成文件"+properties.getProperty("ModuleSequenceStabilityAd.samplePath")+"process2"+"_"+datadelay+".csv");
                             break;
                         }
                     }

@@ -1,10 +1,12 @@
 package cn.handler.ad;
 
 import cn.controllers.RfTestController;
+import cn.handler.base.BaseHandler;
 import cn.instr.DbfClient;
 import cn.instr.InstrumentClient;
 import cn.utils.ControllersManager;
 import cn.utils.DateFormat;
+import cn.utils.SystemUtils;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -13,10 +15,17 @@ import javafx.scene.control.ToggleButton;
 
 import java.io.*;
 import java.util.Date;
+import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.locks.LockSupport;
 
-public class ModulePpsSynAd implements EventHandler {
+/**
+ * DBF地检模式设置为射频快测
+ * FPGA刷新控制：关闭
+ * FPGA刷新错误自动重载：不重载
+ * 对于AGILENT TECHNOLOGIES,MSO-X 3014A，需要U盘且同名文件自动覆盖
+ */
+public class ModulePpsSynAd   implements EventHandler {
 
     RfTestController rfTestController =(RfTestController) ControllersManager.CONTROLLERS.get(RfTestController.class.getSimpleName());
     TextArea taLogs=rfTestController.taLogs;
@@ -67,10 +76,15 @@ public class ModulePpsSynAd implements EventHandler {
     boolean programming1;
     boolean programming2;
 
+    boolean readerRunning0=true;
+    boolean readerRunning1=true;
+    boolean readerRunning2=true;
 
     static int readCounter0=0;
     static int readCounter1=0;
     static int readCounter2=0;
+
+    Properties properties =new Properties();
 
     @Override
     public void handle(Event event) {
@@ -78,6 +92,13 @@ public class ModulePpsSynAd implements EventHandler {
         Platform.runLater(() -> {
             taLogs.appendText("开始执行（整机）PPS板间同步信号测试...\n");
         });
+
+        try {
+            properties.load(new FileInputStream("src/main/resources/configs/vivado.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         try {
             String vivadoPath = "D:\\Xilinx\\Vivado\\2018.3\\bin\\vivado.bat";
@@ -106,7 +127,7 @@ public class ModulePpsSynAd implements EventHandler {
                 processInput0 = new BufferedReader(new InputStreamReader(process0.getInputStream(), "UTF-8"));
                 processError0 = new BufferedReader(new InputStreamReader(process0.getInputStream()));
 
-                while (true) {
+                while (readerRunning0) {
                     Thread.sleep(1000);
                     String echo = readFromProcess(processInput0,"reader0",0);
                     String error = readErrorFromProcess(processError0);
@@ -132,7 +153,7 @@ public class ModulePpsSynAd implements EventHandler {
                 processInput1 = new BufferedReader(new InputStreamReader(process1.getInputStream(), "UTF-8"));
                 processError1 = new BufferedReader(new InputStreamReader(process1.getInputStream()));
 
-                while (true) {
+                while (readerRunning1) {
                     Thread.sleep(1000);
                     String echo = readFromProcess(processInput1,"reader1",1);
                     String error = readErrorFromProcess(processError1);
@@ -158,7 +179,7 @@ public class ModulePpsSynAd implements EventHandler {
                 processInput2 = new BufferedReader(new InputStreamReader(process2.getInputStream(), "UTF-8"));
                 processError2 = new BufferedReader(new InputStreamReader(process2.getInputStream()));
 
-                while (true) {
+                while (readerRunning2) {
                     Thread.sleep(1000);
                     String echo = readFromProcess(processInput2,"reader2",2);
                     String error = readErrorFromProcess(processError2);
@@ -186,23 +207,23 @@ public class ModulePpsSynAd implements EventHandler {
         processOutput2 = new BufferedWriter(new OutputStreamWriter(process2.getOutputStream()));
         System.out.println("shell2进程状态：" + process2.isAlive());
 
-        new Thread(()->{
-            writerAndTester0=Thread.currentThread();
+        writerAndTester0=new Thread(()->{
+//            writerAndTester0=Thread.currentThread();
             try {
                 System.out.println("process0初始操作...");
                 writeToProcess(processOutput0, 0,"open_hw" + "\n");
                 writeToProcess(processOutput0, 0,"connect_hw_server" + "\n");
                 Thread.sleep(1000);
 //                writeToProcess(processOutput0, "open_hw_target" + "\n");
-                writeToProcess(processOutput0, 0,"open_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c001}" + "\n");
-                writeToProcess(processOutput0, 0,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/80806580073c01}" + "\n");
-                writeToProcess(processOutput0, 0,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658007c701}" + "\n");
+                writeToProcess(processOutput0, 0,"open_hw_target " +properties.getProperty("ModulePpsSynAd.boxNum0")+ "\n");
+                writeToProcess(processOutput0, 0,"close_hw_target " +properties.getProperty("ModulePpsSynAd.boxNum1")+ "\n");
+                writeToProcess(processOutput0, 0,"close_hw_target " +properties.getProperty("ModulePpsSynAd.boxNum2")+ "\n");
                 Thread.sleep(10000);
                 writeToProcess(processOutput0, 0,"current_hw_device [get_hw_devices xc7vx690t_0]" + "\n");
                 writeToProcess(processOutput0, 0,"refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]" + "\n"); // 6~7s
-                writeToProcess(processOutput0, 0,"set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput0, 0,"set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput0, 0,"set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.bit} [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput0, 0,"set_property PROBES.FILE "+properties.getProperty("ModulePpsSynAd.probesPath0")+" [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput0, 0,"set_property FULL_PROBES.FILE "+properties.getProperty("ModulePpsSynAd.probesPath0")+" [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput0, 0,"set_property PROGRAM.FILE "+properties.getProperty("ModulePpsSynAd.programPath0")+" [get_hw_devices xc7vx690t_0]" + "\n");
 
                 if (btDownload.isSelected()){
                     System.out.println("process0下载...");
@@ -250,10 +271,15 @@ public class ModulePpsSynAd implements EventHandler {
                     LockSupport.park();
                     System.out.println("process0通过检查点一被唤起...");  //所有AD线程配置完delay，同步线程pps切内-截图-pps切外-FPGA复位，并唤醒此
                 }
+                readerRunning0=false;
+                System.out.println("关闭process0的vivado...");
+                SystemUtils.killProcessTree(process0);
             }catch (Exception e){}
-        }).start();
-        new Thread(()->{
-            writerAndTester1=Thread.currentThread();
+        });
+        writerAndTester0.start();
+
+        writerAndTester1=new Thread(()->{
+//            writerAndTester1=Thread.currentThread();
             try {
                 cd0.await();
                 System.out.println("process1初始操作...");
@@ -261,15 +287,15 @@ public class ModulePpsSynAd implements EventHandler {
                 writeToProcess(processOutput1, 1,"connect_hw_server" + "\n");
                 Thread.sleep(1000);
 //                writeToProcess(processOutput1, "open_hw_target" + "\n");
-                writeToProcess(processOutput1, 1,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c001}" + "\n");
-                writeToProcess(processOutput1, 1,"open_hw_target {localhost:3121/xilinx_tcf/Xilinx/80806580073c01}" + "\n");
-                writeToProcess(processOutput1, 1,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658007c701}" + "\n");
+                writeToProcess(processOutput1, 1,"close_hw_target "+properties.getProperty("ModulePpsSynAd.boxNum0") + "\n");
+                writeToProcess(processOutput1, 1,"open_hw_target "+properties.getProperty("ModulePpsSynAd.boxNum1") + "\n");
+                writeToProcess(processOutput1, 1,"close_hw_target "+properties.getProperty("ModulePpsSynAd.boxNum2") + "\n");
                 Thread.sleep(10000);
                 writeToProcess(processOutput1, 1,"current_hw_device [get_hw_devices xc7vx690t_0]" + "\n");
                 writeToProcess(processOutput1, 1,"refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]" + "\n"); // 6~7s
-                writeToProcess(processOutput1, 1,"set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput1, 1,"set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput1, 1,"set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.bit} [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput1, 1,"set_property PROBES.FILE "+properties.getProperty("ModulePpsSynAd.probesPath1")+" [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput1, 1,"set_property FULL_PROBES.FILE "+properties.getProperty("ModulePpsSynAd.probesPath1")+" [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput1, 1,"set_property PROGRAM.FILE "+properties.getProperty("ModulePpsSynAd.programPath1")+" [get_hw_devices xc7vx690t_0]" + "\n");
 
                 if (btDownload.isSelected()){
                     System.out.println("process1下载...");
@@ -320,10 +346,15 @@ public class ModulePpsSynAd implements EventHandler {
                     LockSupport.park();
                     System.out.println("process1通过检查点一被唤起...");  //所有AD线程配置完delay，同步线程pps切内-截图-pps切外-FPGA复位，并唤醒此
                 }
+                readerRunning1=false;
+                System.out.println("关闭process1的vivado...");
+                SystemUtils.killProcessTree(process1);
             }catch (Exception e){}
-        }).start();
-        new Thread(()->{
-            writerAndTester2=Thread.currentThread();
+        });
+        writerAndTester1.start();
+
+        writerAndTester2=new Thread(()->{
+//            writerAndTester2=Thread.currentThread();
             try {
                 cd1.await();
                 System.out.println("process2初始操作...");
@@ -331,15 +362,15 @@ public class ModulePpsSynAd implements EventHandler {
                 writeToProcess(processOutput2, 2,"connect_hw_server" + "\n");
                 Thread.sleep(1000);
 //                writeToProcess(processOutput2, "open_hw_target" + "\n");
-                writeToProcess(processOutput2, 2,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c001}" + "\n");
-                writeToProcess(processOutput2, 2,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/80806580073c01}" + "\n");
-                writeToProcess(processOutput2, 2,"open_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658007c701}" + "\n");
+                writeToProcess(processOutput2, 2,"close_hw_target "+properties.getProperty("ModulePpsSynAd.boxNum0") + "\n");
+                writeToProcess(processOutput2, 2,"close_hw_target "+properties.getProperty("ModulePpsSynAd.boxNum1") + "\n");
+                writeToProcess(processOutput2, 2,"open_hw_target "+properties.getProperty("ModulePpsSynAd.boxNum2") + "\n");
                 Thread.sleep(10000);
                 writeToProcess(processOutput2, 2,"current_hw_device [get_hw_devices xc7vx690t_0]" + "\n");
                 writeToProcess(processOutput2, 2,"refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]" + "\n"); // 6~7s
-                writeToProcess(processOutput2, 2,"set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput2, 2,"set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput2, 2,"set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.bit} [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput2, 2,"set_property PROBES.FILE "+properties.getProperty("ModulePpsSynAd.probesPath2")+" [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput2, 2,"set_property FULL_PROBES.FILE "+properties.getProperty("ModulePpsSynAd.probesPath2")+" [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput2, 2,"set_property PROGRAM.FILE "+properties.getProperty("ModulePpsSynAd.programPath2")+" [get_hw_devices xc7vx690t_0]" + "\n");
 
                 if (btDownload.isSelected()){
                     System.out.println("process2下载...");
@@ -386,8 +417,12 @@ public class ModulePpsSynAd implements EventHandler {
                     LockSupport.park();
                     System.out.println("process2通过检查点一被唤起...");  //所有AD线程配置完delay，同步线程pps切内-截图-pps切外-FPGA复位，并唤醒此
                 }
+                readerRunning2=false;
+                System.out.println("关闭process2的vivado...");
+                SystemUtils.killProcessTree(process2);
             }catch (Exception e){}
-        }).start();
+        });
+        writerAndTester2.start();
 
         new Thread(()->{
             sync=Thread.currentThread();
@@ -438,11 +473,18 @@ public class ModulePpsSynAd implements EventHandler {
                     LockSupport.unpark(writerAndTester2);
                 }
 
-
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }).start();
+
+        try {
+            writerAndTester0.join();
+            writerAndTester1.join();
+            writerAndTester2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private  void writeToProcess(BufferedWriter processOutput,int senderNum, String command) throws IOException, InterruptedException {

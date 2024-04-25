@@ -12,6 +12,7 @@ import javafx.scene.control.ToggleButton;
 
 import java.io.*;
 import java.util.Date;
+import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.locks.LockSupport;
 
@@ -80,6 +81,8 @@ public class ModuleCalSynSignalAd implements EventHandler {
     static int readCounter2=0;
     static int readCounter3=0;
 
+    Properties properties=new Properties();
+
     @Override
     public void handle(Event event) {
         System.out.println("执行（整机）AD校正同步信号测试...");
@@ -87,6 +90,11 @@ public class ModuleCalSynSignalAd implements EventHandler {
             taLogs.appendText("开始执行（整机）AD校正同步信号测试...");
         });
 
+        try {
+            properties.load(new FileInputStream("src/main/resources/configs/vivado.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         try {
             String vivadoPath = "D:\\Xilinx\\Vivado\\2018.3\\bin\\vivado.bat";
@@ -235,16 +243,16 @@ public class ModuleCalSynSignalAd implements EventHandler {
                 writeToProcess(processOutput0, 0,"connect_hw_server" + "\n");
                 Thread.sleep(1000);
 //                writeToProcess(processOutput0, "open_hw_target" + "\n");
-                writeToProcess(processOutput0, 0,"open_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c001}" + "\n");
-                writeToProcess(processOutput0, 0,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/80806580073c01}" + "\n");
-                writeToProcess(processOutput0, 0,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658007c701}" + "\n");
-                writeToProcess(processOutput0, 0,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/000018eaffd701}" + "\n");
+                writeToProcess(processOutput0, 0, "open_hw_target "+properties.getProperty("ModuleCalSynSignalAd.boxNum0") + "\n");
+                writeToProcess(processOutput0, 0,"close_hw_target "+properties.getProperty("ModuleCalSynSignalAd.boxNum1") + "\n");
+                writeToProcess(processOutput0, 0,"close_hw_target "+properties.getProperty("ModuleCalSynSignalAd.boxNum2") + "\n");
+                writeToProcess(processOutput0, 0,"close_hw_target "+properties.getProperty("ModuleCalSynSignalAd.boxNum3") + "\n");
                 Thread.sleep(10000);
                 writeToProcess(processOutput0, 0,"current_hw_device [get_hw_devices xc7vx690t_0]" + "\n");
                 writeToProcess(processOutput0, 0,"refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]" + "\n"); // 6~7s
-                writeToProcess(processOutput0, 0,"set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput0, 0,"set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput0, 0,"set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.bit} [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput0, 0,     "set_property PROBES.FILE "+properties.getProperty("ModuleCalSynSignalAd.probesPath0") +" [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput0, 0,"set_property FULL_PROBES.FILE "+properties.getProperty("ModuleCalSynSignalAd.probesPath0") +" [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput0, 0,    "set_property PROGRAM.FILE "+properties.getProperty("ModuleCalSynSignalAd.programPath0")+" [get_hw_devices xc7vx690t_0]" + "\n");
 
                 if (btDownload.isSelected()){
                     System.out.println("process0下载...");
@@ -288,13 +296,13 @@ public class ModuleCalSynSignalAd implements EventHandler {
                     Thread.sleep(3000); //触发余量
                     writeToProcess(processOutput0,0,"wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"rec_Calib_inst/ila_rec_calib_syntest_inst\"}]"+"\n");
                     writeToProcess(processOutput0,0,"upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"rec_Calib_inst/ila_rec_calib_syntest_inst\"}]"+"\n");
-                    writeToProcess(processOutput0,0, "write_hw_ila_data -csv_file {E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"
+                    writeToProcess(processOutput0,0, "write_hw_ila_data -csv_file {"+properties.getProperty("ModuleCalSynSignalAd.samplePath")
                             +"process0"+"_"+datadelay+".csv} hw_ila_data_6" + "\n");
 //                    writeToProcess(processOutput0,"start_gui");
-                    File file=new File("E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process0"+"_"+datadelay+".csv");
+                    File file=new File(properties.getProperty("ModuleCalSynSignalAd.samplePath")+"process0"+"_"+datadelay+".csv");
                     while (true){
                         if (file.exists()){
-                            System.out.println("已生成文件"+"E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process0"+"_"+datadelay+".csv");
+                            System.out.println("已生成文件"+properties.getProperty("ModuleCalSynSignalAd.samplePath")+"process0"+"_"+datadelay+".csv");
                             break;
                         }
                     }
@@ -310,16 +318,16 @@ public class ModuleCalSynSignalAd implements EventHandler {
                 writeToProcess(processOutput1, 1,"connect_hw_server" + "\n");
                 Thread.sleep(1000);
 //                writeToProcess(processOutput1, "open_hw_target" + "\n");
-                writeToProcess(processOutput1, 1,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c001}" + "\n");
-                writeToProcess(processOutput1, 1,"open_hw_target {localhost:3121/xilinx_tcf/Xilinx/80806580073c01}" + "\n");
-                writeToProcess(processOutput1, 1,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658007c701}" + "\n");
-                writeToProcess(processOutput1, 1,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/000018eaffd701}" + "\n");
+                writeToProcess(processOutput1, 1,"close_hw_target "+properties.getProperty("ModuleCalSynSignalAd.boxNum0") + "\n");
+                writeToProcess(processOutput1, 1, "open_hw_target "+properties.getProperty("ModuleCalSynSignalAd.boxNum1") + "\n");
+                writeToProcess(processOutput1, 1,"close_hw_target "+properties.getProperty("ModuleCalSynSignalAd.boxNum2") + "\n");
+                writeToProcess(processOutput1, 1,"close_hw_target "+properties.getProperty("ModuleCalSynSignalAd.boxNum3") + "\n");
                 Thread.sleep(10000);
                 writeToProcess(processOutput1, 1,"current_hw_device [get_hw_devices xc7vx690t_0]" + "\n");
                 writeToProcess(processOutput1, 1,"refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]" + "\n"); // 6~7s
-                writeToProcess(processOutput1, 1,"set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput1, 1,"set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput1, 1,"set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.bit} [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput1, 1,     "set_property PROBES.FILE "+properties.getProperty("ModuleCalSynSignalAd.probesPath1") +" [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput1, 1,"set_property FULL_PROBES.FILE "+properties.getProperty("ModuleCalSynSignalAd.probesPath1") +" [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput1, 1,    "set_property PROGRAM.FILE "+properties.getProperty("ModuleCalSynSignalAd.programPath1")+" [get_hw_devices xc7vx690t_0]" + "\n");
 
                 if (btDownload.isSelected()){
                     System.out.println("process1下载...");
@@ -364,13 +372,13 @@ public class ModuleCalSynSignalAd implements EventHandler {
                     Thread.sleep(3000); //触发余量
                     writeToProcess(processOutput1,1,"wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"rec_Calib_inst/ila_rec_calib_syntest_inst\"}]"+"\n");
                     writeToProcess(processOutput1,1,"upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"rec_Calib_inst/ila_rec_calib_syntest_inst\"}]"+"\n");
-                    writeToProcess(processOutput1,1, "write_hw_ila_data -csv_file {E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"
+                    writeToProcess(processOutput1,1, "write_hw_ila_data -csv_file {"+properties.getProperty("ModuleCalSynSignalAd.samplePath")
                             +"process1"+"_"+datadelay+".csv} hw_ila_data_6" + "\n");
 //
-                    File file=new File("E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process1"+"_"+datadelay+".csv");
+                    File file=new File(properties.getProperty("ModuleCalSynSignalAd.samplePath")+"process1"+"_"+datadelay+".csv");
                     while (true){
                         if (file.exists()){
-                            System.out.println("已生成文件"+"E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process1"+"_"+datadelay+".csv");
+                            System.out.println("已生成文件"+properties.getProperty("ModuleCalSynSignalAd.samplePath")+"process1"+"_"+datadelay+".csv");
                             break;
                         }
                     }
@@ -386,16 +394,16 @@ public class ModuleCalSynSignalAd implements EventHandler {
                 writeToProcess(processOutput2, 2,"connect_hw_server" + "\n");
                 Thread.sleep(1000);
 //                writeToProcess(processOutput2, "open_hw_target" + "\n");
-                writeToProcess(processOutput2, 2,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c001}" + "\n");
-                writeToProcess(processOutput2, 2,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/80806580073c01}" + "\n");
-                writeToProcess(processOutput2, 2,"open_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658007c701}" + "\n");
-                writeToProcess(processOutput2, 2,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/000018eaffd701}" + "\n");
+                writeToProcess(processOutput2, 2,"close_hw_target "+properties.getProperty("ModuleCalSynSignalAd.boxNum0") + "\n");
+                writeToProcess(processOutput2, 2,"close_hw_target "+properties.getProperty("ModuleCalSynSignalAd.boxNum1") + "\n");
+                writeToProcess(processOutput2, 2, "open_hw_target "+properties.getProperty("ModuleCalSynSignalAd.boxNum2") + "\n");
+                writeToProcess(processOutput2, 2,"close_hw_target "+properties.getProperty("ModuleCalSynSignalAd.boxNum3") + "\n");
                 Thread.sleep(10000);
                 writeToProcess(processOutput2, 2,"current_hw_device [get_hw_devices xc7vx690t_0]" + "\n");
                 writeToProcess(processOutput2, 2,"refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]" + "\n"); // 6~7s
-                writeToProcess(processOutput2, 2,"set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput2, 2,"set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput2, 2,"set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/0311/AD_impl_testDA_ila/TOP_test2.bit} [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput2, 2,     "set_property PROBES.FILE "+properties.getProperty("ModuleCalSynSignalAd.probesPath2") +" [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput2, 2,"set_property FULL_PROBES.FILE "+properties.getProperty("ModuleCalSynSignalAd.probesPath2") +" [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput2, 2,    "set_property PROGRAM.FILE "+properties.getProperty("ModuleCalSynSignalAd.programPath2")+" [get_hw_devices xc7vx690t_0]" + "\n");
 
                 if (btDownload.isSelected()){
                     System.out.println("process2下载...");
@@ -438,13 +446,13 @@ public class ModuleCalSynSignalAd implements EventHandler {
                     Thread.sleep(3000); //触发余量
                     writeToProcess(processOutput2,2,"wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"rec_Calib_inst/ila_rec_calib_syntest_inst\"}]"+"\n");
                     writeToProcess(processOutput2,2,"upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"rec_Calib_inst/ila_rec_calib_syntest_inst\"}]"+"\n");
-                    writeToProcess(processOutput2,2, "write_hw_ila_data -csv_file {E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"
+                    writeToProcess(processOutput2,2, "write_hw_ila_data -csv_file {"+properties.getProperty("ModuleCalSynSignalAd.samplePath")
                             +"process2"+"_"+datadelay+".csv} hw_ila_data_6" + "\n");
 //                    writeToProcess(processOutput0,"start_gui");
-                    File file=new File("E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process2"+"_"+datadelay+".csv");
+                    File file=new File(properties.getProperty("ModuleCalSynSignalAd.samplePath")+"process2"+"_"+datadelay+".csv");
                     while (true){
                         if (file.exists()){
-                            System.out.println("已生成文件"+"E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process2"+"_"+datadelay+".csv");
+                            System.out.println("已生成文件"+properties.getProperty("ModuleCalSynSignalAd.samplePath")+"process2"+"_"+datadelay+".csv");
                             break;
                         }
                     }
@@ -458,17 +466,17 @@ public class ModuleCalSynSignalAd implements EventHandler {
                 writeToProcess(processOutput3, 3,"open_hw" + "\n");
                 writeToProcess(processOutput3, 3,"connect_hw_server" + "\n");
                 Thread.sleep(1000);
-                writeToProcess(processOutput3, 3,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c001}" + "\n");
-                writeToProcess(processOutput3, 3,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/80806580073c01}" + "\n");
-                writeToProcess(processOutput3, 3,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658007c701}" + "\n");
-                writeToProcess(processOutput3, 3,"open_hw_target {localhost:3121/xilinx_tcf/Xilinx/000018eaffd701}" + "\n");
+                writeToProcess(processOutput3, 3,"close_hw_target "+properties.getProperty("ModuleCalSynSignalAd.boxNum0") + "\n");
+                writeToProcess(processOutput3, 3,"close_hw_target "+properties.getProperty("ModuleCalSynSignalAd.boxNum1") + "\n");
+                writeToProcess(processOutput3, 3,"close_hw_target "+properties.getProperty("ModuleCalSynSignalAd.boxNum2") + "\n");
+                writeToProcess(processOutput3, 3, "open_hw_target "+properties.getProperty("ModuleCalSynSignalAd.boxNum3") + "\n");
                 Thread.sleep(10000);
                 writeToProcess(processOutput3, 3,"current_hw_device [get_hw_devices xc7vx690t_0]" + "\n");
                 writeToProcess(processOutput3, 3,"refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]" + "\n"); // 6~7s
                 Thread.sleep(10000);
-                writeToProcess(processOutput3, 3,"set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/HL_impl_transCalib_ilagai/TOP_HL_SELF.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput3, 3,"set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/HL_impl_transCalib_ilagai/TOP_HL_SELF.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput3, 3,"set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/0311/HL_impl_transCalib_ilagai/TOP_HL_SELF.bit} [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput3, 3,     "set_property PROBES.FILE "+properties.getProperty("ModuleCalSynSignalAd.probesPath3") +" [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput3, 3,"set_property FULL_PROBES.FILE "+properties.getProperty("ModuleCalSynSignalAd.probesPath3") +" [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput3, 3,    "set_property PROGRAM.FILE "+properties.getProperty("ModuleCalSynSignalAd.programPath3")+" [get_hw_devices xc7vx690t_0]" + "\n");
 
                 if (btDownload.isSelected()){
                     System.out.println("process3下载...");
@@ -552,12 +560,12 @@ public class ModuleCalSynSignalAd implements EventHandler {
                     Thread.sleep(3000); //触发余量
                     writeToProcess(processOutput3,3,"wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"rec_source_inst/ila_calibsource_inst\"}]"+"\n");
                     writeToProcess(processOutput3,3,"upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"rec_source_inst/ila_calibsource_inst\"}]"+"\n");
-                    writeToProcess(processOutput3,3, "write_hw_ila_data -csv_file {E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"
+                    writeToProcess(processOutput3,3, "write_hw_ila_data -csv_file {"+properties.getProperty("ModuleCalSynSignalAd.samplePath")
                             +"process3"+"_"+datadelay+".csv} hw_ila_data_11" + "\n");
-                    File file=new File("E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process3"+"_"+datadelay+".csv");
+                    File file=new File(properties.getProperty("ModuleCalSynSignalAd.samplePath")+"process3"+"_"+datadelay+".csv");
                     while (true){
                         if (file.exists()){
-                            System.out.println("已生成文件"+"E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process3"+"_"+datadelay+".csv");
+                            System.out.println("已生成文件"+properties.getProperty("ModuleCalSynSignalAd.samplePath")+"process3"+"_"+datadelay+".csv");
                             break;
                         }
                     }

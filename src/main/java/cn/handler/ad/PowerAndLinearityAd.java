@@ -17,6 +17,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.locks.LockSupport;
 
 public class PowerAndLinearityAd implements EventHandler {
@@ -53,11 +54,13 @@ public class PowerAndLinearityAd implements EventHandler {
 //            System.out.println("请检查仪表连接！");
 //            return;
 //        }
-        if (true || InstruType.SMW200A.equals(instru0.instruType) && InstruType.ZNB.equals(instru2.instruType)) {  // TODO: 2024/1/12 被旁路
+
             System.out.println("执行ad线性度测试...");
             Platform.runLater(() -> {
                 taLogs.appendText("开始执行ad线性度测试...");
             });
+
+
 
             try {
                 String s=aChannelsTypeIn.getText().trim();
@@ -130,7 +133,7 @@ public class PowerAndLinearityAd implements EventHandler {
             processOutput = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
             System.out.println("当前shell进程状态：" + process.isAlive());
 
-            new Thread(() -> {
+            Thread t=new Thread(() -> {
                 writerAndTester = Thread.currentThread();
                 try {
                     writeToProcess(processOutput, "open_hw" + "\n");
@@ -139,9 +142,9 @@ public class PowerAndLinearityAd implements EventHandler {
                     writeToProcess(processOutput, "open_hw_target" + "\n");
                     writeToProcess(processOutput, "current_hw_device [get_hw_devices xc7vx690t_0]" + "\n");
                     writeToProcess(processOutput, "refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]" + "\n");
-                    writeToProcess(processOutput, "set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/AD_impl_Calib_syn_test/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                    writeToProcess(processOutput, "set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/AD_impl_Calib_syn_test/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                    writeToProcess(processOutput, "set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/AD_impl_Calib_syn_test/TOP_test2.bit} [get_hw_devices xc7vx690t_0]" + "\n");
+                    writeToProcess(processOutput, "set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0325/AD_impl_pps_r_added/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
+                    writeToProcess(processOutput, "set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0325/AD_impl_pps_r_added/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
+                    writeToProcess(processOutput, "set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/0325/AD_impl_pps_r_added/TOP_test2.bit} [get_hw_devices xc7vx690t_0]" + "\n");
                     if(btDownload.isSelected()) {
                         writeToProcess(processOutput, "program_hw_devices [get_hw_devices xc7vx690t_0]" + "\n");
                         //display_hw_ila_data [ get_hw_ila_data hw_ila_data_3 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]]
@@ -201,51 +204,102 @@ public class PowerAndLinearityAd implements EventHandler {
 
                     System.out.println("待遍历set："+ValueCollection.vsgList);
 
-                    for(ValueCollection.FreqAndPower set :ValueCollection.vsgList){
-                        String freq=set.getFreq();
-                        String power=set.getPower();
-                        /***********************************************************************************************/
-                        instru0.writeCmd("SOURce1:FREQuency:CW "+freq);   //R&S
+                    if (InstruType.SMW200A.equals(instru0.instruType)) {
+                        for (ValueCollection.FreqAndPower set : ValueCollection.vsgList) {
+                            String freq = set.getFreq();
+                            String power = set.getPower();
+                            /***********************************************************************************************/
+
+                            instru0.writeCmd("SOURce1:FREQuency:CW " + freq);   //R&S
 //                        instru0.writeCmd(":FREQuency "+freq);   //keysight
-                        System.out.println("当前频点："+freq);
-                        instru0.writeCmd("SOURce1:POWer:POWer " + power);  //R&S
+                            System.out.println("当前频点：" + freq);
+                            instru0.writeCmd("SOURce1:POWer:POWer " + power);  //R&S
 //                        instru0.writeCmd("SOURce:POWer:LEVel " + power);  //keysight
-                        System.out.println("当前功率："+power);
-                        instru0.writeCmd(":OUTPut1 ON"); //R&S
+                            System.out.println("当前功率：" + power);
+                            instru0.writeCmd(":OUTPut1 ON"); //R&S
 //                        instru0.writeCmd(":OUTPut ON"); //keysight
-                        Thread.sleep(500);
-                        /***********************************************************************************************/
-                        //采数
-                        writeToProcess(processOutput, "run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/ila_addata_inst\"}] -trigger_now" + "\n");
-                        writeToProcess(processOutput, "wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/ila_addata_inst\"}]" + "\n");
+                            //:OUTPut:MOD:STAT OFF keysight
+                            Thread.sleep(500);
+                            /***********************************************************************************************/
+                            //采数
+                            writeToProcess(processOutput, "run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/ila_addata_inst\"}] -trigger_now" + "\n");
+                            writeToProcess(processOutput, "wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/ila_addata_inst\"}]" + "\n");
 //                        writeToProcess(processOutput, "display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/ila_addata_inst\"}]]" + "\n");
-                        writeToProcess(processOutput, "upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/ila_addata_inst\"}]" + "\n");
+                            writeToProcess(processOutput, "upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/ila_addata_inst\"}]" + "\n");
 
 //                        sampling=true;
 
-                        // TODO: 2024/1/12 还是要增加标志位，时间长
+                            // TODO: 2024/1/12 还是要增加标志位，时间长
 //                        System.out.println("等待采数...");
 //                        LockSupport.park();
 //                        Thread.sleep(7000);
-                        System.out.println("开始存文件...");
-                        writeToProcess(processOutput, "write_hw_ila_data -csv_file {E:\\wx\\2_projects\\L payload\\vivado files\\AD_impl_Calib_syn_test\\"
-                                +freq+"_"+power+".csv} hw_ila_data_3" + "\n");
-                        File file=new File("E:\\wx\\2_projects\\L payload\\vivado files\\AD_impl_Calib_syn_test\\"+freq+"_"+power+".csv");
-                        while (true){
-                            if (file.exists()){
-                                System.out.println("已生成文件"+"E:\\wx\\2_projects\\L payload\\vivado files\\AD_impl_Calib_syn_test\\"+freq+"_"+power+".csv");
-                                break;
+                            System.out.println("开始存文件...");
+                            writeToProcess(processOutput, "write_hw_ila_data -csv_file {E:\\wx\\2_projects\\caishu\\0326\\"
+                                    + freq + "_" + power + ".csv} hw_ila_data_3" + "\n");
+                            File file = new File("E:\\wx\\2_projects\\caishu\\0326\\" + freq + "_" + power + ".csv");
+                            while (true) {
+                                if (file.exists()) {
+                                    System.out.println("已生成文件" + "E:\\wx\\2_projects\\caishu\\0326\\" + freq + "_" + power + ".csv");
+                                    break;
+                                }
                             }
                         }
+                        instru0.writeCmd(":OUTPut1 OFF");
+                    }else if (InstruType.E8267D.equals(instru0.instruType)) {
+                        for (ValueCollection.FreqAndPower set : ValueCollection.vsgList) {
+                            String freq = set.getFreq();
+                            String power = set.getPower();
+                            /***********************************************************************************************/
+
+//                            instru0.writeCmd("SOURce1:FREQuency:CW " + freq);   //R&S
+                            instru0.writeCmd(":FREQuency "+freq);   //keysight
+                            System.out.println("当前频点：" + freq);
+//                            instru0.writeCmd("SOURce1:POWer:POWer " + power);  //R&S
+                            instru0.writeCmd("SOURce:POWer:LEVel " + power);  //keysight
+                            System.out.println("当前功率：" + power);
+//                            instru0.writeCmd(":OUTPut1 ON"); //R&S
+                            instru0.writeCmd(":OUTPut ON"); //keysight
+                            instru0.writeCmd(":OUTPut:MOD:STAT OFF");// keysight
+                            Thread.sleep(500);
+                            /***********************************************************************************************/
+                            //采数
+                            writeToProcess(processOutput, "run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/ila_addata_inst\"}] -trigger_now" + "\n");
+                            writeToProcess(processOutput, "wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/ila_addata_inst\"}]" + "\n");
+//                        writeToProcess(processOutput, "display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/ila_addata_inst\"}]]" + "\n");
+                            writeToProcess(processOutput, "upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/ila_addata_inst\"}]" + "\n");
+
+//                        sampling=true;
+
+                            // TODO: 2024/1/12 还是要增加标志位，时间长
+//                        System.out.println("等待采数...");
+//                        LockSupport.park();
+//                        Thread.sleep(7000);
+                            System.out.println("开始存文件...");
+                            writeToProcess(processOutput, "write_hw_ila_data -csv_file {E:\\wx\\2_projects\\caishu\\0326\\"
+                                    + freq + "_" + power + ".csv} hw_ila_data_3" + "\n");
+                            File file = new File("E:\\wx\\2_projects\\caishu\\0326\\" + freq + "_" + power + ".csv");
+                            while (true) {
+                                if (file.exists()) {
+                                    System.out.println("已生成文件" + "E:\\wx\\2_projects\\caishu\\0326\\" + freq + "_" + power + ".csv");
+                                    break;
+                                }
+                            }
+                        }
+                        instru0.writeCmd(":OUTPut1 OFF");
                     }
-                    instru0.writeCmd(":OUTPut1 OFF");
-                    System.out.println("测试结束");
+                        System.out.println("测试结束");
 
                 } catch (Exception e) {
                 }
 
-            }).start();
-        }
+            });
+            t.start();
+            try {
+                t.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
     }
 
     private  void writeToProcess(BufferedWriter processOutput, String command) throws IOException, InterruptedException {
