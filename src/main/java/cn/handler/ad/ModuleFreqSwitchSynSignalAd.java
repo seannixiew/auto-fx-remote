@@ -6,6 +6,7 @@ import cn.instr.DbfClient;
 import cn.utils.ControllersManager;
 import cn.utils.DateFormat;
 import cn.utils.SystemUtils;
+import cn.utils.ThreadAndProcessPools;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -51,13 +52,10 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
     }
 
     //实现串行下载fpga程序
-    private static final CountDownLatch cd0=new CountDownLatch(1);
-    private static final CountDownLatch cd1=new CountDownLatch(1);
-    private static final CountDownLatch cd2=new CountDownLatch(1);
-
-    private static final CountDownLatch cdFirstSendDbf=new CountDownLatch(4);    //控制初次发地检指令时机
-
-
+    private static CountDownLatch cd0=new CountDownLatch(1);
+    private static CountDownLatch cd1=new CountDownLatch(1);
+    private static CountDownLatch cd2=new CountDownLatch(1);
+    private static CountDownLatch cdFirstSendDbf=new CountDownLatch(4);    //控制初次发地检指令时机
 
     Process process0;
     Process process1;
@@ -71,10 +69,10 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
     BufferedReader processInput1;
     BufferedReader processInput2;
     BufferedReader processInput3;
-    BufferedReader processError0;
-    BufferedReader processError1;
-    BufferedReader processError2;
-    BufferedReader processError3;
+//    BufferedReader processError0;
+//    BufferedReader processError1;
+//    BufferedReader processError2;
+//    BufferedReader processError3;
     Thread reader0;
     Thread reader1;
     Thread reader2;
@@ -102,12 +100,45 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
 
     Properties properties =new Properties();
 
+    public ModuleFreqSwitchSynSignalAd(){
+        //构造方法更新所有静态变量
+
+        for(int i=0;i<32;i++){
+            for(int j=0;j<3;j++) {
+                countDownLatchs0[i][j] = new CountDownLatch(4);
+            }
+        }
+
+        for(int i=0;i<32;i++){
+            for(int j=0;j<3;j++) {
+                countDownLatchs1[i][j] = new CountDownLatch(4);
+            }
+        }
+
+        for(int i=0;i<32;i++){
+            countDownLatchs2[i] = new CountDownLatch(4);
+        }
+
+        readCounter0=0;
+        readCounter1=0;
+        readCounter2=0;
+        readCounter3=0;
+
+        cd0=new CountDownLatch(1);
+        cd1=new CountDownLatch(1);
+        cd2=new CountDownLatch(1);
+        cdFirstSendDbf=new CountDownLatch(4);
+
+    }
+
     @Override
     public void handle(Event event) {
         System.out.println("执行（整机）AD校正同步信号测试...");
         Platform.runLater(() -> {
-            taLogs.appendText("开始执行（整机）AD校正同步信号测试...");
+            taLogs.appendText("开始执行（整机）AD校正同步信号测试...\n");
         });
+
+//        ThreadAndProcessPools.clearProcessAndThread();
 
         try {
             properties.load(new FileInputStream("src/main/resources/configs/vivado.properties"));
@@ -123,25 +154,35 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
             ProcessBuilder processBuilder0 = new ProcessBuilder(vivadoPath, "-mode", "tcl", "-source", tclScriptPath);
             processBuilder0.redirectErrorStream(true);
             process0 = processBuilder0.start();
+            ThreadAndProcessPools.addProcess(process0);
+
             // 启动Vivado进程1
             ProcessBuilder processBuilder1 = new ProcessBuilder(vivadoPath, "-mode", "tcl", "-source", tclScriptPath);
             processBuilder1.redirectErrorStream(true);
             process1 = processBuilder1.start();
+            ThreadAndProcessPools.addProcess(process1);
+
             // 启动Vivado进程2
             ProcessBuilder processBuilder2 = new ProcessBuilder(vivadoPath, "-mode", "tcl", "-source", tclScriptPath);
             processBuilder2.redirectErrorStream(true);
             process2 = processBuilder2.start();
+            ThreadAndProcessPools.addProcess(process2);
+
             // 启动Vivado进程3（合路板）
             ProcessBuilder processBuilder3 = new ProcessBuilder(vivadoPath, "-mode", "tcl", "-source", tclScriptPath);
             processBuilder3.redirectErrorStream(true);
             process3 = processBuilder3.start();
+            ThreadAndProcessPools.addProcess(process3);
+
+            //vivado启动时间
+            Thread.sleep(3000);
 
         } catch (Exception e) {
         }
 
-        new Thread(()->{
+        reader0=new Thread(()->{
             try {
-                reader0 = Thread.currentThread();
+//                reader0 = Thread.currentThread();
                 processInput0 = new BufferedReader(new InputStreamReader(process0.getInputStream(), "UTF-8"));
 //                processError0 = new BufferedReader(new InputStreamReader(process0.getInputStream()));
 
@@ -149,10 +190,12 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
                     Thread.sleep(1000);
                     String echo = readFromProcess(processInput0,"reader0",0);
 //                    String error = readErrorFromProcess(processError0,0);
-                    Platform.runLater(() -> {
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+echo + "\n");
+                    if(echo!=null && !echo.contains("read pending...")) {
+                        Platform.runLater(() -> {
+                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n");
 //                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+error + "\n");
-                    });
+                        });
+                    }
                     String s = echo;
                     if (programming0) {
                         if (s.contains("End of startup status: HIGH")) {
@@ -164,10 +207,13 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
                 }
             } catch (Exception e) {
             }
-        }).start();
-        new Thread(()->{
+        });
+        reader0.start();
+        ThreadAndProcessPools.addThread(reader0);
+
+        reader1=new Thread(()->{
             try {
-                reader1 = Thread.currentThread();
+//                reader1 = Thread.currentThread();
                 processInput1 = new BufferedReader(new InputStreamReader(process1.getInputStream(), "UTF-8"));
 //                processError1 = new BufferedReader(new InputStreamReader(process1.getInputStream()));
 
@@ -175,10 +221,12 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
                     Thread.sleep(1000);
                     String echo = readFromProcess(processInput1,"reader1",1);
 //                    String error = readErrorFromProcess(processError1,1);
-                    Platform.runLater(() -> {
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+echo + "\n");
+                    if(echo!=null && !echo.contains("read pending...")) {
+                        Platform.runLater(() -> {
+                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n");
 //                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+error + "\n");
-                    });
+                        });
+                    }
                     String s = echo;
                     if (programming1) {
                         if (s.contains("End of startup status: HIGH")) {
@@ -190,10 +238,13 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
                 }
             } catch (Exception e) {
             }
-        }).start();
-        new Thread(()->{
+        });
+        reader1.start();
+        ThreadAndProcessPools.addThread(reader1);
+
+        reader2=new Thread(()->{
             try {
-                reader2 = Thread.currentThread();
+//                reader2 = Thread.currentThread();
                 processInput2 = new BufferedReader(new InputStreamReader(process2.getInputStream(), "UTF-8"));
 //                processError2 = new BufferedReader(new InputStreamReader(process2.getInputStream()));
 
@@ -201,10 +252,12 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
                     Thread.sleep(1000);
                     String echo = readFromProcess(processInput2,"reader2",2);
 //                    String error = readErrorFromProcess(processError2,2);
-                    Platform.runLater(() -> {
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+echo + "\n");
+                    if(echo!=null && !echo.contains("read pending...")) {
+                        Platform.runLater(() -> {
+                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n");
 //                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+error + "\n");
-                    });
+                        });
+                    }
                     String s = echo;
                     if (programming2) {
                         if (s.contains("End of startup status: HIGH")) {
@@ -216,10 +269,13 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
                 }
             } catch (Exception e) {
             }
-        }).start();
-        new Thread(()->{
+        });
+        reader2.start();
+        ThreadAndProcessPools.addThread(reader2);
+
+        reader3=new Thread(()->{
             try {
-                reader3 = Thread.currentThread();
+//                reader3 = Thread.currentThread();
                 processInput3 = new BufferedReader(new InputStreamReader(process3.getInputStream(), "UTF-8"));
 //                processError3 = new BufferedReader(new InputStreamReader(process3.getInputStream()));
 
@@ -227,11 +283,12 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
                     Thread.sleep(1000);
                     String echo = readFromProcess(processInput3,"reader3",3);
 //                    String error = readErrorFromProcess(processError3,3);
-
-                    Platform.runLater(() -> {
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+echo + "\n");
+                    if(echo!=null && !echo.contains("read pending...")) {
+                        Platform.runLater(() -> {
+                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n");
 //                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+error + "\n");
-                    });
+                        });
+                    }
                     String s = echo;
                     if (programming3) {
                         if (s.contains("End of startup status: HIGH")) {
@@ -243,7 +300,9 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
                 }
             } catch (Exception e) {
             }
-        }).start();
+        });
+        reader3.start();
+        ThreadAndProcessPools.addThread(reader3);
 
         processOutput0 = new BufferedWriter(new OutputStreamWriter(process0.getOutputStream()));
         System.out.println("shell0进程状态：" + process0.isAlive());
@@ -399,6 +458,7 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
             }catch (Exception e){}
         });
         writerAndTester0.start();
+        ThreadAndProcessPools.addThread(writerAndTester0);
 
         writerAndTester1=new Thread(()->{
 //            writerAndTester1=Thread.currentThread();
@@ -544,6 +604,7 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
             }catch (Exception e){}
         });
         writerAndTester1.start();
+        ThreadAndProcessPools.addThread(writerAndTester1);
 
         writerAndTester2=new Thread(()->{
 //            writerAndTester2=Thread.currentThread();
@@ -687,6 +748,7 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
             }catch (Exception e){}
         });
         writerAndTester2.start();
+        ThreadAndProcessPools.addThread(writerAndTester2);
 
         writerAndTester3=new Thread(()->{
 //            writerAndTester3=Thread.currentThread();
@@ -865,9 +927,10 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
             }catch (Exception e){}
         });
         writerAndTester3.start();
+        ThreadAndProcessPools.addThread(writerAndTester3);
 
-        new Thread(()->{
-            sync=Thread.currentThread();
+        sync=new Thread(()->{
+//            sync=Thread.currentThread();
             try {
                 //4块板子下完程序（执行完display xxx），执行此处
                 cdFirstSendDbf.await();
@@ -959,22 +1022,18 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
                     LockSupport.unpark(writerAndTester2);
                     LockSupport.unpark(writerAndTester3);
                 }
-
-
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }).start();
+        });
+        sync.start();
+        ThreadAndProcessPools.addThread(sync);
 
         try {
             writerAndTester0.join();
             writerAndTester1.join();
             writerAndTester2.join();
             writerAndTester3.join();
-            System.out.println("AD频率切换同步测试完毕！");
-            Platform.runLater(()->{
-                taLogs.appendText("AD频率切换同步测试完毕！");
-            });
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

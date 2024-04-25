@@ -29,6 +29,7 @@ public class SystemUtils {
                 Process killPrcess = rt.exec(cmd);
                 killPrcess.waitFor();
                 killPrcess.destroyForcibly();
+                System.out.println("process: "+killPrcess+" -->killed.");
             }
         } catch (Exception e) {
             e.printStackTrace();

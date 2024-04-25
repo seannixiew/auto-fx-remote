@@ -14,16 +14,19 @@ import cn.utils.CommonUtils;
 import cn.instr.InstrumentClient;
 import cn.instr.MatrixClient;
 import cn.utils.DateFormat;
+import cn.utils.ThreadAndProcessPools;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import org.controlsfx.control.CheckTreeView;
@@ -116,6 +119,22 @@ public class RfTestController extends RootController {
 
     public MainTestDispatcher mainTestDispatcher;
 
+    private double mouseY;
+
+    @FXML
+    void onMouPres(MouseEvent event){
+        mouseY = event.getScreenY();
+    }
+    @FXML
+    void onMouDra(MouseEvent event){
+        double deltaY = event.getScreenY() - mouseY;
+        double newHeight = tp0.getHeight() + deltaY;
+        if (newHeight > tp0.getMinHeight()) { // 防止高度小于最小高度
+            tp0.setPrefHeight(newHeight);
+            mouseY = event.getScreenY();
+        }
+    }
+
     @FXML
     void onActionBtStart(Event event){
 //        if(listView.getItems().size()==0 || (instru0.isConnected || instru1.isConnected || instru2.isConnected || instru3.isConnected)==false){
@@ -125,8 +144,15 @@ public class RfTestController extends RootController {
 //            });
 //            return;
 //        }
-        System.out.println(instru0);
+
+        ThreadAndProcessPools.clearProcessAndThread();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         System.out.println("测试启动...");
+
         mainTestDispatcher=new MainTestDispatcher();
         mainTestDispatcher.testHandlerDispatcher(event);
     }
@@ -134,7 +160,10 @@ public class RfTestController extends RootController {
 
     @FXML
     void onActionBtEnd(){
-
+        boolean res=ThreadAndProcessPools.clearProcessAndThread();
+        Platform.runLater(()->{
+            taLogs.appendText("reader & writer 线程池 及 vivado 进程池 清空状态："+res+"\n");
+        });
     }
 
     @FXML

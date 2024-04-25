@@ -78,7 +78,7 @@
                    </AnchorPane>
                </children>
             </HBox>
-            <TitledPane animated="false" expanded="false" text="DEVELOPER CONSOLE">
+            <TitledPane animated="false" expanded="false" text="CONSOLE">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

@@ -23,7 +23,7 @@
    <children>
       <VBox fx:id="vb0" maxHeight="1.7976931348623157E308" prefHeight="637.0" prefWidth="835.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <TitledPane fx:id="tp0" animated="false" collapsible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="364.0" prefWidth="1001.0" styleClass="titled-pane-rftest-0" text="测试配置" VBox.vgrow="ALWAYS">
+            <TitledPane fx:id="tp0" animated="false" collapsible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="364.0" prefWidth="1001.0" styleClass="titled-pane-rftest-0" text="测试配置" VBox.vgrow="NEVER">
                <content>
                   <AnchorPane maxHeight="1.7976931348623157E308">
                      <children>
@@ -121,7 +121,7 @@
             </TitledPane>
             <TitledPane animated="false" collapsible="false" maxHeight="200.0" maxWidth="1.7976931348623157E308" prefHeight="166.0" prefWidth="835.0" styleClass="titled-pane-rftest-2" text="操作日志" VBox.vgrow="ALWAYS">
               <content>
-                  <TextArea fx:id="taLogs" prefHeight="114.0" prefWidth="833.0">
+                  <TextArea fx:id="taLogs" onMouseDragged="#onMouDra" onMousePressed="#onMouPres" prefHeight="114.0" prefWidth="833.0">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>

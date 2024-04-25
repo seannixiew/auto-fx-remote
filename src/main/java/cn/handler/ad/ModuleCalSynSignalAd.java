@@ -40,9 +40,9 @@ public class ModuleCalSynSignalAd implements EventHandler {
     }
 
     //实现串行下载fpga程序
-    private static final CountDownLatch cd0=new CountDownLatch(1);
-    private static final CountDownLatch cd1=new CountDownLatch(1);
-    private static final CountDownLatch cd2=new CountDownLatch(1);
+    private static CountDownLatch cd0=new CountDownLatch(1);
+    private static CountDownLatch cd1=new CountDownLatch(1);
+    private static CountDownLatch cd2=new CountDownLatch(1);
 
 
     Process process0;
@@ -83,11 +83,31 @@ public class ModuleCalSynSignalAd implements EventHandler {
 
     Properties properties=new Properties();
 
+    public ModuleCalSynSignalAd(){
+
+        for(int i=0;i<32;i++){
+            countDownLatchs0[i]=new CountDownLatch(4);
+        }
+
+        for(int i=0;i<32;i++){
+            countDownLatchs1[i]=new CountDownLatch(4);
+        }
+
+        cd0=new CountDownLatch(1);
+        cd1=new CountDownLatch(1);
+        cd2=new CountDownLatch(1);
+
+        readCounter0=0;
+        readCounter1=0;
+        readCounter2=0;
+        readCounter3=0;
+    }
+
     @Override
     public void handle(Event event) {
         System.out.println("执行（整机）AD校正同步信号测试...");
         Platform.runLater(() -> {
-            taLogs.appendText("开始执行（整机）AD校正同步信号测试...");
+            taLogs.appendText("开始执行（整机）AD校正同步信号测试...\n");
         });
 
         try {
@@ -116,6 +136,8 @@ public class ModuleCalSynSignalAd implements EventHandler {
             ProcessBuilder processBuilder3 = new ProcessBuilder(vivadoPath, "-mode", "tcl", "-source", tclScriptPath);
             processBuilder3.redirectErrorStream(true);
             process3 = processBuilder3.start();
+
+            Thread.sleep(3000);
 
         } catch (Exception e) {
         }
@@ -561,7 +583,7 @@ public class ModuleCalSynSignalAd implements EventHandler {
                     writeToProcess(processOutput3,3,"wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"rec_source_inst/ila_calibsource_inst\"}]"+"\n");
                     writeToProcess(processOutput3,3,"upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"rec_source_inst/ila_calibsource_inst\"}]"+"\n");
                     writeToProcess(processOutput3,3, "write_hw_ila_data -csv_file {"+properties.getProperty("ModuleCalSynSignalAd.samplePath")
-                            +"process3"+"_"+datadelay+".csv} hw_ila_data_11" + "\n");
+                            +"process3"+"_"+datadelay+".csv} hw_ila_data_13" + "\n");
                     File file=new File(properties.getProperty("ModuleCalSynSignalAd.samplePath")+"process3"+"_"+datadelay+".csv");
                     while (true){
                         if (file.exists()){

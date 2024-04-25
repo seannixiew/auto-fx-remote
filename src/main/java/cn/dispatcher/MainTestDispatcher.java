@@ -6,10 +6,7 @@ import cn.instr.DbfClient;
 import cn.instr.InstrumentClient;
 import cn.instr.MatrixClient;
 import cn.model.TestItemModel;
-import cn.utils.CommonUtils;
-import cn.utils.ControllersManager;
-import cn.utils.DateFormat;
-import cn.utils.TeeOutputStream;
+import cn.utils.*;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -54,6 +51,8 @@ public class MainTestDispatcher {
 
             for (TreeItem<TestItemModel> item : selectedItems) {
 
+                ThreadAndProcessPools.clearProcessAndThread();
+
                 TestItemModel testItem = item.getValue();
                 try {
                     Class handlerClass = Class.forName(testItem.getHandlerName());
@@ -63,16 +62,16 @@ public class MainTestDispatcher {
                     e.printStackTrace();
                 }
 
-//                System.out.println(testItem.getName()+"---测试完成！");
-//                Platform.runLater(()->{
-//                    taLogs.appendText(testItem.getName()+"---测试完成！");
-//                });
+                System.out.println(testItem.getName()+"---测试完成！");
+                Platform.runLater(()->{
+                    taLogs.appendText(testItem.getName()+"---测试完成！\n");
+                });
             }
 
-//            System.out.println("所有测试项完毕。");
-//            Platform.runLater(()->{
-//                taLogs.appendText("所有测试项完毕。");
-//            });
+            System.out.println("所有测试项完毕。");
+            Platform.runLater(()->{
+                taLogs.appendText("所有测试项完毕。\n");
+            });
 
         }).start();
 

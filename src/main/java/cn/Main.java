@@ -5,6 +5,7 @@ import cn.controllers.RfTestController;
 import cn.controllers.VivadoClientController;
 import cn.controllers.outline.ViewController;
 import cn.utils.ControllersManager;
+import cn.utils.ThreadAndProcessPools;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -76,6 +77,7 @@ public class Main extends Application {
     @Override
     public void stop() throws Exception {
         System.out.println("stop...");
+        ThreadAndProcessPools.clearProcessAndThread();
         super.stop();
     }
 }
