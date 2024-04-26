@@ -4,6 +4,8 @@ import cn.controllers.RfTestController;
 import cn.instr.DbfClient;
 import cn.utils.ControllersManager;
 import cn.utils.DateFormat;
+import cn.utils.SystemUtils;
+import cn.utils.ThreadAndProcessPools;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -12,6 +14,7 @@ import javafx.scene.control.ToggleButton;
 
 import java.io.*;
 import java.util.Date;
+import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.locks.LockSupport;
 
@@ -39,9 +42,9 @@ public class ModuleCalSynSignalDa implements EventHandler {
     }
 
     //实现串行下载fpga程序
-    private static final CountDownLatch cd0=new CountDownLatch(1);
-    private static final CountDownLatch cd1=new CountDownLatch(1);
-    private static final CountDownLatch cd2=new CountDownLatch(1);
+    private static CountDownLatch cd0=new CountDownLatch(1);
+    private static CountDownLatch cd1=new CountDownLatch(1);
+    private static CountDownLatch cd2=new CountDownLatch(1);
 
 
     Process process0;
@@ -75,18 +78,51 @@ public class ModuleCalSynSignalDa implements EventHandler {
     boolean programming2;
     boolean programming3;
 
+    boolean readerRunning0=true;
+    boolean readerRunning1=true;
+    boolean readerRunning2=true;
+    boolean readerRunning3=true;
+
     static int readCounter0=0;
     static int readCounter1=0;
     static int readCounter2=0;
     static int readCounter3=0;
 
+    Properties properties =new Properties();
+
+    public ModuleCalSynSignalDa(){
+
+        for(int i=0;i<32;i++){
+            countDownLatchs0[i]=new CountDownLatch(4);
+        }
+
+        for(int i=0;i<32;i++){
+            countDownLatchs1[i]=new CountDownLatch(4);
+        }
+
+        cd0=new CountDownLatch(1);
+        cd1=new CountDownLatch(1);
+        cd2=new CountDownLatch(1);
+
+        readCounter0=0;
+        readCounter1=0;
+        readCounter2=0;
+        readCounter3=0;
+
+    }
+
     @Override
     public void handle(Event event) {
-        System.out.println("执行（整机）AD校正同步信号测试...");
+        System.out.println("执行（整机）DA校正同步信号测试...");
         Platform.runLater(() -> {
-            taLogs.appendText("开始执行（整机）AD校正同步信号测试...");
+            taLogs.appendText("开始执行（整机）DA校正同步信号测试...\n");
         });
 
+        try {
+            properties.load(new FileInputStream("src/main/resources/configs/vivado.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         try {
             String vivadoPath = "D:\\Xilinx\\Vivado\\2018.3\\bin\\vivado.bat";
@@ -96,36 +132,47 @@ public class ModuleCalSynSignalDa implements EventHandler {
             ProcessBuilder processBuilder0 = new ProcessBuilder(vivadoPath, "-mode", "tcl", "-source", tclScriptPath);
             processBuilder0.redirectErrorStream(true);
             process0 = processBuilder0.start();
+            ThreadAndProcessPools.addProcess(process0);
+
             // 启动Vivado进程1
             ProcessBuilder processBuilder1 = new ProcessBuilder(vivadoPath, "-mode", "tcl", "-source", tclScriptPath);
             processBuilder1.redirectErrorStream(true);
             process1 = processBuilder1.start();
+            ThreadAndProcessPools.addProcess(process1);
+
             // 启动Vivado进程2
             ProcessBuilder processBuilder2 = new ProcessBuilder(vivadoPath, "-mode", "tcl", "-source", tclScriptPath);
             processBuilder2.redirectErrorStream(true);
             process2 = processBuilder2.start();
+            ThreadAndProcessPools.addProcess(process2);
+
             // 启动Vivado进程3（合路板）
             ProcessBuilder processBuilder3 = new ProcessBuilder(vivadoPath, "-mode", "tcl", "-source", tclScriptPath);
             processBuilder3.redirectErrorStream(true);
             process3 = processBuilder3.start();
+            ThreadAndProcessPools.addProcess(process3);
+
+            Thread.sleep(3000);
 
         } catch (Exception e) {
         }
 
-        new Thread(()->{
+        reader0=new Thread(()->{
             try {
-                reader0 = Thread.currentThread();
+//                reader0 = Thread.currentThread();
                 processInput0 = new BufferedReader(new InputStreamReader(process0.getInputStream(), "UTF-8"));
                 processError0 = new BufferedReader(new InputStreamReader(process0.getInputStream()));
 
-                while (true) {
+                while (readerRunning0) {
                     Thread.sleep(1000);
                     String echo = readFromProcess(processInput0,"reader0",0);
                     String error = readErrorFromProcess(processError0);
-                    Platform.runLater(() -> {
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+echo + "\n");
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+error + "\n");
-                    });
+                    if(echo!=null && !echo.contains("read pending...")) {
+                        Platform.runLater(() -> {
+                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n");
+                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + error + "\n");
+                        });
+                    }
                     String s = echo;
                     if (programming0) {
                         if (s.contains("End of startup status: HIGH")) {
@@ -137,21 +184,26 @@ public class ModuleCalSynSignalDa implements EventHandler {
                 }
             } catch (Exception e) {
             }
-        }).start();
-        new Thread(()->{
+        });
+        reader0.start();
+        ThreadAndProcessPools.addThread(reader0);
+
+        reader1=new Thread(()->{
             try {
-                reader1 = Thread.currentThread();
+//                reader1 = Thread.currentThread();
                 processInput1 = new BufferedReader(new InputStreamReader(process1.getInputStream(), "UTF-8"));
                 processError1 = new BufferedReader(new InputStreamReader(process1.getInputStream()));
 
-                while (true) {
+                while (readerRunning1) {
                     Thread.sleep(1000);
                     String echo = readFromProcess(processInput1,"reader1",1);
                     String error = readErrorFromProcess(processError1);
-                    Platform.runLater(() -> {
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+echo + "\n");
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+error + "\n");
-                    });
+                    if(echo!=null && !echo.contains("read pending...")) {
+                        Platform.runLater(() -> {
+                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n");
+                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + error + "\n");
+                        });
+                    }
                     String s = echo;
                     if (programming1) {
                         if (s.contains("End of startup status: HIGH")) {
@@ -163,21 +215,26 @@ public class ModuleCalSynSignalDa implements EventHandler {
                 }
             } catch (Exception e) {
             }
-        }).start();
-        new Thread(()->{
+        });
+        reader1.start();
+        ThreadAndProcessPools.addThread(reader1);
+
+        reader2=new Thread(()->{
             try {
-                reader2 = Thread.currentThread();
+//                reader2 = Thread.currentThread();
                 processInput2 = new BufferedReader(new InputStreamReader(process2.getInputStream(), "UTF-8"));
                 processError2 = new BufferedReader(new InputStreamReader(process2.getInputStream()));
 
-                while (true) {
+                while (readerRunning2) {
                     Thread.sleep(1000);
                     String echo = readFromProcess(processInput2,"reader2",2);
                     String error = readErrorFromProcess(processError2);
-                    Platform.runLater(() -> {
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+echo + "\n");
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+error + "\n");
-                    });
+                    if(echo!=null && !echo.contains("read pending...")) {
+                        Platform.runLater(() -> {
+                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n");
+                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + error + "\n");
+                        });
+                    }
                     String s = echo;
                     if (programming2) {
                         if (s.contains("End of startup status: HIGH")) {
@@ -189,21 +246,26 @@ public class ModuleCalSynSignalDa implements EventHandler {
                 }
             } catch (Exception e) {
             }
-        }).start();
-        new Thread(()->{
+        });
+        reader2.start();
+        ThreadAndProcessPools.addThread(reader2);
+
+        reader3=new Thread(()->{
             try {
-                reader3 = Thread.currentThread();
+//                reader3 = Thread.currentThread();
                 processInput3 = new BufferedReader(new InputStreamReader(process3.getInputStream(), "UTF-8"));
                 processError3 = new BufferedReader(new InputStreamReader(process3.getInputStream()));
 
-                while (true) {
+                while (readerRunning3) {
                     Thread.sleep(1000);
                     String echo = readFromProcess(processInput3,"reader3",3);
                     String error = readErrorFromProcess(processError3);
-                    Platform.runLater(() -> {
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+echo + "\n");
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+error + "\n");
-                    });
+                    if(echo!=null && !echo.contains("read pending...")) {
+                        Platform.runLater(() -> {
+                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n");
+                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + error + "\n");
+                        });
+                    }
                     String s = echo;
                     if (programming3) {
                         if (s.contains("End of startup status: HIGH")) {
@@ -215,7 +277,9 @@ public class ModuleCalSynSignalDa implements EventHandler {
                 }
             } catch (Exception e) {
             }
-        }).start();
+        });
+        reader3.start();
+        ThreadAndProcessPools.addThread(reader3);
 
         processOutput0 = new BufferedWriter(new OutputStreamWriter(process0.getOutputStream()));
         System.out.println("shell0进程状态：" + process0.isAlive());
@@ -226,8 +290,8 @@ public class ModuleCalSynSignalDa implements EventHandler {
         processOutput3 = new BufferedWriter(new OutputStreamWriter(process3.getOutputStream()));
         System.out.println("shell3进程状态：" + process3.isAlive());
 
-        new Thread(()->{
-            writerAndTester0=Thread.currentThread();
+        writerAndTester0=new Thread(()->{
+//            writerAndTester0=Thread.currentThread();
             try {
                 cd0.await();
                 System.out.println("process0初始操作...");
@@ -235,16 +299,16 @@ public class ModuleCalSynSignalDa implements EventHandler {
                 writeToProcess(processOutput0, 0,"connect_hw_server" + "\n");
                 Thread.sleep(1000);
 //                writeToProcess(processOutput0, "open_hw_target" + "\n");
-                writeToProcess(processOutput0, 0,"open_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c001}" + "\n");
-                writeToProcess(processOutput0, 0,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/80806580073c01}" + "\n");
-                writeToProcess(processOutput0, 0,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658007c701}" + "\n");
-                writeToProcess(processOutput0, 0,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/000018eaffd701}" + "\n");
+                writeToProcess(processOutput0, 0, "open_hw_target "+properties.getProperty("ModuleCalSynSignalDa.boxNum0") + "\n");
+                writeToProcess(processOutput0, 0,"close_hw_target "+properties.getProperty("ModuleCalSynSignalDa.boxNum1") + "\n");
+                writeToProcess(processOutput0, 0,"close_hw_target "+properties.getProperty("ModuleCalSynSignalDa.boxNum2") + "\n");
+                writeToProcess(processOutput0, 0,"close_hw_target "+properties.getProperty("ModuleCalSynSignalDa.boxNum3") + "\n");
                 Thread.sleep(10000);
                 writeToProcess(processOutput0, 0,"current_hw_device [get_hw_devices xc7vx690t_0]" + "\n");
                 writeToProcess(processOutput0, 0,"refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]" + "\n"); // 6~7s
-                writeToProcess(processOutput0, 0,"set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/DA_impl_Calib_syn_test/DA_top2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput0, 0,"set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/DA_impl_Calib_syn_test/DA_top2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput0, 0,"set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/0311/DA_impl_Calib_syn_test/DA_top2.bit} [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput0, 0,     "set_property PROBES.FILE "+properties.getProperty("ModuleCalSynSignalDa.probesPath0") +" [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput0, 0,"set_property FULL_PROBES.FILE "+properties.getProperty("ModuleCalSynSignalDa.probesPath0") +" [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput0, 0,    "set_property PROGRAM.FILE "+properties.getProperty("ModuleCalSynSignalDa.programPath0")+" [get_hw_devices xc7vx690t_0]" + "\n");
 
                 if (btDownload.isSelected()){
                     System.out.println("process0下载...");
@@ -288,21 +352,28 @@ public class ModuleCalSynSignalDa implements EventHandler {
                     Thread.sleep(3000); //触发余量
                     writeToProcess(processOutput0,0,"wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"trans_source_inst/ILA_trans_source_syntest_inst\"}]"+"\n");
                     writeToProcess(processOutput0,0,"upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"trans_source_inst/ILA_trans_source_syntest_inst\"}]"+"\n");
-                    writeToProcess(processOutput0,0, "write_hw_ila_data -csv_file {E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"
-                            +"process0"+"_"+datadelay+".csv} hw_ila_data_6" + "\n");
+                    writeToProcess(processOutput0,0, "write_hw_ila_data -csv_file {"+properties.getProperty("ModuleCalSynSignalDa.samplePath")
+                            +"process0"+"_"+datadelay+".csv} hw_ila_data_"+properties.getProperty("ModuleCalSynSignalDa.ilaNumDA1") + "\n");
 //                    writeToProcess(processOutput0,"start_gui");
-                    File file=new File("E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process0"+"_"+datadelay+".csv");
+                    File file=new File(properties.getProperty("ModuleCalSynSignalDa.samplePath")+"process0"+"_"+datadelay+".csv");
                     while (true){
+                        Thread.sleep(1);
                         if (file.exists()){
-                            System.out.println("已生成文件"+"E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process0"+"_"+datadelay+".csv");
+                            System.out.println("已生成文件"+properties.getProperty("ModuleCalSynSignalDa.samplePath")+"process0"+"_"+datadelay+".csv");
                             break;
                         }
                     }
                 }
+                readerRunning0=false;
+                System.out.println("关闭process0的vivado...");
+                SystemUtils.killProcessTree(process0);
             }catch (Exception e){}
-        }).start();
-        new Thread(()->{
-            writerAndTester1=Thread.currentThread();
+        });
+        writerAndTester0.start();
+        ThreadAndProcessPools.addThread(writerAndTester0);
+
+        writerAndTester1=new Thread(()->{
+//            writerAndTester1=Thread.currentThread();
             try {
                 cd1.await();
                 System.out.println("process1初始操作...");
@@ -310,16 +381,16 @@ public class ModuleCalSynSignalDa implements EventHandler {
                 writeToProcess(processOutput1, 1,"connect_hw_server" + "\n");
                 Thread.sleep(1000);
 //                writeToProcess(processOutput1, "open_hw_target" + "\n");
-                writeToProcess(processOutput1, 1,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c001}" + "\n");
-                writeToProcess(processOutput1, 1,"open_hw_target {localhost:3121/xilinx_tcf/Xilinx/80806580073c01}" + "\n");
-                writeToProcess(processOutput1, 1,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658007c701}" + "\n");
-                writeToProcess(processOutput1, 1,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/000018eaffd701}" + "\n");
+                writeToProcess(processOutput1, 1,"close_hw_target "+properties.getProperty("ModuleCalSynSignalDa.boxNum0") + "\n");
+                writeToProcess(processOutput1, 1, "open_hw_target "+properties.getProperty("ModuleCalSynSignalDa.boxNum1") + "\n");
+                writeToProcess(processOutput1, 1,"close_hw_target "+properties.getProperty("ModuleCalSynSignalDa.boxNum2") + "\n");
+                writeToProcess(processOutput1, 1,"close_hw_target "+properties.getProperty("ModuleCalSynSignalDa.boxNum3") + "\n");
                 Thread.sleep(10000);
                 writeToProcess(processOutput1, 1,"current_hw_device [get_hw_devices xc7vx690t_0]" + "\n");
                 writeToProcess(processOutput1, 1,"refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]" + "\n"); // 6~7s
-                writeToProcess(processOutput1, 1,"set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/DA_impl_Calib_syn_test/DA_top2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput1, 1,"set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/DA_impl_Calib_syn_test/DA_top2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput1, 1,"set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/0311/DA_impl_Calib_syn_test/DA_top2.bit} [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput1, 1,     "set_property PROBES.FILE "+properties.getProperty("ModuleCalSynSignalDa.probesPath1") +" [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput1, 1,"set_property FULL_PROBES.FILE "+properties.getProperty("ModuleCalSynSignalDa.probesPath1") +" [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput1, 1,    "set_property PROGRAM.FILE "+properties.getProperty("ModuleCalSynSignalDa.programPath1")+" [get_hw_devices xc7vx690t_0]" + "\n");
 
                 if (btDownload.isSelected()){
                     System.out.println("process1下载...");
@@ -363,21 +434,28 @@ public class ModuleCalSynSignalDa implements EventHandler {
                     Thread.sleep(3000); //触发余量
                     writeToProcess(processOutput1,1,"wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"trans_source_inst/ILA_trans_source_syntest_inst\"}]"+"\n");
                     writeToProcess(processOutput1,1,"upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"trans_source_inst/ILA_trans_source_syntest_inst\"}]"+"\n");
-                    writeToProcess(processOutput1,1, "write_hw_ila_data -csv_file {E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"
-                            +"process1"+"_"+datadelay+".csv} hw_ila_data_6" + "\n");
+                    writeToProcess(processOutput1,1, "write_hw_ila_data -csv_file {"+properties.getProperty("ModuleCalSynSignalDa.samplePath")
+                            +"process1"+"_"+datadelay+".csv} hw_ila_data_"+properties.getProperty("ModuleCalSynSignalDa.ilaNumDA2") + "\n");
 //
-                    File file=new File("E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process1"+"_"+datadelay+".csv");
+                    File file=new File(properties.getProperty("ModuleCalSynSignalDa.samplePath")+"process1"+"_"+datadelay+".csv");
                     while (true){
+                        Thread.sleep(1);
                         if (file.exists()){
-                            System.out.println("已生成文件"+"E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process1"+"_"+datadelay+".csv");
+                            System.out.println("已生成文件"+properties.getProperty("ModuleCalSynSignalDa.samplePath")+"process1"+"_"+datadelay+".csv");
                             break;
                         }
                     }
                 }
+                readerRunning1=false;
+                System.out.println("关闭process1的vivado...");
+                SystemUtils.killProcessTree(process1);
             }catch (Exception e){}
-        }).start();
-        new Thread(()->{
-            writerAndTester2=Thread.currentThread();
+        });
+        writerAndTester1.start();
+        ThreadAndProcessPools.addThread(writerAndTester1);
+
+        writerAndTester2=new Thread(()->{
+//            writerAndTester2=Thread.currentThread();
             try {
                 cd2.await();
                 System.out.println("process2初始操作...");
@@ -385,16 +463,16 @@ public class ModuleCalSynSignalDa implements EventHandler {
                 writeToProcess(processOutput2, 2,"connect_hw_server" + "\n");
                 Thread.sleep(1000);
 //                writeToProcess(processOutput2, "open_hw_target" + "\n");
-                writeToProcess(processOutput2, 2,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c001}" + "\n");
-                writeToProcess(processOutput2, 2,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/80806580073c01}" + "\n");
-                writeToProcess(processOutput2, 2,"open_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658007c701}" + "\n");
-                writeToProcess(processOutput2, 2,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/000018eaffd701}" + "\n");
+                writeToProcess(processOutput2, 2,"close_hw_target "+properties.getProperty("ModuleCalSynSignalDa.boxNum0") + "\n");
+                writeToProcess(processOutput2, 2,"close_hw_target "+properties.getProperty("ModuleCalSynSignalDa.boxNum1") + "\n");
+                writeToProcess(processOutput2, 2, "open_hw_target "+properties.getProperty("ModuleCalSynSignalDa.boxNum2") + "\n");
+                writeToProcess(processOutput2, 2,"close_hw_target "+properties.getProperty("ModuleCalSynSignalDa.boxNum3") + "\n");
                 Thread.sleep(10000);
                 writeToProcess(processOutput2, 2,"current_hw_device [get_hw_devices xc7vx690t_0]" + "\n");
                 writeToProcess(processOutput2, 2,"refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]" + "\n"); // 6~7s
-                writeToProcess(processOutput2, 2,"set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/DA_impl_Calib_syn_test/DA_top2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput2, 2,"set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/DA_impl_Calib_syn_test/DA_top2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput2, 2,"set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/0311/DA_impl_Calib_syn_test/DA_top2.bit} [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput2, 2,     "set_property PROBES.FILE "+properties.getProperty("ModuleCalSynSignalDa.probesPath2") +" [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput2, 2,"set_property FULL_PROBES.FILE "+properties.getProperty("ModuleCalSynSignalDa.probesPath2") +" [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput2, 2,    "set_property PROGRAM.FILE "+properties.getProperty("ModuleCalSynSignalDa.programPath2")+" [get_hw_devices xc7vx690t_0]" + "\n");
 
                 if (btDownload.isSelected()){
                     System.out.println("process2下载...");
@@ -437,37 +515,44 @@ public class ModuleCalSynSignalDa implements EventHandler {
                     Thread.sleep(3000); //触发余量
                     writeToProcess(processOutput2,2,"wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"trans_source_inst/ILA_trans_source_syntest_inst\"}]"+"\n");
                     writeToProcess(processOutput2,2,"upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"trans_source_inst/ILA_trans_source_syntest_inst\"}]"+"\n");
-                    writeToProcess(processOutput2,2, "write_hw_ila_data -csv_file {E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"
-                            +"process2"+"_"+datadelay+".csv} hw_ila_data_6" + "\n");
+                    writeToProcess(processOutput2,2, "write_hw_ila_data -csv_file {"+properties.getProperty("ModuleCalSynSignalDa.samplePath")
+                            +"process2"+"_"+datadelay+".csv} hw_ila_data_"+properties.getProperty("ModuleCalSynSignalDa.ilaNumDA3") + "\n");
 //                    writeToProcess(processOutput0,"start_gui");
-                    File file=new File("E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process2"+"_"+datadelay+".csv");
+                    File file=new File(properties.getProperty("ModuleCalSynSignalDa.samplePath")+"process2"+"_"+datadelay+".csv");
                     while (true){
+                        Thread.sleep(1);
                         if (file.exists()){
-                            System.out.println("已生成文件"+"E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process2"+"_"+datadelay+".csv");
+                            System.out.println("已生成文件"+properties.getProperty("ModuleCalSynSignalDa.samplePath")+"process2"+"_"+datadelay+".csv");
                             break;
                         }
                     }
                 }
+                readerRunning2=false;
+                System.out.println("关闭process2的vivado...");
+                SystemUtils.killProcessTree(process2);
             }catch (Exception e){}
-        }).start();
-        new Thread(()->{
-            writerAndTester3=Thread.currentThread();
+        });
+        writerAndTester2.start();
+        ThreadAndProcessPools.addThread(writerAndTester2);
+
+        writerAndTester3=new Thread(()->{
+//            writerAndTester3=Thread.currentThread();
             try {
                 System.out.println("process3初始操作...");
                 writeToProcess(processOutput3, 3,"open_hw" + "\n");
                 writeToProcess(processOutput3, 3,"connect_hw_server" + "\n");
                 Thread.sleep(1000);
-                writeToProcess(processOutput3, 3,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658006c001}" + "\n");
-                writeToProcess(processOutput3, 3,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/80806580073c01}" + "\n");
-                writeToProcess(processOutput3, 3,"close_hw_target {localhost:3121/xilinx_tcf/Xilinx/8080658007c701}" + "\n");
-                writeToProcess(processOutput3, 3,"open_hw_target {localhost:3121/xilinx_tcf/Xilinx/000018eaffd701}" + "\n");
+                writeToProcess(processOutput3, 3,"close_hw_target "+properties.getProperty("ModuleCalSynSignalDa.boxNum0") + "\n");
+                writeToProcess(processOutput3, 3,"close_hw_target "+properties.getProperty("ModuleCalSynSignalDa.boxNum1") + "\n");
+                writeToProcess(processOutput3, 3,"close_hw_target "+properties.getProperty("ModuleCalSynSignalDa.boxNum2") + "\n");
+                writeToProcess(processOutput3, 3, "open_hw_target "+properties.getProperty("ModuleCalSynSignalDa.boxNum3") + "\n");
                 Thread.sleep(10000);
                 writeToProcess(processOutput3, 3,"current_hw_device [get_hw_devices xc7vx690t_0]" + "\n");
                 writeToProcess(processOutput3, 3,"refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]" + "\n"); // 6~7s
                 Thread.sleep(10000);
-                writeToProcess(processOutput3, 3,"set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/HL_impl_transCalib_ilagai/TOP_HL_SELF.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput3, 3,"set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0311/HL_impl_transCalib_ilagai/TOP_HL_SELF.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                writeToProcess(processOutput3, 3,"set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/0311/HL_impl_transCalib_ilagai/TOP_HL_SELF.bit} [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput3, 3,     "set_property PROBES.FILE "+properties.getProperty("ModuleCalSynSignalDa.probesPath3") +" [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput3, 3,"set_property FULL_PROBES.FILE "+properties.getProperty("ModuleCalSynSignalDa.probesPath3") +" [get_hw_devices xc7vx690t_0]" + "\n");
+                writeToProcess(processOutput3, 3,    "set_property PROGRAM.FILE "+properties.getProperty("ModuleCalSynSignalDa.programPath3")+" [get_hw_devices xc7vx690t_0]" + "\n");
 
                 if (btDownload.isSelected()){
                     System.out.println("process3下载...");
@@ -551,22 +636,28 @@ public class ModuleCalSynSignalDa implements EventHandler {
                     Thread.sleep(3000); //触发余量
                     writeToProcess(processOutput3,3,"wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst\"}]"+"\n");
                     writeToProcess(processOutput3,3,"upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"trans_Calib_test_inst/ILA_trans_Calib_syntest_inst\"}]"+"\n");
-                    writeToProcess(processOutput3,3, "write_hw_ila_data -csv_file {E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"
-                            +"process3"+"_"+datadelay+".csv} hw_ila_data_12" + "\n");
-                    File file=new File("E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process3"+"_"+datadelay+".csv");
+                    writeToProcess(processOutput3,3, "write_hw_ila_data -csv_file {"+properties.getProperty("ModuleCalSynSignalDa.samplePath")
+                            +"process3"+"_"+datadelay+".csv} hw_ila_data_"+properties.getProperty("ModuleCalSynSignalDa.ilaNumHL") + "\n");
+                    File file=new File(properties.getProperty("ModuleCalSynSignalDa.samplePath")+"process3"+"_"+datadelay+".csv");
                     while (true){
+                        Thread.sleep(1);
                         if (file.exists()){
-                            System.out.println("已生成文件"+"E:\\wx\\2_projects\\L payload\\vivado files\\0311\\0caishu\\"+"process3"+"_"+datadelay+".csv");
+                            System.out.println("已生成文件"+properties.getProperty("ModuleCalSynSignalDa.samplePath")+"process3"+"_"+datadelay+".csv");
                             break;
                         }
                     }
                 }
+                readerRunning3=false;
+                System.out.println("关闭process3的vivado...");
+                SystemUtils.killProcessTree(process3);
             }catch (Exception e){}
-        }).start();
+        });
+        writerAndTester3.start();
+        ThreadAndProcessPools.addThread(writerAndTester3);
 
 
-        new Thread(()->{
-            sync=Thread.currentThread();
+        sync=new Thread(()->{
+//            sync=Thread.currentThread();
             try {
                 for(int i=0;i<32;i++){
                     System.out.println("sync线程进入waiting，等待三个线程到达检查点一...循环编号："+i);
@@ -600,12 +691,22 @@ public class ModuleCalSynSignalDa implements EventHandler {
                     LockSupport.unpark(writerAndTester2);
                     LockSupport.unpark(writerAndTester3);
                 }
-
-
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }).start();
+        });
+        sync.start();
+        ThreadAndProcessPools.addThread(sync);
+
+        try {
+            writerAndTester0.join();
+            writerAndTester1.join();
+            writerAndTester2.join();
+            writerAndTester3.join();
+            sync.join();
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
     }
 
     private  void writeToProcess(BufferedWriter processOutput,int senderNum, String command) throws IOException, InterruptedException {

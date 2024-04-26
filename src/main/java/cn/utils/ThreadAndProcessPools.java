@@ -12,7 +12,7 @@ public class ThreadAndProcessPools {
     RfTestController rfTestController =(RfTestController) ControllersManager.CONTROLLERS.get(RfTestController.class.getSimpleName());
     TextArea taLogs=rfTestController.taLogs;
 
-    static List<Thread> theRoundThreadList=new ArrayList<>(); //vivado reader & writer threads
+    static List<Thread> theRoundThreadList=new ArrayList<>(); //vivado reader & writer & sync threads
     static List<Process> theRoundProcessList=new ArrayList<>();
 
     public static boolean clearProcessAndThread(){

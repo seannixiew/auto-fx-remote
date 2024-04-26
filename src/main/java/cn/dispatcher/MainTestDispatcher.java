@@ -51,8 +51,13 @@ public class MainTestDispatcher {
 
             for (TreeItem<TestItemModel> item : selectedItems) {
 
-                ThreadAndProcessPools.clearProcessAndThread();
-
+                try {
+                    //执行每个测试项前清理线程池和进程池
+                    ThreadAndProcessPools.clearProcessAndThread();
+                    Thread.sleep(1000);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 TestItemModel testItem = item.getValue();
                 try {
                     Class handlerClass = Class.forName(testItem.getHandlerName());
@@ -61,7 +66,6 @@ public class MainTestDispatcher {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
                 System.out.println(testItem.getName()+"---测试完成！");
                 Platform.runLater(()->{
                     taLogs.appendText(testItem.getName()+"---测试完成！\n");

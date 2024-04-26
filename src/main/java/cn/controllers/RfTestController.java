@@ -25,10 +25,14 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
+import org.apache.poi.ss.usermodel.RichTextString;
 import org.controlsfx.control.CheckTreeView;
 import org.controlsfx.control.PopOver;
 import org.controlsfx.control.ToggleSwitch;
@@ -51,6 +55,10 @@ public class RfTestController extends RootController {
     public ListView<String> listView;
     @FXML
     public TitledPane tp0;
+    @FXML
+    public TitledPane tp1;
+    @FXML
+    public TitledPane tp2;
     @FXML
     public ComboBox cbVSG;
     @FXML
@@ -97,6 +105,8 @@ public class RfTestController extends RootController {
     public ToggleButton btDownload;
     @FXML
     public Button btGroundTest;
+    @FXML
+    public Label lbErrors;
 
     @FXML
     public ComboBox<String> cbLoop;
@@ -119,19 +129,35 @@ public class RfTestController extends RootController {
 
     public MainTestDispatcher mainTestDispatcher;
 
-    private double mouseY;
+    boolean ifMaxHeightTp2=false;
+    double lastHeightTp0;
+    double lastHeightTp1;
+    double lastHeightTp2;
 
     @FXML
-    void onMouPres(MouseEvent event){
-        mouseY = event.getScreenY();
-    }
-    @FXML
-    void onMouDra(MouseEvent event){
-        double deltaY = event.getScreenY() - mouseY;
-        double newHeight = tp0.getHeight() + deltaY;
-        if (newHeight > tp0.getMinHeight()) { // 防止高度小于最小高度
-            tp0.setPrefHeight(newHeight);
-            mouseY = event.getScreenY();
+    void onMouClic(){
+
+        if(!ifMaxHeightTp2) {
+            ifMaxHeightTp2=true;
+            lastHeightTp0=tp0.getHeight();
+            lastHeightTp1=tp1.getHeight();
+            lastHeightTp2=tp2.getHeight();
+            Platform.runLater(()->{
+                tp0.setMaxHeight(0);
+                tp1.setMaxHeight(0);
+                tp2.setPrefHeight(lastHeightTp0 + lastHeightTp1 +lastHeightTp2 );
+                tp2.setStyle("-fx-border-color: #FF7744 ");
+            });
+        }else {
+            ifMaxHeightTp2=false;
+            tp0.setMaxHeight(9999);
+            tp1.setMaxHeight(9999);
+            Platform.runLater(()->{
+                tp0.setPrefHeight(lastHeightTp0);
+                tp1.setPrefHeight(lastHeightTp1);
+                tp2.setPrefHeight(lastHeightTp2);
+                tp2.setStyle(null);
+            });
         }
     }
 
@@ -144,13 +170,6 @@ public class RfTestController extends RootController {
 //            });
 //            return;
 //        }
-
-        ThreadAndProcessPools.clearProcessAndThread();
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         System.out.println("测试启动...");
 
         mainTestDispatcher=new MainTestDispatcher();
@@ -611,6 +630,7 @@ public class RfTestController extends RootController {
 
         cbLoop.getItems().addAll("遍历模式：0","遍历模式：1","遍历模式：2","遍历模式：3","遍历模式：4","遍历模式：5");
         cbLoop.getSelectionModel().select(0);
+
     }
 
 }

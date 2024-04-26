@@ -6,6 +6,7 @@ import cn.instr.DbfClient;
 import cn.utils.ControllersManager;
 import cn.utils.DateFormat;
 import cn.utils.SystemUtils;
+import cn.utils.ThreadAndProcessPools;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -51,13 +52,11 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
     }
 
     //实现串行下载fpga程序
-    private static final CountDownLatch cd0=new CountDownLatch(1);
-    private static final CountDownLatch cd1=new CountDownLatch(1);
-    private static final CountDownLatch cd2=new CountDownLatch(1);
+    private static CountDownLatch cd0=new CountDownLatch(1);
+    private static CountDownLatch cd1=new CountDownLatch(1);
+    private static CountDownLatch cd2=new CountDownLatch(1);
 
-    private static final CountDownLatch cdFirstSendDbf=new CountDownLatch(4);    //控制初次发地检指令时机
-
-
+    private static CountDownLatch cdFirstSendDbf=new CountDownLatch(4);    //控制初次发地检指令时机
 
     Process process0;
     Process process1;
@@ -102,11 +101,39 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
 
     Properties properties =new Properties();
 
+    public ModuleFreqSwitchSynSignalDa(){
+        for(int i=0;i<32;i++){
+            for(int j=0;j<3;j++) {
+                countDownLatchs0[i][j] = new CountDownLatch(4);
+            }
+        }
+
+        for(int i=0;i<32;i++){
+            for(int j=0;j<3;j++) {
+                countDownLatchs1[i][j] = new CountDownLatch(4);
+            }
+        }
+
+        for(int i=0;i<32;i++){
+            countDownLatchs2[i] = new CountDownLatch(4);
+        }
+
+        cd0=new CountDownLatch(1);
+        cd1=new CountDownLatch(1);
+        cd2=new CountDownLatch(1);
+        cdFirstSendDbf=new CountDownLatch(4);
+
+        readCounter0=0;
+        readCounter1=0;
+        readCounter2=0;
+        readCounter3=0;
+    }
+
     @Override
     public void handle(Event event) {
-        System.out.println("执行（整机）DA校正同步信号测试...");
+        System.out.println("执行（整机）DA频率切换同步信号测试...");
         Platform.runLater(() -> {
-            taLogs.appendText("开始执行（整机）DA校正同步信号测试...");
+            taLogs.appendText("开始执行（整机）DA频率切换同步信号测试...\n");
         });
 
         try {
@@ -123,25 +150,34 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
             ProcessBuilder processBuilder0 = new ProcessBuilder(vivadoPath, "-mode", "tcl", "-source", tclScriptPath);
             processBuilder0.redirectErrorStream(true);
             process0 = processBuilder0.start();
+            ThreadAndProcessPools.addProcess(process0);
+
             // 启动Vivado进程1
             ProcessBuilder processBuilder1 = new ProcessBuilder(vivadoPath, "-mode", "tcl", "-source", tclScriptPath);
             processBuilder1.redirectErrorStream(true);
             process1 = processBuilder1.start();
+            ThreadAndProcessPools.addProcess(process1);
+
             // 启动Vivado进程2
             ProcessBuilder processBuilder2 = new ProcessBuilder(vivadoPath, "-mode", "tcl", "-source", tclScriptPath);
             processBuilder2.redirectErrorStream(true);
             process2 = processBuilder2.start();
+            ThreadAndProcessPools.addProcess(process2);
+
             // 启动Vivado进程3（合路板）
             ProcessBuilder processBuilder3 = new ProcessBuilder(vivadoPath, "-mode", "tcl", "-source", tclScriptPath);
             processBuilder3.redirectErrorStream(true);
             process3 = processBuilder3.start();
+            ThreadAndProcessPools.addProcess(process3);
+
+            Thread.sleep(3000);
 
         } catch (Exception e) {
         }
 
-        new Thread(()->{
+        reader0=new Thread(()->{
             try {
-                reader0 = Thread.currentThread();
+//                reader0 = Thread.currentThread();
                 processInput0 = new BufferedReader(new InputStreamReader(process0.getInputStream(), "UTF-8"));
                 processError0 = new BufferedReader(new InputStreamReader(process0.getInputStream()));
 
@@ -150,8 +186,10 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
                     String echo = readFromProcess(processInput0,"reader0",0);
                     String error = readErrorFromProcess(processError0);
                     Platform.runLater(() -> {
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+echo + "\n");
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+error + "\n");
+                        if(echo != null && !echo.contains("read pending...")) {
+                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n");
+                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + error + "\n");
+                        }
                     });
                     String s = echo;
                     if (programming0) {
@@ -164,10 +202,13 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
                 }
             } catch (Exception e) {
             }
-        }).start();
-        new Thread(()->{
+        });
+        reader0.start();
+        ThreadAndProcessPools.addThread(reader0);
+
+        reader1=new Thread(()->{
             try {
-                reader1 = Thread.currentThread();
+//                reader1 = Thread.currentThread();
                 processInput1 = new BufferedReader(new InputStreamReader(process1.getInputStream(), "UTF-8"));
                 processError1 = new BufferedReader(new InputStreamReader(process1.getInputStream()));
 
@@ -175,10 +216,12 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
                     Thread.sleep(1000);
                     String echo = readFromProcess(processInput1,"reader1",1);
                     String error = readErrorFromProcess(processError1);
-                    Platform.runLater(() -> {
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+echo + "\n");
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+error + "\n");
-                    });
+                    if(echo != null && !echo.contains("read pending...")) {
+                        Platform.runLater(() -> {
+                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n");
+                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + error + "\n");
+                        });
+                    }
                     String s = echo;
                     if (programming1) {
                         if (s.contains("End of startup status: HIGH")) {
@@ -190,10 +233,13 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
                 }
             } catch (Exception e) {
             }
-        }).start();
-        new Thread(()->{
+        });
+        reader1.start();
+        ThreadAndProcessPools.addThread(reader1);
+
+        reader2=new Thread(()->{
             try {
-                reader2 = Thread.currentThread();
+//                reader2 = Thread.currentThread();
                 processInput2 = new BufferedReader(new InputStreamReader(process2.getInputStream(), "UTF-8"));
                 processError2 = new BufferedReader(new InputStreamReader(process2.getInputStream()));
 
@@ -201,10 +247,12 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
                     Thread.sleep(1000);
                     String echo = readFromProcess(processInput2,"reader2",2);
                     String error = readErrorFromProcess(processError2);
-                    Platform.runLater(() -> {
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+echo + "\n");
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+error + "\n");
-                    });
+                    if(echo != null && !echo.contains("read pending...")) {
+                        Platform.runLater(() -> {
+                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n");
+                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + error + "\n");
+                        });
+                    }
                     String s = echo;
                     if (programming2) {
                         if (s.contains("End of startup status: HIGH")) {
@@ -216,10 +264,13 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
                 }
             } catch (Exception e) {
             }
-        }).start();
-        new Thread(()->{
+        });
+        reader2.start();
+        ThreadAndProcessPools.addThread(reader2);
+
+        reader3=new Thread(()->{
             try {
-                reader3 = Thread.currentThread();
+//                reader3 = Thread.currentThread();
                 processInput3 = new BufferedReader(new InputStreamReader(process3.getInputStream(), "UTF-8"));
                 processError3 = new BufferedReader(new InputStreamReader(process3.getInputStream()));
 
@@ -227,10 +278,12 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
                     Thread.sleep(1000);
                     String echo = readFromProcess(processInput3,"reader3",3);
                     String error = readErrorFromProcess(processError3);
-                    Platform.runLater(() -> {
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+echo + "\n");
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+error + "\n");
-                    });
+                    if(echo != null && !echo.contains("read pending...")) {
+                        Platform.runLater(() -> {
+                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n");
+                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + error + "\n");
+                        });
+                    }
                     String s = echo;
                     if (programming3) {
                         if (s.contains("End of startup status: HIGH")) {
@@ -242,7 +295,9 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
                 }
             } catch (Exception e) {
             }
-        }).start();
+        });
+        reader3.start();
+        ThreadAndProcessPools.addThread(reader3);
 
         processOutput0 = new BufferedWriter(new OutputStreamWriter(process0.getOutputStream()));
         System.out.println("shell0进程状态：" + process0.isAlive());
@@ -253,8 +308,8 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
         processOutput3 = new BufferedWriter(new OutputStreamWriter(process3.getOutputStream()));
         System.out.println("shell3进程状态：" + process3.isAlive());
 
-        new Thread(()->{
-            writerAndTester0=Thread.currentThread();
+        writerAndTester0=new Thread(()->{
+//            writerAndTester0=Thread.currentThread();
             try {
                 cd0.await();
                 System.out.println("process0初始操作...");
@@ -295,6 +350,14 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
                 cdFirstSendDbf.countDown();
                 Thread.sleep(1000);
                 LockSupport.park();
+
+                System.out.println("process0设置pps时延...");
+//                writeToProcess(processOutput0, 0,"set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes CNTVALUEIN -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0_1] -filter {CELL_NAME=~\"vio_pps_inst\"}]]" + "\n");
+//                writeToProcess(processOutput0, 0,"set_property INPUT_VALUE_RADIX UNSIGNED [get_hw_probes CNTVALUEOUT -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0_1] -filter {CELL_NAME=~\"vio_pps_inst\"}]]" + "\n");
+//                writeToProcess(processOutput0, 0,"set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes Delayloaden -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0_1] -filter {CELL_NAME=~\"vio_pps_inst\"}]]" + "\n");
+//                writeToProcess(processOutput0, 0,"set_property OUTPUT_VALUE "+properties.getProperty("ModuleFreqSwitchSynSignalDa.vioPpsInst")+" [get_hw_probes CNTVALUEIN -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0_1] -filter {CELL_NAME=~\"vio_pps_inst\"}]]" + "\n");
+//                writeToProcess(processOutput0, 0,"commit_hw_vio [get_hw_probes {CNTVALUEIN} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0_1] -filter {CELL_NAME=~\"vio_pps_inst\"}]]" + "\n");
+
                 System.out.println("process0设置vio_delay_ld及上升沿触发...");
 
                 writeToProcess(processOutput0,0,"set_property OUTPUT_VALUE 0 [get_hw_probes Inst_freq_change_syn_DA1/LD -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"Inst_freq_change_syn_DA1/Inst_vio_syn_DA1\"}]]"+"\n");
@@ -330,6 +393,7 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
 //                    writeToProcess(processOutput0,"start_gui");
                     File file=new File(properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process0"+"_"+datadelay+"#0"+".csv");
                     while (true){
+                        Thread.sleep(1);
                         if (file.exists()){
                             System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process0"+"_"+datadelay+"#0"+".csv");
                             break;
@@ -355,6 +419,7 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
 //                    writeToProcess(processOutput0,"start_gui");
                     file=new File(properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process0"+"_"+datadelay+"#1"+".csv");
                     while (true){
+                        Thread.sleep(1);
                         if (file.exists()){
                             System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process0"+"_"+datadelay+"#1"+".csv");
                             break;
@@ -380,6 +445,7 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
 //                    writeToProcess(processOutput0,"start_gui");
                     file=new File(properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process0"+"_"+datadelay+"#2"+".csv");
                     while (true){
+                        Thread.sleep(1);
                         if (file.exists()){
                             System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process0"+"_"+datadelay+"#2"+".csv");
                             break;
@@ -395,9 +461,12 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
                 System.out.println("关闭process0的vivado...");
                 SystemUtils.killProcessTree(process0);
             }catch (Exception e){}
-        }).start();
-        new Thread(()->{
-            writerAndTester1=Thread.currentThread();
+        });
+        writerAndTester0.start();
+        ThreadAndProcessPools.addThread(writerAndTester0);
+
+        writerAndTester1=new Thread(()->{
+//            writerAndTester1=Thread.currentThread();
             try {
                 cd1.await();
                 System.out.println("process1初始操作...");
@@ -438,6 +507,14 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
                 cdFirstSendDbf.countDown();
                 Thread.sleep(1000);
                 LockSupport.park();
+
+                System.out.println("process1设置pps时延...");
+//                writeToProcess(processOutput1, 1,"set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes CNTVALUEIN -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0_1] -filter {CELL_NAME=~\"vio_pps_inst\"}]]" + "\n");
+//                writeToProcess(processOutput1, 1,"set_property INPUT_VALUE_RADIX UNSIGNED [get_hw_probes CNTVALUEOUT -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0_1] -filter {CELL_NAME=~\"vio_pps_inst\"}]]" + "\n");
+//                writeToProcess(processOutput1, 1,"set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes Delayloaden -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0_1] -filter {CELL_NAME=~\"vio_pps_inst\"}]]" + "\n");
+//                writeToProcess(processOutput1, 1,"set_property OUTPUT_VALUE "+properties.getProperty("ModuleFreqSwitchSynSignalDa.vioPpsInst")+" [get_hw_probes CNTVALUEIN -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0_1] -filter {CELL_NAME=~\"vio_pps_inst\"}]]" + "\n");
+//                writeToProcess(processOutput1, 1,"commit_hw_vio [get_hw_probes {CNTVALUEIN} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0_1] -filter {CELL_NAME=~\"vio_pps_inst\"}]]" + "\n");
+
                 System.out.println("process1设置vio_delay_ld及上升沿触发...");
 
                 writeToProcess(processOutput1,1,"set_property OUTPUT_VALUE 0 [get_hw_probes Inst_freq_change_syn_DA2/LD -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"Inst_freq_change_syn_DA2/Inst_vio_syn_DA2\"}]]"+"\n");
@@ -473,6 +550,7 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
 //                    writeToProcess(processOutput0,"start_gui");
                     File file=new File(properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process1"+"_"+datadelay+"#0"+".csv");
                     while (true){
+                        Thread.sleep(1);
                         if (file.exists()){
                             System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process1"+"_"+datadelay+"#0"+".csv");
                             break;
@@ -498,6 +576,7 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
 //                    writeToProcess(processOutput0,"start_gui");
                     file=new File(properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process1"+"_"+datadelay+"#1"+".csv");
                     while (true){
+                        Thread.sleep(1);
                         if (file.exists()){
                             System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process1"+"_"+datadelay+"#1"+".csv");
                             break;
@@ -523,6 +602,7 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
 //                    writeToProcess(processOutput0,"start_gui");
                     file=new File(properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process1"+"_"+datadelay+"#2"+".csv");
                     while (true){
+                        Thread.sleep(1);
                         if (file.exists()){
                             System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process1"+"_"+datadelay+"#2"+".csv");
                             break;
@@ -538,9 +618,12 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
                 System.out.println("关闭process1的vivado...");
                 SystemUtils.killProcessTree(process1);
             }catch (Exception e){}
-        }).start();
-        new Thread(()->{
-            writerAndTester2=Thread.currentThread();
+        });
+        writerAndTester1.start();
+        ThreadAndProcessPools.addThread(writerAndTester1);
+
+        writerAndTester2=new Thread(()->{
+//            writerAndTester2=Thread.currentThread();
             try {
                 cd2.await();
                 System.out.println("process2初始操作...");
@@ -581,6 +664,14 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
                 cdFirstSendDbf.countDown();
                 Thread.sleep(1000);
                 LockSupport.park();
+
+                System.out.println("process2设置pps时延...");
+//                writeToProcess(processOutput2, 2,"set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes CNTVALUEIN -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0_1] -filter {CELL_NAME=~\"vio_pps_inst\"}]]" + "\n");
+//                writeToProcess(processOutput2, 2,"set_property INPUT_VALUE_RADIX UNSIGNED [get_hw_probes CNTVALUEOUT -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0_1] -filter {CELL_NAME=~\"vio_pps_inst\"}]]" + "\n");
+//                writeToProcess(processOutput2, 2,"set_property OUTPUT_VALUE_RADIX UNSIGNED [get_hw_probes Delayloaden -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0_1] -filter {CELL_NAME=~\"vio_pps_inst\"}]]" + "\n");
+//                writeToProcess(processOutput2, 2,"set_property OUTPUT_VALUE "+properties.getProperty("ModuleFreqSwitchSynSignalDa.vioPpsInst")+" [get_hw_probes CNTVALUEIN -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0_1] -filter {CELL_NAME=~\"vio_pps_inst\"}]]" + "\n");
+//                writeToProcess(processOutput2, 2,"commit_hw_vio [get_hw_probes {CNTVALUEIN} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0_1] -filter {CELL_NAME=~\"vio_pps_inst\"}]]" + "\n");
+
                 System.out.println("process2设置vio_delay_ld及上升沿触发...");
 
                 writeToProcess(processOutput2,2,"set_property OUTPUT_VALUE 0 [get_hw_probes Inst_freq_change_syn_DA3/LD -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"Inst_freq_change_syn_DA3/Inst_vio_syn_DA3\"}]]"+"\n");
@@ -616,6 +707,7 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
 //                    writeToProcess(processOutput0,"start_gui");
                     File file=new File(properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process2"+"_"+datadelay+"#0"+".csv");
                     while (true){
+                        Thread.sleep(1);
                         if (file.exists()){
                             System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process2"+"_"+datadelay+"#0"+".csv");
                             break;
@@ -641,6 +733,7 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
 //                    writeToProcess(processOutput0,"start_gui");
                     file=new File(properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process2"+"_"+datadelay+"#1"+".csv");
                     while (true){
+                        Thread.sleep(1);
                         if (file.exists()){
                             System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process2"+"_"+datadelay+"#1"+".csv");
                             break;
@@ -666,6 +759,7 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
 //                    writeToProcess(processOutput0,"start_gui");
                     file=new File(properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process2"+"_"+datadelay+"#2"+".csv");
                     while (true){
+                        Thread.sleep(1);
                         if (file.exists()){
                             System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process2"+"_"+datadelay+"#2"+".csv");
                             break;
@@ -681,9 +775,12 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
                 System.out.println("关闭process2的vivado...");
                 SystemUtils.killProcessTree(process2);
             }catch (Exception e){}
-        }).start();
-        new Thread(()->{
-            writerAndTester3=Thread.currentThread();
+        });
+        writerAndTester2.start();
+        ThreadAndProcessPools.addThread(writerAndTester2);
+
+        writerAndTester3=new Thread(()->{
+//            writerAndTester3=Thread.currentThread();
             try {
                 System.out.println("process3初始操作...");
                 writeToProcess(processOutput3, 3,"open_hw" + "\n");
@@ -771,6 +868,7 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
                             +"process3"+"_"+datadelay+"#0"+".csv} hw_ila_data_3" + "\n");
                     File file=new File(properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process3"+"_"+datadelay+"#0"+".csv");
                     while (true){
+                        Thread.sleep(1);
                         if (file.exists()){
                             System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process3"+"_"+datadelay+"#0"+".csv");
                             break;
@@ -805,6 +903,7 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
                             +"process3"+"_"+datadelay+"#1"+".csv} hw_ila_data_3" + "\n");
                     file=new File(properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process3"+"_"+datadelay+"#1"+".csv");
                     while (true){
+                        Thread.sleep(1);
                         if (file.exists()){
                             System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process3"+"_"+datadelay+"#1"+".csv");
                             break;
@@ -839,6 +938,7 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
                             +"process3"+"_"+datadelay+"#2"+".csv} hw_ila_data_3" + "\n");
                     file=new File(properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process3"+"_"+datadelay+"#2"+".csv");
                     while (true){
+                        Thread.sleep(1);
                         if (file.exists()){
                             System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalDa.samplePath")+"process3"+"_"+datadelay+"#2"+".csv");
                             break;
@@ -856,11 +956,12 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
                 System.out.println("关闭process3的vivado...");
                 SystemUtils.killProcessTree(process3);
             }catch (Exception e){}
-        }).start();
+        });
+        writerAndTester3.start();
+        ThreadAndProcessPools.addThread(writerAndTester3);
 
-
-        new Thread(()->{
-            sync=Thread.currentThread();
+        sync=new Thread(()->{
+//            sync=Thread.currentThread();
             try {
                 //4块板子下完程序（执行完display xxx），执行此处
                 cdFirstSendDbf.await();
@@ -952,12 +1053,22 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
                     LockSupport.unpark(writerAndTester2);
                     LockSupport.unpark(writerAndTester3);
                 }
-
-
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }).start();
+        });
+        sync.start();
+        ThreadAndProcessPools.addThread(sync);
+
+        try {
+            writerAndTester0.join();
+            writerAndTester1.join();
+            writerAndTester2.join();
+            writerAndTester3.join();
+            sync.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private  void writeToProcess(BufferedWriter processOutput,int senderNum, String command) throws IOException, InterruptedException {
