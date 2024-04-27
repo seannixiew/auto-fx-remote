@@ -24,6 +24,9 @@
   ModuleSequenceStabilityAd
   不下程序，测试到一半终止，再复测，成功采数。【1 clear】
   不下程序，注入error，终止，再复测，成功运行。【1 clear】
+
+  ModulePpsSynAd
+  不下程序，测试到一半终止，再复测，成功截图。【1 clear】
   
 # 代码不一致性备注
   针对vivado相关测试项，可实现断点获取vivado shell句柄

@@ -4,9 +4,7 @@ import cn.controllers.RfTestController;
 import cn.handler.base.BaseHandler;
 import cn.instr.DbfClient;
 import cn.instr.InstrumentClient;
-import cn.utils.ControllersManager;
-import cn.utils.DateFormat;
-import cn.utils.SystemUtils;
+import cn.utils.*;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -44,8 +42,8 @@ public class ModulePpsSynAd   implements EventHandler {
     }
 
     //实现串行下载fpga程序
-    private static final CountDownLatch cd0=new CountDownLatch(1);
-    private static final CountDownLatch cd1=new CountDownLatch(1);
+    private static CountDownLatch cd0=new CountDownLatch(1);
+    private static CountDownLatch cd1=new CountDownLatch(1);
 
     Process process0;
     Process process1;
@@ -86,6 +84,19 @@ public class ModulePpsSynAd   implements EventHandler {
 
     Properties properties =new Properties();
 
+    public ModulePpsSynAd(){
+        for(int i=0;i<96;i++){
+            countDownLatchs0[i]=new CountDownLatch(3);
+        }
+
+        cd0=new CountDownLatch(1);
+        cd1=new CountDownLatch(1);
+
+        readCounter0=0;
+        readCounter1=0;
+        readCounter2=0;
+    }
+
     @Override
     public void handle(Event event) {
         System.out.println("执行（整机）PPS板间同步信号测试...");
@@ -108,22 +119,29 @@ public class ModulePpsSynAd   implements EventHandler {
             ProcessBuilder processBuilder0 = new ProcessBuilder(vivadoPath, "-mode", "tcl", "-source", tclScriptPath);
             processBuilder0.redirectErrorStream(true);
             process0 = processBuilder0.start();
+            ThreadAndProcessPools.addProcess(process0);
+
             // 启动Vivado进程1
             ProcessBuilder processBuilder1 = new ProcessBuilder(vivadoPath, "-mode", "tcl", "-source", tclScriptPath);
             processBuilder1.redirectErrorStream(true);
             process1 = processBuilder1.start();
+            ThreadAndProcessPools.addProcess(process1);
+
             // 启动Vivado进程2
             ProcessBuilder processBuilder2 = new ProcessBuilder(vivadoPath, "-mode", "tcl", "-source", tclScriptPath);
             processBuilder2.redirectErrorStream(true);
             process2 = processBuilder2.start();
+            ThreadAndProcessPools.addProcess(process2);
+
+            Thread.sleep(3000);
 
 
         } catch (Exception e) {
         }
 
-        new Thread(()->{
+        reader0=new Thread(()->{
             try {
-                reader0 = Thread.currentThread();
+//                reader0 = Thread.currentThread();
                 processInput0 = new BufferedReader(new InputStreamReader(process0.getInputStream(), "UTF-8"));
                 processError0 = new BufferedReader(new InputStreamReader(process0.getInputStream()));
 
@@ -131,10 +149,16 @@ public class ModulePpsSynAd   implements EventHandler {
                     Thread.sleep(1000);
                     String echo = readFromProcess(processInput0,"reader0",0);
                     String error = readErrorFromProcess(processError0);
-                    Platform.runLater(() -> {
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+echo + "\n");
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+error + "\n");
-                    });
+                    if(echo != null && !echo.contains("read pending...")) {
+                        String log = DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n";
+                        if (log.toUpperCase().contains("ERROR")) {
+                            VivadoErrorCounts.setReadError(log);
+                        }
+                        Platform.runLater(() -> {
+                            taLogs.appendText(log);
+                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + error + "\n");
+                        });
+                    }
                     String s = echo;
                     if (programming0) {
                         if (s.contains("End of startup status: HIGH")) {
@@ -146,10 +170,13 @@ public class ModulePpsSynAd   implements EventHandler {
                 }
             } catch (Exception e) {
             }
-        }).start();
-        new Thread(()->{
+        });
+        reader0.start();
+        ThreadAndProcessPools.addThread(reader0);
+
+        reader1=new Thread(()->{
             try {
-                reader1 = Thread.currentThread();
+//                reader1 = Thread.currentThread();
                 processInput1 = new BufferedReader(new InputStreamReader(process1.getInputStream(), "UTF-8"));
                 processError1 = new BufferedReader(new InputStreamReader(process1.getInputStream()));
 
@@ -157,10 +184,16 @@ public class ModulePpsSynAd   implements EventHandler {
                     Thread.sleep(1000);
                     String echo = readFromProcess(processInput1,"reader1",1);
                     String error = readErrorFromProcess(processError1);
-                    Platform.runLater(() -> {
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+echo + "\n");
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+error + "\n");
-                    });
+                    if(echo != null && !echo.contains("read pending...")) {
+                        String log = DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n";
+                        if (log.toUpperCase().contains("ERROR")) {
+                            VivadoErrorCounts.setReadError(log);
+                        }
+                        Platform.runLater(() -> {
+                            taLogs.appendText(log);
+                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + error + "\n");
+                        });
+                    }
                     String s = echo;
                     if (programming1) {
                         if (s.contains("End of startup status: HIGH")) {
@@ -172,10 +205,13 @@ public class ModulePpsSynAd   implements EventHandler {
                 }
             } catch (Exception e) {
             }
-        }).start();
-        new Thread(()->{
+        });
+        reader1.start();
+        ThreadAndProcessPools.addThread(reader1);
+
+        reader2=new Thread(()->{
             try {
-                reader2 = Thread.currentThread();
+//                reader2 = Thread.currentThread();
                 processInput2 = new BufferedReader(new InputStreamReader(process2.getInputStream(), "UTF-8"));
                 processError2 = new BufferedReader(new InputStreamReader(process2.getInputStream()));
 
@@ -183,10 +219,16 @@ public class ModulePpsSynAd   implements EventHandler {
                     Thread.sleep(1000);
                     String echo = readFromProcess(processInput2,"reader2",2);
                     String error = readErrorFromProcess(processError2);
-                    Platform.runLater(() -> {
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+echo + "\n");
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+error + "\n");
-                    });
+                    if(echo != null && !echo.contains("read pending...")) {
+                        String log = DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n";
+                        if (log.toUpperCase().contains("ERROR")) {
+                            VivadoErrorCounts.setReadError(log);
+                        }
+                        Platform.runLater(() -> {
+                            taLogs.appendText(log);
+                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + error + "\n");
+                        });
+                    }
                     String s = echo;
                     if (programming2) {
                         if (s.contains("End of startup status: HIGH")) {
@@ -198,7 +240,9 @@ public class ModulePpsSynAd   implements EventHandler {
                 }
             } catch (Exception e) {
             }
-        }).start();
+        });
+        reader2.start();
+        ThreadAndProcessPools.addThread(reader2);
 
         processOutput0 = new BufferedWriter(new OutputStreamWriter(process0.getOutputStream()));
         System.out.println("shell0进程状态：" + process0.isAlive());
@@ -277,6 +321,7 @@ public class ModulePpsSynAd   implements EventHandler {
             }catch (Exception e){}
         });
         writerAndTester0.start();
+        ThreadAndProcessPools.addThread(writerAndTester0);
 
         writerAndTester1=new Thread(()->{
 //            writerAndTester1=Thread.currentThread();
@@ -352,6 +397,7 @@ public class ModulePpsSynAd   implements EventHandler {
             }catch (Exception e){}
         });
         writerAndTester1.start();
+        ThreadAndProcessPools.addThread(writerAndTester1);
 
         writerAndTester2=new Thread(()->{
 //            writerAndTester2=Thread.currentThread();
@@ -423,9 +469,10 @@ public class ModulePpsSynAd   implements EventHandler {
             }catch (Exception e){}
         });
         writerAndTester2.start();
+        ThreadAndProcessPools.addThread(writerAndTester2);
 
-        new Thread(()->{
-            sync=Thread.currentThread();
+        sync=new Thread(()->{
+//            sync=Thread.currentThread();
             try {
 
                 //设置KL14，pps切外
@@ -476,12 +523,15 @@ public class ModulePpsSynAd   implements EventHandler {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }).start();
+        });
+        sync.start();
+        ThreadAndProcessPools.addThread(sync);
 
         try {
             writerAndTester0.join();
             writerAndTester1.join();
             writerAndTester2.join();
+            sync.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
