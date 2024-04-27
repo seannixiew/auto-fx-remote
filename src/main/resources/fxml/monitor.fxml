@@ -24,7 +24,7 @@
          <children>
             <Accordion fx:id="accorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFFFBB;">
               <panes>
-                <TitledPane animated="false" text="电源">
+                <TitledPane fx:id="tpPowerSupply" animated="false" text="电源">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>

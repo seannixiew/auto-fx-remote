@@ -26,6 +26,16 @@
 
 }
 
+.buttonStyle2{
+    -fx-background-color:#00BFFF;
+}
+
+.buttonStyle2:hover{
+    -fx-background-color:#53a4f0;
+    -fx-effect: innershadow(gaussian, #666666, 5, 0.5, 2, 2)
+}
+
+
 /*.titled-pane-rftest-0 > .title {*/
 /*    -fx-text-fill: #336699; !* Set title text color 不生效*!*/
 /*    -fx-font-size: 14px; !* Set title font size *!*/

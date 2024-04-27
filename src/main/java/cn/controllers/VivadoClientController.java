@@ -1,6 +1,7 @@
 package cn.controllers;
 
 import cn.controllers.root.RootController;
+import cn.dispatcher.MainTestDispatcher;
 import cn.handler.ad.PowerAndLinearityAd;
 import cn.handler.base.BaseHandler;
 import cn.utils.ControllersManager;
@@ -8,6 +9,8 @@ import cn.utils.DateFormat;
 import cn.utils.SystemUtils;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
@@ -47,7 +50,12 @@ public class VivadoClientController  extends RootController {
     TextField tf3;
 
     @FXML
-    TextArea taResult;
+    TextArea taReader;
+
+    @FXML
+    ComboBox<String> cbPickShell;
+    @FXML
+    Button btGetShell;
 
     boolean readerRunning=true;
 
@@ -424,45 +432,54 @@ public class VivadoClientController  extends RootController {
     }
 
     @FXML
-    public void onGetRunningShell0(){
+    public void onGetShell(){
         RfTestController rfTestController=(RfTestController)ControllersManager.CONTROLLERS.get("RfTestController");
-        BaseHandler handlerInstance = (BaseHandler) rfTestController.mainTestDispatcher.HandlerInstance;
-        processOutput=handlerInstance.processOutput0;
-        Platform.runLater(()->{
-            taResult.appendText("已获取processOutput0...\n");
-        });
+        MainTestDispatcher mainTestDispatcher= rfTestController.mainTestDispatcher;
+        if(mainTestDispatcher!=null){
+            BaseHandler  handlerInstance = (BaseHandler) mainTestDispatcher.HandlerInstance;
+
+            String shellNum=cbPickShell.getValue();
+            if(shellNum!=null && shellNum!="") {
+                int num=Integer.parseInt(shellNum.charAt(8)+"");
+                switch (num) {
+                    case 0:
+                        processOutput = handlerInstance.processOutput0;
+                        if(processOutput!=null) {
+                            Platform.runLater(() -> {
+                                taReader.appendText("已获取processOutput0...\n");
+                            });
+                        }
+                        break;
+                    case 1:
+                        processOutput = handlerInstance.processOutput1;
+                        if(processOutput!=null) {
+                            Platform.runLater(() -> {
+                                taReader.appendText("已获取processOutput1...\n");
+                            });
+                        }
+                        break;
+                    case 2:
+                        processOutput = handlerInstance.processOutput2;
+                        if(processOutput!=null) {
+                            Platform.runLater(() -> {
+                                taReader.appendText("已获取processOutput2...\n");
+                            });
+                        }
+                        break;
+                    case 3:
+                        processOutput = handlerInstance.processOutput3;
+                        if(processOutput!=null) {
+                            Platform.runLater(() -> {
+                                taReader.appendText("已获取processOutput3...\n");
+                            });
+                        }
+                        break;
+                }
+            }
+        }
 
     }
 
-    @FXML
-    public void onGetRunningShell1(){
-        RfTestController rfTestController=(RfTestController)ControllersManager.CONTROLLERS.get("RfTestController");
-        BaseHandler handlerInstance = (BaseHandler) rfTestController.mainTestDispatcher.HandlerInstance;
-        processOutput=handlerInstance.processOutput1;
-        Platform.runLater(()->{
-            taResult.appendText("已获取processOutput1...\n");
-        });
-    }
-
-    @FXML
-    public void onGetRunningShell2(){
-        RfTestController rfTestController=(RfTestController)ControllersManager.CONTROLLERS.get("RfTestController");
-        BaseHandler handlerInstance = (BaseHandler) rfTestController.mainTestDispatcher.HandlerInstance;
-        processOutput=handlerInstance.processOutput2;
-        Platform.runLater(()->{
-            taResult.appendText("已获取processOutput2...\n");
-        });
-    }
-
-    @FXML
-    public void onGetRunningShell3(){
-        RfTestController rfTestController=(RfTestController)ControllersManager.CONTROLLERS.get("RfTestController");
-        BaseHandler handlerInstance = (BaseHandler) rfTestController.mainTestDispatcher.HandlerInstance;
-        processOutput=handlerInstance.processOutput3;
-        Platform.runLater(()->{
-            taResult.appendText("已获取processOutput3...\n");
-        });
-    }
 
     @FXML
     public void onNewShell(){
@@ -611,5 +628,7 @@ public class VivadoClientController  extends RootController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        cbPickShell.getItems().addAll("Running 0","Running 1","Running 2","Running 3");
     }
 }

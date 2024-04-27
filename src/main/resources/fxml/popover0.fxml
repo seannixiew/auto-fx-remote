@@ -27,28 +27,39 @@
                 <RowConstraints maxHeight="300.0" minHeight="10.0" prefHeight="300.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <VBox alignment="CENTER" fillWidth="false" prefHeight="200.0" prefWidth="100.0" spacing="20.0" GridPane.rowIndex="1">
+                  <VBox alignment="CENTER" fillWidth="false" prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.rowIndex="1">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="135.0" text="准备使用的矩阵通道：" />
-                        <TextField fx:id="tfEndpoints" prefHeight="23.0" prefWidth="140.0" promptText="输入起止通道，以空格分隔...">
+                        <AnchorPane prefHeight="15.0" prefWidth="133.0">
+                           <children>
+                              <Label prefHeight="15.0" prefWidth="60.0" text="快捷输入：" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                        <TextField fx:id="tfEndpoints" editable="false" focusTraversable="false" prefHeight="23.0" prefWidth="140.0" promptText="输入起止通道，以空格分隔...">
                            <font>
                               <Font size="10.0" />
                            </font>
                         </TextField>
-                        <Button fx:id="btInputAll" mnemonicParsing="false" onAction="#onInputAll" text="所有通道" textFill="#149071">
+                        <Button fx:id="btInputAll" mnemonicParsing="false" onAction="#onInputAll" prefWidth="140.0" text="所有通道">
                            <VBox.margin>
-                              <Insets top="-15.0" />
+                              <Insets />
                            </VBox.margin></Button>
-                        <Button fx:id="btConfirm" mnemonicParsing="false" onAction="#onConfirm" prefHeight="23.0" prefWidth="64.0" text="保存" />
                      </children>
                   </VBox>
                   <TextField fx:id="tfIP" alignment="CENTER" prefHeight="23.0" prefWidth="231.0" promptText="192.168.1.123" GridPane.columnIndex="1" />
-                  <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <VBox GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <TextArea fx:id="taChannels" prefHeight="255.0" prefWidth="282.0" />
+                        <AnchorPane>
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="288.0" text="即将使用的矩阵通道：" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                        <TextArea fx:id="taChannels" prefHeight="255.0" prefWidth="282.0" VBox.vgrow="ALWAYS">
+                           <VBox.margin>
+                              <Insets bottom="20.0" />
+                           </VBox.margin></TextArea>
                      </children>
-                  </AnchorPane>
-                  <Button fx:id="btConnection" onAction="#onConnection" mnemonicParsing="false" text="连接矩阵" GridPane.columnIndex="2" />
+                  </VBox>
+                  <Button fx:id="btConnection" mnemonicParsing="false" onAction="#onConnection" text="连接矩阵" GridPane.columnIndex="2" />
                   <AnchorPane>
                      <children>
                         <Label layoutX="100.0" layoutY="20.0" text="请输入IP：" />
@@ -56,8 +67,9 @@
                   </AnchorPane>
                   <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <children>
-                        <Button fx:id="btSwitchOn" mnemonicParsing="false" onAction="#onSwitchOn" text="直接开启通道" />
+                        <Button fx:id="btSwitchOn" mnemonicParsing="false" onAction="#onSwitchOn" prefWidth="88.0" text="SWITCH ON" />
                         <Button fx:id="btReset" mnemonicParsing="false" onAction="#onReset" prefHeight="23.0" prefWidth="88.0" text="RESET" />
+                        <Button fx:id="btConfirm" mnemonicParsing="false" onAction="#onConfirm" prefHeight="23.0" prefWidth="88.0" text="单切以遍历" textFill="#0a8d0a" />
                      </children>
                   </VBox>
                </children>

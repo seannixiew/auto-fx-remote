@@ -68,7 +68,7 @@ public class RfTestController extends RootController {
     @FXML
     public ComboBox cbPowerMeter;
     @FXML
-    public ComboBox cbOsc;
+    public ComboBox<String> cbOsc;
     @FXML
     public ToggleSwitch tsMatrix0;
     @FXML
@@ -147,6 +147,7 @@ public class RfTestController extends RootController {
                 tp1.setMaxHeight(0);
                 tp2.setPrefHeight(lastHeightTp0 + lastHeightTp1 +lastHeightTp2 );
                 tp2.setStyle("-fx-border-color: #FF7744 ");
+                tp2.setText("操作日志 ( click recover )");
             });
         }else {
             ifMaxHeightTp2=false;
@@ -158,6 +159,7 @@ public class RfTestController extends RootController {
                 tp2.setPrefHeight(lastHeightTp2);
                 tp2.setStyle(null);
             });
+            tp2.setText("操作日志 ( click here maxsize )");
         }
     }
 
@@ -327,11 +329,8 @@ public class RfTestController extends RootController {
     void onActionBtConnection4(){
         new Thread(()->{
 
-            if(cbOsc.getValue().toString().equals(InstruType.MSOX3014A)){
+            if(cbOsc.getValue().equals(InstruType.MSOX3014A)){
                 //专门适配InfiniiVision MSO-X 3014A
-                tf4.setEditable(false);
-                tf4.setText("USB0::0x0957::0x17A8::MY54310455::0::INSTR");
-
                 String ip=tf4.getText().trim();
                 boolean isOpen= instru4.openUsb("",ip);
                 if(!isOpen){
@@ -631,6 +630,13 @@ public class RfTestController extends RootController {
 
         cbLoop.getItems().addAll("遍历模式：0","遍历模式：1","遍历模式：2","遍历模式：3","遍历模式：4","遍历模式：5");
         cbLoop.getSelectionModel().select(0);
+
+        cbOsc.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue!=null && newValue.equals(InstruType.MSOX3014A)){
+                tf4.setEditable(false);
+                tf4.setText("USB0::0x0957::0x17A8::MY54310455::0::INSTR");
+            }
+        });
 
     }
 

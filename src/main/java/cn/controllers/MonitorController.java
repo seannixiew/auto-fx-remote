@@ -46,6 +46,9 @@ public class MonitorController extends RootController {
     TableColumn tcOff;
     @FXML
     TextArea taScpiReader;
+    @FXML
+    TitledPane tpPowerSupply;
+
 
     boolean[] monitorings={false,false,false};
 
@@ -227,6 +230,7 @@ public class MonitorController extends RootController {
 
         tv0.getItems().addAll(data[0],data[1],data[2]);
 
+        accorPane.setExpandedPane(tpPowerSupply);
 //new Thread(()->{
 //    try {
 //

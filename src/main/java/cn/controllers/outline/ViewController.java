@@ -1,6 +1,7 @@
 package cn.controllers.outline;
 
 import cn.controllers.ChartsController;
+import cn.controllers.MonitorController;
 import cn.controllers.PropertiesController;
 import cn.controllers.RfTestController;
 import cn.controllers.root.RootController;
@@ -42,6 +43,7 @@ public class ViewController extends RootController {
 
     @FXML
     ChartsController chartsPaneController;
+
 
     public RfTestController getRfTestPaneController() {
         return rfTestPaneController;
@@ -131,6 +133,7 @@ public class ViewController extends RootController {
         propertiesPane.setVisible(false);
         groundTestPane.setVisible(false);
         vivadoClientPane.setVisible(false);
+
 
     }
 
