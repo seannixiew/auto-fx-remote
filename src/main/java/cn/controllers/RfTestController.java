@@ -179,6 +179,7 @@ public class RfTestController extends RootController {
 
     @FXML
     void onActionBtEnd(){
+        //注意！多个测试项同时运行时，一次只终止一个测试项
         boolean res=ThreadAndProcessPools.clearProcessAndThread();
         Platform.runLater(()->{
             taLogs.appendText("reader & writer 线程池 及 vivado 进程池 清空状态："+res+"\n");

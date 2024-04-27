@@ -1,6 +1,7 @@
 package cn.dispatcher;
 
 import cn.controllers.RfTestController;
+import cn.controllers.outline.ViewController;
 import cn.handler.tx.PowerInit;
 import cn.instr.DbfClient;
 import cn.instr.InstrumentClient;
@@ -12,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.TreeItem;
 import org.controlsfx.control.ToggleSwitch;
 
@@ -23,6 +25,9 @@ import java.util.List;
 public class MainTestDispatcher {
 
     RfTestController rfTestController =(RfTestController) ControllersManager.CONTROLLERS.get(RfTestController.class.getSimpleName());
+    ViewController viewController=(ViewController) ControllersManager.CONTROLLERS.get(ViewController.class.getSimpleName());
+    TextArea taConsole=viewController.taConsole;
+    TitledPane tpConsole=viewController.tpConsole;
 
     ObservableList<TreeItem<TestItemModel>> selectedItems=rfTestController.selectedItems;
     TextArea taLogs=rfTestController.taLogs;
@@ -48,6 +53,15 @@ public class MainTestDispatcher {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+            VivadoErrorCounts.readErrorProperty.addListener((observable, oldValue, newValue) -> {
+                if(newValue!=null && newValue!="") {
+                    Platform.runLater(() -> {
+                        taConsole.appendText(newValue);
+                        tpConsole.setStyle("-fx-border-color: red");
+                    });
+                }
+            });
 
             for (TreeItem<TestItemModel> item : selectedItems) {
 

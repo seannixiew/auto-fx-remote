@@ -19,12 +19,12 @@
               <menus>
                 <Menu mnemonicParsing="false" text="File">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Close" />
+                    <MenuItem mnemonicParsing="false" text="Open" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Settings">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
+                    <MenuItem mnemonicParsing="false" text="Preference" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
@@ -78,13 +78,14 @@
                    </AnchorPane>
                </children>
             </HBox>
-            <TitledPane animated="false" expanded="false" text="CONSOLE">
+            <TitledPane fx:id="tpConsole" animated="false" expanded="false" text="CONSOLE">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <VBox alignment="CENTER" spacing="6.0">
                      <children>
-                        <TextArea prefHeight="127.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <TextArea fx:id="taConsole" prefHeight="127.0" prefWidth="800.0" />
+                        <Button fx:id="btClearConsole" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onClearConsole" text="CLEAR ERROR TEXT" VBox.vgrow="NEVER" />
                      </children>
-                  </AnchorPane>
+                  </VBox>
               </content>
                <font>
                   <Font name="Arial Italic" size="12.0" />

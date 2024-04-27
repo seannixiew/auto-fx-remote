@@ -2,10 +2,7 @@ package cn.handler.da;
 
 import cn.controllers.RfTestController;
 import cn.instr.DbfClient;
-import cn.utils.ControllersManager;
-import cn.utils.DateFormat;
-import cn.utils.SystemUtils;
-import cn.utils.ThreadAndProcessPools;
+import cn.utils.*;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -168,8 +165,12 @@ public class ModuleCalSynSignalDa implements EventHandler {
                     String echo = readFromProcess(processInput0,"reader0",0);
                     String error = readErrorFromProcess(processError0);
                     if(echo!=null && !echo.contains("read pending...")) {
+                        String log = DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n";
+                        if (log.toUpperCase().contains("ERROR")) {
+                            VivadoErrorCounts.setReadError(log);
+                        }
                         Platform.runLater(() -> {
-                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n");
+                            taLogs.appendText(log);
                             taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + error + "\n");
                         });
                     }
@@ -199,8 +200,12 @@ public class ModuleCalSynSignalDa implements EventHandler {
                     String echo = readFromProcess(processInput1,"reader1",1);
                     String error = readErrorFromProcess(processError1);
                     if(echo!=null && !echo.contains("read pending...")) {
+                        String log = DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n";
+                        if (log.toUpperCase().contains("ERROR")) {
+                            VivadoErrorCounts.setReadError(log);
+                        }
                         Platform.runLater(() -> {
-                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n");
+                            taLogs.appendText(log);
                             taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + error + "\n");
                         });
                     }
@@ -230,8 +235,12 @@ public class ModuleCalSynSignalDa implements EventHandler {
                     String echo = readFromProcess(processInput2,"reader2",2);
                     String error = readErrorFromProcess(processError2);
                     if(echo!=null && !echo.contains("read pending...")) {
+                        String log = DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n";
+                        if (log.toUpperCase().contains("ERROR")) {
+                            VivadoErrorCounts.setReadError(log);
+                        }
                         Platform.runLater(() -> {
-                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n");
+                            taLogs.appendText(log);
                             taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + error + "\n");
                         });
                     }
@@ -261,8 +270,12 @@ public class ModuleCalSynSignalDa implements EventHandler {
                     String echo = readFromProcess(processInput3,"reader3",3);
                     String error = readErrorFromProcess(processError3);
                     if(echo!=null && !echo.contains("read pending...")) {
+                        String log = DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n";
+                        if (log.toUpperCase().contains("ERROR")) {
+                            VivadoErrorCounts.setReadError(log);
+                        }
                         Platform.runLater(() -> {
-                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n");
+                            taLogs.appendText(log);
                             taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + error + "\n");
                         });
                     }

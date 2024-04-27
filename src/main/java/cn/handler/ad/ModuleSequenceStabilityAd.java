@@ -2,8 +2,7 @@ package cn.handler.ad;
 
 import cn.controllers.RfTestController;
 import cn.instr.DbfClient;
-import cn.utils.ControllersManager;
-import cn.utils.DateFormat;
+import cn.utils.*;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -16,7 +15,6 @@ import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.locks.LockSupport;
 
-// TODO: 2024/4/23 不下载程序运行出现error
 public class ModuleSequenceStabilityAd implements EventHandler {
 
     RfTestController rfTestController =(RfTestController) ControllersManager.CONTROLLERS.get(RfTestController.class.getSimpleName());
@@ -40,8 +38,8 @@ public class ModuleSequenceStabilityAd implements EventHandler {
     }
 
     //实现串行下载fpga程序
-    private static final CountDownLatch cd0=new CountDownLatch(1);
-    private static final CountDownLatch cd1=new CountDownLatch(1);
+    private static CountDownLatch cd0=new CountDownLatch(1);
+    private static CountDownLatch cd1=new CountDownLatch(1);
 
 
     Process process0;
@@ -68,17 +66,38 @@ public class ModuleSequenceStabilityAd implements EventHandler {
     boolean programming1;
     boolean programming2;
 
+    boolean readerRunning0=true;
+    boolean readerRunning1=true;
+    boolean readerRunning2=true;
+
     static int readCounter0=0;
     static int readCounter1=0;
     static int readCounter2=0;
 
     Properties properties=new Properties();
 
+    public ModuleSequenceStabilityAd(){
+        for(int i=0;i<32;i++){
+            countDownLatchs0[i]=new CountDownLatch(3);
+        }
+
+        for(int i=0;i<32;i++){
+            countDownLatchs1[i]=new CountDownLatch(3);
+        }
+
+        cd0=new CountDownLatch(1);
+        cd1=new CountDownLatch(1);
+
+        readCounter0=0;
+        readCounter1=0;
+        readCounter2=0;
+    }
+
     @Override
     public void handle(Event event) {
         System.out.println("执行（整机）AD时序稳定性测试...");
         Platform.runLater(() -> {
-            taLogs.appendText("开始执行（整机）AD时序稳定性测试...");
+            taLogs.appendText("开始执行（整机）AD时序稳定性测试...\n");
         });
 
         try {
@@ -95,32 +114,43 @@ public class ModuleSequenceStabilityAd implements EventHandler {
             ProcessBuilder processBuilder0 = new ProcessBuilder(vivadoPath, "-mode", "tcl", "-source", tclScriptPath);
             processBuilder0.redirectErrorStream(true);
             process0 = processBuilder0.start();
+            ThreadAndProcessPools.addProcess(process0);
             // 启动Vivado进程1
             ProcessBuilder processBuilder1 = new ProcessBuilder(vivadoPath, "-mode", "tcl", "-source", tclScriptPath);
             processBuilder1.redirectErrorStream(true);
             process1 = processBuilder1.start();
+            ThreadAndProcessPools.addProcess(process1);
             // 启动Vivado进程2
             ProcessBuilder processBuilder2 = new ProcessBuilder(vivadoPath, "-mode", "tcl", "-source", tclScriptPath);
             processBuilder2.redirectErrorStream(true);
             process2 = processBuilder2.start();
+            ThreadAndProcessPools.addProcess(process2);
+
+            Thread.sleep(3000);
 
         } catch (Exception e) {
         }
 
-        new Thread(()->{
+        reader0=new Thread(()->{
             try {
-                reader0 = Thread.currentThread();
+//                reader0 = Thread.currentThread();
                 processInput0 = new BufferedReader(new InputStreamReader(process0.getInputStream(), "UTF-8"));
                 processError0 = new BufferedReader(new InputStreamReader(process0.getInputStream()));
 
-                while (true) {
+                while (readerRunning0) {
                     Thread.sleep(1000);
                     String echo = readFromProcess(processInput0,"reader0",0);
                     String error = readErrorFromProcess(processError0);
-                    Platform.runLater(() -> {
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+echo + "\n");
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+error + "\n");
-                    });
+                    if(echo != null && !echo.contains("read pending...")) {
+                        String log = DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n";
+                        if (log.toUpperCase().contains("ERROR")) {
+                            VivadoErrorCounts.setReadError(log);
+                        }
+                        Platform.runLater(() -> {
+                            taLogs.appendText(log);
+                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + error + "\n");
+                        });
+                    }
                     String s = echo;
                     if (programming0) {
                         if (s.contains("End of startup status: HIGH")) {
@@ -132,21 +162,30 @@ public class ModuleSequenceStabilityAd implements EventHandler {
                 }
             } catch (Exception e) {
             }
-        }).start();
-        new Thread(()->{
+        });
+        reader0.start();
+        ThreadAndProcessPools.addThread(reader0);
+
+        reader1=new Thread(()->{
             try {
-                reader1 = Thread.currentThread();
+//                reader1 = Thread.currentThread();
                 processInput1 = new BufferedReader(new InputStreamReader(process1.getInputStream(), "UTF-8"));
                 processError1 = new BufferedReader(new InputStreamReader(process1.getInputStream()));
 
-                while (true) {
+                while (readerRunning1) {
                     Thread.sleep(1000);
                     String echo = readFromProcess(processInput1,"reader1",1);
                     String error = readErrorFromProcess(processError1);
-                    Platform.runLater(() -> {
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+echo + "\n");
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+error + "\n");
-                    });
+                    if(echo != null && !echo.contains("read pending...")) {
+                        String log = DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n";
+                        if (log.toUpperCase().contains("ERROR")) {
+                            VivadoErrorCounts.setReadError(log);
+                        }
+                        Platform.runLater(() -> {
+                            taLogs.appendText(log);
+                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + error + "\n");
+                        });
+                    }
                     String s = echo;
                     if (programming1) {
                         if (s.contains("End of startup status: HIGH")) {
@@ -158,21 +197,30 @@ public class ModuleSequenceStabilityAd implements EventHandler {
                 }
             } catch (Exception e) {
             }
-        }).start();
-        new Thread(()->{
+        });
+        reader1.start();
+        ThreadAndProcessPools.addThread(reader1);
+
+        reader2=new Thread(()->{
             try {
-                reader2 = Thread.currentThread();
+//                reader2 = Thread.currentThread();
                 processInput2 = new BufferedReader(new InputStreamReader(process2.getInputStream(), "UTF-8"));
                 processError2 = new BufferedReader(new InputStreamReader(process2.getInputStream()));
 
-                while (true) {
+                while (readerRunning2) {
                     Thread.sleep(1000);
                     String echo = readFromProcess(processInput2,"reader2",2);
                     String error = readErrorFromProcess(processError2);
-                    Platform.runLater(() -> {
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+echo + "\n");
-                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+error + "\n");
-                    });
+                    if(echo != null && !echo.contains("read pending...")) {
+                        String log = DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n";
+                        if (log.toUpperCase().contains("ERROR")) {
+                            VivadoErrorCounts.setReadError(log);
+                        }
+                        Platform.runLater(() -> {
+                            taLogs.appendText(log);
+                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + error + "\n");
+                        });
+                    }
                     String s = echo;
                     if (programming2) {
                         if (s.contains("End of startup status: HIGH")) {
@@ -184,7 +232,10 @@ public class ModuleSequenceStabilityAd implements EventHandler {
                 }
             } catch (Exception e) {
             }
-        }).start();
+        });
+        reader2.start();
+        ThreadAndProcessPools.addThread(reader2);
+
         processOutput0 = new BufferedWriter(new OutputStreamWriter(process0.getOutputStream()));
         System.out.println("shell0进程状态：" + process0.isAlive());
         processOutput1 = new BufferedWriter(new OutputStreamWriter(process1.getOutputStream()));
@@ -192,8 +243,8 @@ public class ModuleSequenceStabilityAd implements EventHandler {
         processOutput2 = new BufferedWriter(new OutputStreamWriter(process2.getOutputStream()));
         System.out.println("shell2进程状态：" + process2.isAlive());
 
-        new Thread(()->{
-            writerAndTester0=Thread.currentThread();
+        writerAndTester0=new Thread(()->{
+//            writerAndTester0=Thread.currentThread();
             try {
                 System.out.println("process0初始操作...");
                 writeToProcess(processOutput0, "open_hw" + "\n");
@@ -284,16 +335,23 @@ public class ModuleSequenceStabilityAd implements EventHandler {
 //                    writeToProcess(processOutput0,"start_gui");
                     File file=new File(properties.getProperty("ModuleSequenceStabilityAd.samplePath")+"process0"+"_"+datadelay+".csv");
                     while (true){
+                        Thread.sleep(1);
                         if (file.exists()){
                             System.out.println("已生成文件"+properties.getProperty("ModuleSequenceStabilityAd.samplePath")+"process0"+"_"+datadelay+".csv");
                             break;
                         }
                     }
                 }
+                readerRunning0=false;
+                System.out.println("关闭process0的vivado...");
+                SystemUtils.killProcessTree(process0);
             }catch (Exception e){}
-        }).start();
-        new Thread(()->{
-            writerAndTester1=Thread.currentThread();
+        });
+        writerAndTester0.start();
+        ThreadAndProcessPools.addThread(writerAndTester0);
+
+        writerAndTester1=new Thread(()->{
+//            writerAndTester1=Thread.currentThread();
             try {
                 cd0.await();
                 System.out.println("process1初始操作...");
@@ -385,16 +443,23 @@ public class ModuleSequenceStabilityAd implements EventHandler {
 //                    writeToProcess(processOutput1,"start_gui");
                     File file=new File(properties.getProperty("ModuleSequenceStabilityAd.samplePath")+"process1"+"_"+datadelay+".csv");
                     while (true){
+                        Thread.sleep(1);
                         if (file.exists()){
                             System.out.println("已生成文件"+properties.getProperty("ModuleSequenceStabilityAd.samplePath")+"process1"+"_"+datadelay+".csv");
                             break;
                         }
                     }
                 }
+                readerRunning1=false;
+                System.out.println("关闭process1的vivado...");
+                SystemUtils.killProcessTree(process1);
             }catch (Exception e){}
-        }).start();
-        new Thread(()->{
-            writerAndTester2=Thread.currentThread();
+        });
+        writerAndTester1.start();
+        ThreadAndProcessPools.addThread(writerAndTester1);
+
+        writerAndTester2=new Thread(()->{
+//            writerAndTester2=Thread.currentThread();
             try {
                 cd1.await();
                 System.out.println("process2初始操作...");
@@ -486,17 +551,23 @@ public class ModuleSequenceStabilityAd implements EventHandler {
 //                    writeToProcess(processOutput2,"start_gui");
                     File file=new File(properties.getProperty("ModuleSequenceStabilityAd.samplePath")+"process2"+"_"+datadelay+".csv");
                     while (true){
+                        Thread.sleep(1);
                         if (file.exists()){
                             System.out.println("已生成文件"+properties.getProperty("ModuleSequenceStabilityAd.samplePath")+"process2"+"_"+datadelay+".csv");
                             break;
                         }
                     }
                 }
+                readerRunning2=false;
+                System.out.println("关闭process2的vivado...");
+                SystemUtils.killProcessTree(process2);
             }catch (Exception e){}
-        }).start();
+        });
+        writerAndTester2.start();
+        ThreadAndProcessPools.addThread(writerAndTester2);
 
-        new Thread(()->{
-            sync=Thread.currentThread();
+        sync=new Thread(()->{
+//            sync=Thread.currentThread();
             try {
                 for(int i=0;i<32;i++){
 
@@ -534,7 +605,18 @@ public class ModuleSequenceStabilityAd implements EventHandler {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }).start();
+        });
+        sync.start();
+        ThreadAndProcessPools.addThread(sync);
+
+        try {
+            writerAndTester0.join();
+            writerAndTester1.join();
+            writerAndTester2.join();
+            sync.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private  void writeToProcess(BufferedWriter processOutput, String command) throws IOException, InterruptedException {

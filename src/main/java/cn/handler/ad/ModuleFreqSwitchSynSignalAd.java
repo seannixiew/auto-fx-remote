@@ -3,10 +3,7 @@ package cn.handler.ad;
 import cn.controllers.RfTestController;
 import cn.handler.base.BaseHandler;
 import cn.instr.DbfClient;
-import cn.utils.ControllersManager;
-import cn.utils.DateFormat;
-import cn.utils.SystemUtils;
-import cn.utils.ThreadAndProcessPools;
+import cn.utils.*;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -138,8 +135,6 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
             taLogs.appendText("开始执行（整机）AD校正同步信号测试...\n");
         });
 
-//        ThreadAndProcessPools.clearProcessAndThread();
-
         try {
             properties.load(new FileInputStream("src/main/resources/configs/vivado.properties"));
         } catch (IOException e) {
@@ -191,9 +186,13 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
                     String echo = readFromProcess(processInput0,"reader0",0);
 //                    String error = readErrorFromProcess(processError0,0);
                     if(echo!=null && !echo.contains("read pending...")) {
+                        String log = DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n";
+                        if (log.toUpperCase().contains("ERROR")) {
+                            VivadoErrorCounts.setReadError(log);
+                        }
                         Platform.runLater(() -> {
-                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n");
-//                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+error + "\n");
+                            taLogs.appendText(log);
+//                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + error + "\n");
                         });
                     }
                     String s = echo;
@@ -222,9 +221,13 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
                     String echo = readFromProcess(processInput1,"reader1",1);
 //                    String error = readErrorFromProcess(processError1,1);
                     if(echo!=null && !echo.contains("read pending...")) {
+                        String log = DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n";
+                        if (log.toUpperCase().contains("ERROR")) {
+                            VivadoErrorCounts.setReadError(log);
+                        }
                         Platform.runLater(() -> {
-                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n");
-//                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+error + "\n");
+                            taLogs.appendText(log);
+//                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + error + "\n");
                         });
                     }
                     String s = echo;
@@ -253,9 +256,13 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
                     String echo = readFromProcess(processInput2,"reader2",2);
 //                    String error = readErrorFromProcess(processError2,2);
                     if(echo!=null && !echo.contains("read pending...")) {
+                        String log = DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n";
+                        if (log.toUpperCase().contains("ERROR")) {
+                            VivadoErrorCounts.setReadError(log);
+                        }
                         Platform.runLater(() -> {
-                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n");
-//                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+error + "\n");
+                            taLogs.appendText(log);
+//                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + error + "\n");
                         });
                     }
                     String s = echo;
@@ -284,9 +291,13 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
                     String echo = readFromProcess(processInput3,"reader3",3);
 //                    String error = readErrorFromProcess(processError3,3);
                     if(echo!=null && !echo.contains("read pending...")) {
+                        String log = DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n";
+                        if (log.toUpperCase().contains("ERROR")) {
+                            VivadoErrorCounts.setReadError(log);
+                        }
                         Platform.runLater(() -> {
-                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n");
-//                        taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+error + "\n");
+                            taLogs.appendText(log);
+//                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + error + "\n");
                         });
                     }
                     String s = echo;
@@ -390,6 +401,7 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
 //                    writeToProcess(processOutput0,"start_gui");
                     File file=new File(properties.getProperty("ModuleFreqSwitchSynSignalAd.samplePath")+"process0"+"_"+datadelay+"#0"+".csv");
                     while (true){
+                        Thread.sleep(1);
                         if (file.exists()){
                             System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalAd.samplePath")+"process0"+"_"+datadelay+"#0"+".csv");
                             break;
@@ -416,6 +428,7 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
 //                    writeToProcess(processOutput0,"start_gui");
                     file=new File(properties.getProperty("ModuleFreqSwitchSynSignalAd.samplePath")+"process0"+"_"+datadelay+"#1"+".csv");
                     while (true){
+                        Thread.sleep(1);
                         if (file.exists()){
                             System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalAd.samplePath")+"process0"+"_"+datadelay+"#1"+".csv");
                             break;
@@ -441,6 +454,7 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
 //                    writeToProcess(processOutput0,"start_gui");
                     file=new File(properties.getProperty("ModuleFreqSwitchSynSignalAd.samplePath")+"process0"+"_"+datadelay+"#2"+".csv");
                     while (true){
+                        Thread.sleep(1);
                         if (file.exists()){
                             System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalAd.samplePath")+"process0"+"_"+datadelay+"#2"+".csv");
                             break;
@@ -537,6 +551,7 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
 //                    writeToProcess(processOutput0,"start_gui");
                     File file=new File(properties.getProperty("ModuleFreqSwitchSynSignalAd.samplePath")+"process1"+"_"+datadelay+"#0"+".csv");
                     while (true){
+                        Thread.sleep(1);
                         if (file.exists()){
                             System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalAd.samplePath")+"process1"+"_"+datadelay+"#0"+".csv");
                             break;
@@ -562,6 +577,7 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
 //                    writeToProcess(processOutput0,"start_gui");
                     file=new File(properties.getProperty("ModuleFreqSwitchSynSignalAd.samplePath")+"process1"+"_"+datadelay+"#1"+".csv");
                     while (true){
+                        Thread.sleep(1);
                         if (file.exists()){
                             System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalAd.samplePath")+"process1"+"_"+datadelay+"#1"+".csv");
                             break;
@@ -587,6 +603,7 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
 //                    writeToProcess(processOutput0,"start_gui");
                     file=new File(properties.getProperty("ModuleFreqSwitchSynSignalAd.samplePath")+"process1"+"_"+datadelay+"#2"+".csv");
                     while (true){
+                        Thread.sleep(1);
                         if (file.exists()){
                             System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalAd.samplePath")+"process1"+"_"+datadelay+"#2"+".csv");
                             break;
@@ -681,6 +698,7 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
 //                    writeToProcess(processOutput0,"start_gui");
                     File file=new File(properties.getProperty("ModuleFreqSwitchSynSignalAd.samplePath")+"process2"+"_"+datadelay+"#0"+".csv");
                     while (true){
+                        Thread.sleep(1);
                         if (file.exists()){
                             System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalAd.samplePath")+"process2"+"_"+datadelay+"#0"+".csv");
                             break;
@@ -706,6 +724,7 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
 //                    writeToProcess(processOutput0,"start_gui");
                     file=new File(properties.getProperty("ModuleFreqSwitchSynSignalAd.samplePath")+"process2"+"_"+datadelay+"#1"+".csv");
                     while (true){
+                        Thread.sleep(1);
                         if (file.exists()){
                             System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalAd.samplePath")+"process2"+"_"+datadelay+"#1"+".csv");
                             break;
@@ -731,6 +750,7 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
 //                    writeToProcess(processOutput0,"start_gui");
                     file=new File(properties.getProperty("ModuleFreqSwitchSynSignalAd.samplePath")+"process2"+"_"+datadelay+"#2"+".csv");
                     while (true){
+                        Thread.sleep(1);
                         if (file.exists()){
                             System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalAd.samplePath")+"process2"+"_"+datadelay+"#2"+".csv");
                             break;
@@ -839,6 +859,7 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
                             +"process3"+"_"+datadelay+"#0"+".csv} hw_ila_data_2" + "\n");
                     File file=new File(properties.getProperty("ModuleFreqSwitchSynSignalAd.samplePath")+"process3"+"_"+datadelay+"#0"+".csv");
                     while (true){
+                        Thread.sleep(1);
                         if (file.exists()){
                             System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalAd.samplePath")+"process3"+"_"+datadelay+"#0"+".csv");
                             break;
@@ -873,6 +894,7 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
                             +"process3"+"_"+datadelay+"#1"+".csv} hw_ila_data_2" + "\n");
                     file=new File(properties.getProperty("ModuleFreqSwitchSynSignalAd.samplePath")+"process3"+"_"+datadelay+"#1"+".csv");
                     while (true){
+                        Thread.sleep(1);
                         if (file.exists()){
                             System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalAd.samplePath")+"process3"+"_"+datadelay+"#1"+".csv");
                             break;
@@ -907,6 +929,7 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
                             +"process3"+"_"+datadelay+"#2"+".csv} hw_ila_data_2" + "\n");
                     file=new File(properties.getProperty("ModuleFreqSwitchSynSignalAd.samplePath")+"process3"+"_"+datadelay+"#2"+".csv");
                     while (true){
+                        Thread.sleep(1);
                         if (file.exists()){
                             System.out.println("已生成文件"+properties.getProperty("ModuleFreqSwitchSynSignalAd.samplePath")+"process3"+"_"+datadelay+"#2"+".csv");
                             break;
@@ -1034,6 +1057,7 @@ public class ModuleFreqSwitchSynSignalAd extends BaseHandler implements EventHan
             writerAndTester1.join();
             writerAndTester2.join();
             writerAndTester3.join();
+            sync.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

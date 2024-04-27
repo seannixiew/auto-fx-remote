@@ -3,10 +3,7 @@ package cn.handler.da;
 import cn.controllers.RfTestController;
 import cn.handler.base.BaseHandler;
 import cn.instr.DbfClient;
-import cn.utils.ControllersManager;
-import cn.utils.DateFormat;
-import cn.utils.SystemUtils;
-import cn.utils.ThreadAndProcessPools;
+import cn.utils.*;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -185,12 +182,16 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
                     Thread.sleep(1000);
                     String echo = readFromProcess(processInput0,"reader0",0);
                     String error = readErrorFromProcess(processError0);
-                    Platform.runLater(() -> {
-                        if(echo != null && !echo.contains("read pending...")) {
-                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n");
-                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + error + "\n");
+                    if(echo != null && !echo.contains("read pending...")) {
+                        String log = DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n";
+                        if (log.toUpperCase().contains("ERROR")) {
+                            VivadoErrorCounts.setReadError(log);
                         }
-                    });
+                        Platform.runLater(() -> {
+                            taLogs.appendText(log);
+                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + error + "\n");
+                        });
+                    }
                     String s = echo;
                     if (programming0) {
                         if (s.contains("End of startup status: HIGH")) {
@@ -217,8 +218,12 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
                     String echo = readFromProcess(processInput1,"reader1",1);
                     String error = readErrorFromProcess(processError1);
                     if(echo != null && !echo.contains("read pending...")) {
+                        String log = DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n";
+                        if (log.toUpperCase().contains("ERROR")) {
+                            VivadoErrorCounts.setReadError(log);
+                        }
                         Platform.runLater(() -> {
-                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n");
+                            taLogs.appendText(log);
                             taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + error + "\n");
                         });
                     }
@@ -248,8 +253,12 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
                     String echo = readFromProcess(processInput2,"reader2",2);
                     String error = readErrorFromProcess(processError2);
                     if(echo != null && !echo.contains("read pending...")) {
+                        String log = DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n";
+                        if (log.toUpperCase().contains("ERROR")) {
+                            VivadoErrorCounts.setReadError(log);
+                        }
                         Platform.runLater(() -> {
-                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n");
+                            taLogs.appendText(log);
                             taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + error + "\n");
                         });
                     }
@@ -279,8 +288,12 @@ public class ModuleFreqSwitchSynSignalDa extends BaseHandler implements EventHan
                     String echo = readFromProcess(processInput3,"reader3",3);
                     String error = readErrorFromProcess(processError3);
                     if(echo != null && !echo.contains("read pending...")) {
+                        String log = DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n";
+                        if (log.toUpperCase().contains("ERROR")) {
+                            VivadoErrorCounts.setReadError(log);
+                        }
                         Platform.runLater(() -> {
-                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n");
+                            taLogs.appendText(log);
                             taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + error + "\n");
                         });
                     }

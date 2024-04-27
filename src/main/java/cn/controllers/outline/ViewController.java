@@ -4,10 +4,14 @@ import cn.controllers.ChartsController;
 import cn.controllers.PropertiesController;
 import cn.controllers.RfTestController;
 import cn.controllers.root.RootController;
+import cn.utils.VivadoErrorCounts;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.chart.BarChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
@@ -62,6 +66,18 @@ public class ViewController extends RootController {
     Button btGroundTest;
     @FXML
     Button btVivadoClient;
+
+    @FXML
+    public TitledPane tpConsole;
+    @FXML
+    Button btClearConsole;
+    @FXML
+    public TextArea taConsole;
+
+    public void onClearConsole(){
+        taConsole.clear();
+        tpConsole.setStyle(null);
+    }
 
     public void showRfTestPane(){
 

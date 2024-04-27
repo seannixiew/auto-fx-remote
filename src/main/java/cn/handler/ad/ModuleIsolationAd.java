@@ -1,2 +1,4 @@
-package cn.handler.ad;public class ModuleIsolationAd {
+package cn.handler.ad;
+
+public class ModuleIsolationAd {
 }
