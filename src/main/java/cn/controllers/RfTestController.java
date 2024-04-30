@@ -105,8 +105,7 @@ public class RfTestController extends RootController {
     public ToggleButton btDownload;
     @FXML
     public Button btGroundTest;
-    @FXML
-    public Label lbErrors;
+
 
     @FXML
     public ComboBox<String> cbLoop;
@@ -123,9 +122,6 @@ public class RfTestController extends RootController {
     public MatrixClient matrix0=new MatrixClient();
     public MatrixClient matrix1=new MatrixClient();
     public DbfClient dbfClient=new DbfClient();
-
-    public List<String> offeredChannels0;
-    public List<String> offeredChannels1;
 
     public MainTestDispatcher mainTestDispatcher;
 
@@ -190,10 +186,9 @@ public class RfTestController extends RootController {
 
     @FXML
     void onActionBtCustom(){
-        // TODO: 2024/2/27 临时方案，必须处理
-        if(true){
-            LockSupport.unpark(DaForTest.writerAndTester);
-        }
+//        if(true){
+//            LockSupport.unpark(DaForTest.writerAndTester);
+//        }
     }
 
 
@@ -404,7 +399,6 @@ public class RfTestController extends RootController {
                 new CheckBoxTreeItem<TestItemModel>(TestItems.ad40FuncAndPerformance),
                 new CheckBoxTreeItem<TestItemModel>(TestItems.adTestDAFuncAndPerformance),
                 new CheckBoxTreeItem<TestItemModel>(TestItems.ad40Isolation),
-                new CheckBoxTreeItem<TestItemModel>(TestItems.ad40Consistency),
                 new CheckBoxTreeItem<TestItemModel>(TestItems.adInModuleSequenceStability),
                 new CheckBoxTreeItem<TestItemModel>(TestItems.adInModuleCalSynSignal),
                 new CheckBoxTreeItem<TestItemModel>(TestItems.adInModuleConsistency),
@@ -413,18 +407,18 @@ public class RfTestController extends RootController {
         CheckBoxTreeItem<TestItemModel> node3 = new CheckBoxTreeItem<TestItemModel>(TestItems.da);
         node3.setExpanded(true);
         node3.getChildren().addAll(
-                new CheckBoxTreeItem<TestItemModel>(TestItems.da40FuncAndPerformanceAndIso),
-                new CheckBoxTreeItem<TestItemModel>(TestItems.daTestADFuncAndPerformance),
-                new CheckBoxTreeItem<TestItemModel>(TestItems.da40Power),
-                new CheckBoxTreeItem<TestItemModel>(TestItems.da40Consistency),
+//                new CheckBoxTreeItem<TestItemModel>(TestItems.da40FuncAndPerformanceAndIso),
+//                new CheckBoxTreeItem<TestItemModel>(TestItems.daTestADFuncAndPerformance),
+//                new CheckBoxTreeItem<TestItemModel>(TestItems.da40Power),
+//                new CheckBoxTreeItem<TestItemModel>(TestItems.da40Consistency),
                 new CheckBoxTreeItem<TestItemModel>(TestItems.daInModuleCalSynSignal),
                 new CheckBoxTreeItem<TestItemModel>(TestItems.daInModuleFreqSwitchSynSignal));
 
         CheckBoxTreeItem<TestItemModel> node4 = new CheckBoxTreeItem<TestItemModel>(TestItems.dbf);
         node4.setExpanded(true);
         node4.getChildren().addAll(
-                new CheckBoxTreeItem<TestItemModel>(TestItems.daAndRf),
-                new CheckBoxTreeItem<TestItemModel>(TestItems.adAndRf),
+//                new CheckBoxTreeItem<TestItemModel>(TestItems.daAndRf),
+//                new CheckBoxTreeItem<TestItemModel>(TestItems.adAndRf),
                 new CheckBoxTreeItem<TestItemModel>(TestItems.dbfAndRfTxPower),
                 new CheckBoxTreeItem<TestItemModel>(TestItems.dbfAndRfTxConsistency),
                 new CheckBoxTreeItem<TestItemModel>(TestItems.dbfAndRfRxConsistency));
@@ -486,7 +480,7 @@ public class RfTestController extends RootController {
 
         PopOver popOver0=new PopOver();
         popOver0.setAutoHide(false);
-        popOver0.setTitle("矩阵X配置");
+        popOver0.setTitle("矩阵0配置");
         popOver0.setHeaderAlwaysVisible(true);
         popOver0.setCloseButtonEnabled(true);
         popOver0.setContentNode(popRoot0);
@@ -561,7 +555,7 @@ public class RfTestController extends RootController {
 
         PopOver popOver1=new PopOver();
         popOver1.setAutoHide(false);
-        popOver1.setTitle("矩阵Y配置");
+        popOver1.setTitle("矩阵1配置");
         popOver1.setHeaderAlwaysVisible(true);
         popOver1.setCloseButtonEnabled(true);
         popOver1.setContentNode(popRoot1);

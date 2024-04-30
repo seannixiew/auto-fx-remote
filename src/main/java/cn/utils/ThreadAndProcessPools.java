@@ -37,6 +37,7 @@ public class ThreadAndProcessPools {
             System.out.println("reader & writer 线程池 及 vivado 进程池：大概已清理。");
 
         }catch (Exception e){
+            e.printStackTrace();
             return false;
         }
         return true;

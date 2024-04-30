@@ -68,7 +68,6 @@ public class MainTestDispatcher {
                 try {
                     //执行每个测试项前清理线程池和进程池
                     ThreadAndProcessPools.clearProcessAndThread();
-                    Thread.sleep(1000);
                 }catch (Exception e){
                     e.printStackTrace();
                 }

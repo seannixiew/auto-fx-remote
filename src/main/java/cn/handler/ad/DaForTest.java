@@ -3,11 +3,12 @@ package cn.handler.ad;
 import cn.controllers.RfTestController;
 import cn.instr.InstrumentClient;
 import cn.model.InstruType;
-import cn.utils.ControllersManager;
-import cn.utils.DateFormat;
+import cn.utils.*;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleButton;
 
@@ -31,28 +32,39 @@ public class DaForTest implements EventHandler {
     BufferedReader processInput;
     BufferedReader processError;
     Thread reader;
-    public static Thread writerAndTester; //static 是临时方案
-
+    public Thread writerAndTester;
 
     boolean programming;
-    //    boolean sampling;
+
+    boolean readerRunning0=true;
+
     static int readCounter=0;
 
-    Properties properties = new Properties();
+    Properties propertiesConfig = new Properties();
+    Properties properties=new Properties();
+
+    boolean next=false;
+
+    public DaForTest(){
+        readCounter=0;
+    }
 
     @Override
     public void handle(Event event) {
 
         try {
-            properties.load(new FileInputStream("src/main/resources/configs/config.properties"));
-        }catch (Exception e){}
+            propertiesConfig.load(new FileInputStream("src/main/resources/configs/config.properties"));
+            properties.load(new FileInputStream("src/main/resources/configs/vivado.properties"));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 //        System.out.println(properties.getProperty("vsgPower"));
 //        System.out.println(properties.getProperty("adLineNo"));
 
         if (true || InstruType.SMW200A.equals(instru0.instruType) && InstruType.FSW.equals(instru1.instruType)) {  // TODO: 2024/1/12 当前被旁路
             System.out.println("执行测试DA测试...");
             Platform.runLater(() -> {
-                taLogs.appendText("开始执行测试DA测试...");
+                taLogs.appendText("开始执行测试DA测试...\n");
             });
             try {
                 String vivadoPath = "D:\\Xilinx\\Vivado\\2018.3\\bin\\vivado.bat";
@@ -62,22 +74,33 @@ public class DaForTest implements EventHandler {
                 ProcessBuilder processBuilder = new ProcessBuilder(vivadoPath, "-mode", "tcl", "-source", tclScriptPath);
                 processBuilder.redirectErrorStream(true);
                 process = processBuilder.start();
+                ThreadAndProcessPools.addProcess(process);
+
+                Thread.sleep(3000);
 
             } catch (Exception e) {}
 
-            new Thread(() -> {
+            reader=new Thread(() -> {
                 try {
-                    reader = Thread.currentThread();
+//                    reader = Thread.currentThread();
                     processInput = new BufferedReader(new InputStreamReader(process.getInputStream(), "UTF-8"));
                     processError = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
-                    while (true) {
+                    while (readerRunning0) {
                         Thread.sleep(1000);
                         String echo = readFromProcess(processInput);
                         String error = readErrorFromProcess(processError);
                         Platform.runLater(() -> {
-                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+echo + "\n");
-                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+error + "\n");
+                            if(echo != null && !echo.contains("read pending...")) {
+                                String log = DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n";
+                                if (log.toUpperCase().contains("ERROR")) {
+                                    VivadoErrorCounts.setReadError(log);
+                                }
+                                Platform.runLater(() -> {
+                                    taLogs.appendText(log);
+                                    taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + error + "\n");
+                                });
+                            }
                         });
                         String s = echo;
                         if (programming) {
@@ -89,15 +112,19 @@ public class DaForTest implements EventHandler {
                         }
                     }
 
-                } catch (Exception e) {}
-            }).start();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+            reader.start();
+            ThreadAndProcessPools.addThread(reader);
 
             processOutput = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
             System.out.println("当前shell进程状态：" + process.isAlive());
 
 
-            new Thread(() -> {
-                writerAndTester = Thread.currentThread();
+            writerAndTester=new Thread(() -> {
+//                writerAndTester = Thread.currentThread();
 
                 try {
                     writeToProcess(processOutput, "open_hw" + "\n");
@@ -106,9 +133,9 @@ public class DaForTest implements EventHandler {
                     writeToProcess(processOutput, "open_hw_target" + "\n");
                     writeToProcess(processOutput, "current_hw_device [get_hw_devices xc7vx690t_0]" + "\n");
                     writeToProcess(processOutput, "refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]" + "\n");
-                    writeToProcess(processOutput, "set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/AD_impl_Calib_syn_test/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                    writeToProcess(processOutput, "set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/AD_impl_Calib_syn_test/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                    writeToProcess(processOutput, "set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/AD_impl_Calib_syn_test/TOP_test2.bit} [get_hw_devices xc7vx690t_0]" + "\n");
+                    writeToProcess(processOutput,      "set_property PROBES.FILE "+properties.getProperty("DaForTest.probesPath")+" [get_hw_devices xc7vx690t_0]" + "\n");
+                    writeToProcess(processOutput, "set_property FULL_PROBES.FILE "+properties.getProperty("DaForTest.probesPath")+" [get_hw_devices xc7vx690t_0]" + "\n");
+                    writeToProcess(processOutput,     "set_property PROGRAM.FILE "+properties.getProperty("DaForTest.programPath")+" [get_hw_devices xc7vx690t_0]" + "\n");
                     if(btDownload.isSelected()) {
                         writeToProcess(processOutput, "program_hw_devices [get_hw_devices xc7vx690t_0]" + "\n");
                         //display_hw_ila_data [ get_hw_ila_data hw_ila_data_3 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]]
@@ -146,13 +173,44 @@ public class DaForTest implements EventHandler {
                     writeToProcess(processOutput, "set_property OUTPUT_VALUE 41 [get_hw_probes ADandDA_inst/damodeset -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/vio_damodeset_inst\"}]]" + "\n");
                     writeToProcess(processOutput, "commit_hw_vio [get_hw_probes {ADandDA_inst/damodeset} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/vio_damodeset_inst\"}]]" + "\n");
 
-                    Platform.runLater(()->{
-                        taResults.appendText("确认完毕后，点击Custom继续执行测试！\n");
+                    Thread.sleep(3000);
+                    instru1.writeCmd("FREQ:CENT 132.5 MHz");
+                    instru1.writeCmd(":FREQuency:SPAN 40 MHz");
+                    Thread.sleep(1000);
+                    instru1.writeCmd(":CALCulate:MARKer1:MAX");
+                    String imgPathConfirm=":MMEMory:STORe:SCReen '"+properties.getProperty("DaForTest.remotePath")+DateFormat.FORFILENAME.format(new Date())+".png'";
+                    instru1.writeCmd(imgPathConfirm);
+
+//                    Platform.runLater(()->{
+//                        taResults.appendText("确认完毕后，点击Custom继续执行测试！\n");
+//                    });
+//                    LockSupport.park();
+
+                    Platform.runLater(() -> {
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("Warning");
+                        alert.setHeaderText("确认");
+                        alert.setContentText("点击确认继续...");
+
+                        // 显示对话框并等待用户响应
+                        alert.showAndWait().ifPresent(response -> {
+                            if (response == ButtonType.OK) {
+                                next = true;
+                                System.out.println("NEXT clicked");
+                            }
+                        });
                     });
-                    LockSupport.park();
+
+                    while (!next) {
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
 
                     System.out.println("继续测试...");
-                    String adLineNo=properties.getProperty("adLineNo");
+                    String adLineNo=propertiesConfig.getProperty("adLineNo");
                     writeToProcess(processOutput, "set_property OUTPUT_VALUE "+adLineNo+" [get_hw_probes ADandDA_inst/damodeset -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/vio_damodeset_inst\"}]]" + "\n");
                     writeToProcess(processOutput, "commit_hw_vio [get_hw_probes {ADandDA_inst/damodeset} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/vio_damodeset_inst\"}]]" + "\n");
 
@@ -163,7 +221,7 @@ public class DaForTest implements EventHandler {
                     instru0.writeCmd("SOURce1:FREQuency:STOP 160 MHz");
                     instru0.writeCmd("SOURce1:SWEep:FREQuency:STEP:LINear 0.1 MHz");
                     instru0.writeCmd("SOURce1:FREQuency:MODE SWEep");
-                    String power=properties.getProperty("vsgPower");
+                    String power=propertiesConfig.getProperty("vsgPower");
                     instru0.writeCmd("SOURce1:POWer:POWer " + power+"dBm");//信号源初始功率
                     instru0.writeCmd(":OUTPut1 ON");
 
@@ -174,7 +232,7 @@ public class DaForTest implements EventHandler {
                     instru1.writeCmd("BAND:VIDeo:AUTO ON");
                     instru1.writeCmd("TRAC1:TYPE MAXHold");
                     Thread.sleep(7000);
-                    String imgPath0=":MMEMory:STORe:SCReen 'D:\\3188\\20240227\\"+DateFormat.FORFILENAME.format(new Date())+".png'";
+                    String imgPath0=":MMEMory:STORe:SCReen '"+properties.getProperty("DaForTest.remotePath")+DateFormat.FORFILENAME.format(new Date())+".png'";
                     instru1.writeCmd(imgPath0);
 
                     Platform.runLater(()->{
@@ -197,7 +255,7 @@ public class DaForTest implements EventHandler {
                     instru1.writeCmd("BAND 100 KHz");
                     instru1.writeCmd("BAND:VIDeo 100 KHz");
                     Thread.sleep(12000);
-                    String imgPath1=":MMEMory:STORe:SCReen 'D:\\3188\\20240227\\"+DateFormat.FORFILENAME.format(new Date())+".png'";
+                    String imgPath1=":MMEMory:STORe:SCReen '"+properties.getProperty("DaForTest.remotePath")+DateFormat.FORFILENAME.format(new Date())+".png'";
                     instru1.writeCmd(imgPath1);
 
                     Platform.runLater(()->{
@@ -218,7 +276,7 @@ public class DaForTest implements EventHandler {
                     instru1.writeCmd("BAND 100 KHz");
                     instru1.writeCmd("BAND:VIDeo 100 KHz");
                     Thread.sleep(12000);
-                    String imgPath2=":MMEMory:STORe:SCReen 'D:\\3188\\20240227\\"+DateFormat.FORFILENAME.format(new Date())+".png'";
+                    String imgPath2=":MMEMory:STORe:SCReen '"+properties.getProperty("DaForTest.remotePath")+DateFormat.FORFILENAME.format(new Date())+".png'";
                     instru1.writeCmd(imgPath2);
 
                     Platform.runLater(()->{
@@ -239,16 +297,26 @@ public class DaForTest implements EventHandler {
                     instru1.writeCmd("BAND 100 KHz");
                     instru1.writeCmd("BAND:VIDeo 100 KHz");
                     Thread.sleep(12000);
-                      String imgPath3=":MMEMory:STORe:SCReen 'D:\\3188\\20240227\\"+DateFormat.FORFILENAME.format(new Date())+".png'";
+                      String imgPath3=":MMEMory:STORe:SCReen '"+properties.getProperty("DaForTest.remotePath")+DateFormat.FORFILENAME.format(new Date())+".png'";
                     instru1.writeCmd(imgPath3);
 
+                    readerRunning0=false;
+                    System.out.println("关闭process的vivado...");
+                    SystemUtils.killProcessTree(process);
 
                 } catch (Exception e) {
                 }
-            }).start();
+            });
+            writerAndTester.start();
+            ThreadAndProcessPools.addThread(writerAndTester);
 
+            try {
+                writerAndTester.join();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
-                }
+        }
 
     }
 

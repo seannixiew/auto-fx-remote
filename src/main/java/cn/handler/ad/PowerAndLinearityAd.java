@@ -5,8 +5,7 @@ import cn.instr.InstrumentClient;
 import cn.instr.MatrixClient;
 import cn.model.InstruType;
 import cn.model.ValueCollection;
-import cn.utils.ControllersManager;
-import cn.utils.DateFormat;
+import cn.utils.*;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -26,8 +25,8 @@ public class PowerAndLinearityAd implements EventHandler {
     TextArea aChannelsTypeIn=rfTestController.popupControllerA.taChannels;
 
     InstrumentClient instru0=rfTestController.instru0;  //信号源
-    InstrumentClient instru2=rfTestController.instru2;  //网分
-    MatrixClient matrix0= rfTestController.matrix0;  //矩阵X
+//    InstrumentClient instru2=rfTestController.instru2;  //网分
+//    MatrixClient matrix0= rfTestController.matrix0;  //矩阵0
 
     TextArea taLogs=rfTestController.taLogs;
     TextArea taResults=rfTestController.taResults;
@@ -42,10 +41,16 @@ public class PowerAndLinearityAd implements EventHandler {
 
 
     boolean programming;
-//    boolean sampling;
+
+    boolean readerRunning0=true;
+
     static int readCounter=0;
 
+    Properties properties=new Properties();
 
+    public PowerAndLinearityAd(){
+        readCounter=0;
+    }
 
 
     @Override
@@ -54,24 +59,27 @@ public class PowerAndLinearityAd implements EventHandler {
 //            System.out.println("请检查仪表连接！");
 //            return;
 //        }
+            try {
+                properties.load(new FileInputStream("src/main/resources/configs/vivado.properties"));
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
             System.out.println("执行ad线性度测试...");
             Platform.runLater(() -> {
-                taLogs.appendText("开始执行ad线性度测试...");
+                taLogs.appendText("开始执行ad线性度测试...\n");
             });
 
-
-
-            try {
-                String s=aChannelsTypeIn.getText().trim();
-                String[] channels=s.split("\\s+");
-                List<String> cmdChannel=new ArrayList<>();
-                for(String channel:channels){
-                    cmdChannel.add(channel);
-                }
-                matrix0.channelSwitch(cmdChannel);
-                Thread.sleep(100);
-            }catch (Exception e){}
+//            try {
+//                String s=aChannelsTypeIn.getText().trim();
+//                String[] channels=s.split("\\s+");
+//                List<String> cmdChannel=new ArrayList<>();
+//                for(String channel:channels){
+//                    cmdChannel.add(channel);
+//                }
+//                matrix0.channelSwitch(cmdChannel);
+//                Thread.sleep(100);
+//            }catch (Exception e){}
 
             try {
                 String vivadoPath = "D:\\Xilinx\\Vivado\\2018.3\\bin\\vivado.bat";
@@ -82,24 +90,34 @@ public class PowerAndLinearityAd implements EventHandler {
 //            ProcessBuilder processBuilder = new ProcessBuilder(vivadoPath);
                 processBuilder.redirectErrorStream(true);
                 process = processBuilder.start();
+                ThreadAndProcessPools.addProcess(process);
+
+                Thread.sleep(3000);
 
             } catch (Exception e) {
             }
 
-            new Thread(() -> {
+            reader=new Thread(() -> {
                 try {
-                    reader = Thread.currentThread();
+//                    reader = Thread.currentThread();
                     processInput = new BufferedReader(new InputStreamReader(process.getInputStream(), "UTF-8"));
                     processError = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
-                    while (true) {
+                    while (readerRunning0) {
                         Thread.sleep(1000);
                         String echo = readFromProcess(processInput);
                         String error = readErrorFromProcess(processError);
-                        Platform.runLater(() -> {
-                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+echo + "\n");
-                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+error + "\n");
-                        });
+
+                        if(echo != null && !echo.contains("read pending...")) {
+                            String log = DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n";
+                            if (log.toUpperCase().contains("ERROR")) {
+                                VivadoErrorCounts.setReadError(log);
+                            }
+                            Platform.runLater(() -> {
+                                taLogs.appendText(log);
+                                taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + error + "\n");
+                            });
+                        }
                         String s = echo;
                         if (programming) {
                             if (s.contains("End of startup status: HIGH")) {
@@ -128,13 +146,15 @@ public class PowerAndLinearityAd implements EventHandler {
 
                 } catch (Exception e) {
                 }
-            }).start();
+            });
+            reader.start();
+            ThreadAndProcessPools.addThread(reader);
 
             processOutput = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
             System.out.println("当前shell进程状态：" + process.isAlive());
 
-            Thread t=new Thread(() -> {
-                writerAndTester = Thread.currentThread();
+            Thread writerAndTester=new Thread(() -> {
+//                writerAndTester = Thread.currentThread();
                 try {
                     writeToProcess(processOutput, "open_hw" + "\n");
                     writeToProcess(processOutput, "connect_hw_server" + "\n");
@@ -142,9 +162,9 @@ public class PowerAndLinearityAd implements EventHandler {
                     writeToProcess(processOutput, "open_hw_target" + "\n");
                     writeToProcess(processOutput, "current_hw_device [get_hw_devices xc7vx690t_0]" + "\n");
                     writeToProcess(processOutput, "refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]" + "\n");
-                    writeToProcess(processOutput, "set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0325/AD_impl_pps_r_added/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                    writeToProcess(processOutput, "set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0325/AD_impl_pps_r_added/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                    writeToProcess(processOutput, "set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/0325/AD_impl_pps_r_added/TOP_test2.bit} [get_hw_devices xc7vx690t_0]" + "\n");
+                    writeToProcess(processOutput,      "set_property PROBES.FILE "+properties.getProperty("PowerAndLinerityAd.probesPath")+" [get_hw_devices xc7vx690t_0]" + "\n");
+                    writeToProcess(processOutput, "set_property FULL_PROBES.FILE "+properties.getProperty("PowerAndLinerityAd.probesPath")+" [get_hw_devices xc7vx690t_0]" + "\n");
+                    writeToProcess(processOutput,     "set_property PROGRAM.FILE "+properties.getProperty("PowerAndLinerityAd.programPath")+" [get_hw_devices xc7vx690t_0]" + "\n");
                     if(btDownload.isSelected()) {
                         writeToProcess(processOutput, "program_hw_devices [get_hw_devices xc7vx690t_0]" + "\n");
                         //display_hw_ila_data [ get_hw_ila_data hw_ila_data_3 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]]
@@ -234,12 +254,13 @@ public class PowerAndLinearityAd implements EventHandler {
 //                        LockSupport.park();
 //                        Thread.sleep(7000);
                             System.out.println("开始存文件...");
-                            writeToProcess(processOutput, "write_hw_ila_data -csv_file {E:\\wx\\2_projects\\caishu\\0326\\"
+                            writeToProcess(processOutput, "write_hw_ila_data -csv_file {"+properties.getProperty("PowerAndLinerityAd.samplePath")
                                     + freq + "_" + power + ".csv} hw_ila_data_3" + "\n");
-                            File file = new File("E:\\wx\\2_projects\\caishu\\0326\\" + freq + "_" + power + ".csv");
+                            File file = new File(properties.getProperty("PowerAndLinerityAd.samplePath") + freq + "_" + power + ".csv");
                             while (true) {
+                                Thread.sleep(1);
                                 if (file.exists()) {
-                                    System.out.println("已生成文件" + "E:\\wx\\2_projects\\caishu\\0326\\" + freq + "_" + power + ".csv");
+                                    System.out.println("已生成文件" + properties.getProperty("PowerAndLinerityAd.samplePath") + freq + "_" + power + ".csv");
                                     break;
                                 }
                             }
@@ -270,32 +291,37 @@ public class PowerAndLinearityAd implements EventHandler {
 
 //                        sampling=true;
 
-                            // TODO: 2024/1/12 还是要增加标志位，时间长
 //                        System.out.println("等待采数...");
 //                        LockSupport.park();
 //                        Thread.sleep(7000);
                             System.out.println("开始存文件...");
-                            writeToProcess(processOutput, "write_hw_ila_data -csv_file {E:\\wx\\2_projects\\caishu\\0326\\"
+                            writeToProcess(processOutput, "write_hw_ila_data -csv_file {"+properties.getProperty("PowerAndLinerityAd.samplePath")
                                     + freq + "_" + power + ".csv} hw_ila_data_3" + "\n");
-                            File file = new File("E:\\wx\\2_projects\\caishu\\0326\\" + freq + "_" + power + ".csv");
+                            File file = new File(properties.getProperty("PowerAndLinerityAd.samplePath") + freq + "_" + power + ".csv");
                             while (true) {
+                                Thread.sleep(1);
                                 if (file.exists()) {
-                                    System.out.println("已生成文件" + "E:\\wx\\2_projects\\caishu\\0326\\" + freq + "_" + power + ".csv");
+                                    System.out.println("已生成文件" + properties.getProperty("PowerAndLinerityAd.samplePath")+ freq + "_" + power + ".csv");
                                     break;
                                 }
                             }
                         }
                         instru0.writeCmd(":OUTPut1 OFF");
                     }
-                        System.out.println("测试结束");
+                    readerRunning0=false;
+                    System.out.println("关闭process的vivado...");
+                    SystemUtils.killProcessTree(process);
+
 
                 } catch (Exception e) {
                 }
 
             });
-            t.start();
+            writerAndTester.start();
+            ThreadAndProcessPools.addThread(writerAndTester);
+
             try {
-                t.join();
+                writerAndTester.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

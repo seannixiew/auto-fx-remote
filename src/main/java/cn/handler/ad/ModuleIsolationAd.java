@@ -1,4 +1,14 @@
 package cn.handler.ad;
 
-public class ModuleIsolationAd {
+import javafx.event.Event;
+import javafx.event.EventHandler;
+
+public class ModuleIsolationAd  implements EventHandler {
+
+
+
+    @Override
+    public void handle(Event event) {
+
+    }
 }

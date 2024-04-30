@@ -50,8 +50,6 @@ public class TestItems {
 
     public static final TestItemModel ad40Isolation=new TestItemModel(15,"AD隔离度测试（40路）","cn.handler.ad.IsolationAd");
 
-    public static final TestItemModel ad40Consistency=new TestItemModel(16,"AD一致性测试（40路）");
-
     public static final TestItemModel adInModuleSequenceStability=new TestItemModel(17,"整机-AD时序稳定性","cn.handler.ad.ModuleSequenceStabilityAd");
 
     public static final TestItemModel adInModuleCalSynSignal=new TestItemModel(18,"整机-AD校正同步信号测试","cn.handler.ad.ModuleCalSynSignalAd");

@@ -22,7 +22,7 @@ public class PopupControllerA extends RootController {
 
     RfTestController rfTestController =(RfTestController) ControllersManager.CONTROLLERS.get(RfTestController.class.getSimpleName());
     MatrixClient matrix0=rfTestController.matrix0;
-    List<String> offeredChannels0=rfTestController.offeredChannels0;
+    public List<String> offeredChannels0;
     TextArea taLogs=rfTestController.taLogs;
 
     @FXML

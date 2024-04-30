@@ -4,8 +4,7 @@ import cn.controllers.RfTestController;
 import cn.instr.InstrumentClient;
 import cn.instr.MatrixClient;
 import cn.model.InstruType;
-import cn.utils.ControllersManager;
-import cn.utils.DateFormat;
+import cn.utils.*;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -22,7 +21,7 @@ import java.util.concurrent.locks.LockSupport;
 public class IsolationAd implements EventHandler {
 
     RfTestController rfTestController =(RfTestController) ControllersManager.CONTROLLERS.get(RfTestController.class.getSimpleName());
-    TextArea aChannelsTypeIn=rfTestController.popupControllerA.taChannels;
+    List<String> offeredChannels0=rfTestController.popupControllerA.offeredChannels0;
 
 
     InstrumentClient instru0=rfTestController.instru0;  //信号源
@@ -38,24 +37,31 @@ public class IsolationAd implements EventHandler {
     Thread reader;
     public Thread writerAndTester;
 
+    boolean readerRunning0=true;
+
     boolean programming;
-    //    boolean sampling;
     static int readCounter=0;
-    Properties properties = new Properties();
+    Properties propertiesConfig = new Properties();
+    Properties properties=new Properties();
+
+    public IsolationAd(){
+        readCounter=0;
+    }
 
 
     @Override
     public void handle(Event event) {
 
         try {
-            properties.load(new FileInputStream("src/main/resources/configs/config.properties"));
+            propertiesConfig.load(new FileInputStream("src/main/resources/configs/config.properties"));
+            properties.load(new FileInputStream("src/main/resources/configs/vivado.properties"));
         }catch (Exception e){}
 
 
 
             System.out.println("执行AD隔离度测试...");
             Platform.runLater(() -> {
-                taLogs.appendText("开始执行AD隔离度测试...");
+                taLogs.appendText("开始执行AD隔离度测试...\n");
             });
             try {
                 String vivadoPath = "D:\\Xilinx\\Vivado\\2018.3\\bin\\vivado.bat";
@@ -65,23 +71,32 @@ public class IsolationAd implements EventHandler {
                 ProcessBuilder processBuilder = new ProcessBuilder(vivadoPath, "-mode", "tcl", "-source", tclScriptPath);
                 processBuilder.redirectErrorStream(true);
                 process = processBuilder.start();
+                ThreadAndProcessPools.addProcess(process);
+
+                Thread.sleep(3000);
 
             } catch (Exception e) {}
 
-            new Thread(() -> {
+            reader=new Thread(() -> {
                 try {
-                    reader = Thread.currentThread();
+//                    reader = Thread.currentThread();
                     processInput = new BufferedReader(new InputStreamReader(process.getInputStream(), "UTF-8"));
                     processError = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
-                    while (true) {
+                    while (readerRunning0) {
                         Thread.sleep(1000);
                         String echo = readFromProcess(processInput);
                         String error = readErrorFromProcess(processError);
-                        Platform.runLater(() -> {
-                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+echo + "\n");
-                            taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date())+error + "\n");
-                        });
+                        if(echo != null && !echo.contains("read pending...")) {
+                            String log = DateFormat.FORLOGSHORT.format(new Date()) + echo + "\n";
+                            if (log.toUpperCase().contains("ERROR")) {
+                                VivadoErrorCounts.setReadError(log);
+                            }
+                            Platform.runLater(() -> {
+                                taLogs.appendText(log);
+                                taLogs.appendText(DateFormat.FORLOGSHORT.format(new Date()) + error + "\n");
+                            });
+                        }
                         String s = echo;
                         if (programming) {
                             if (s.contains("End of startup status: HIGH")) {
@@ -92,15 +107,19 @@ public class IsolationAd implements EventHandler {
                         }
                     }
 
-                } catch (Exception e) {}
-            }).start();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+            reader.start();
+            ThreadAndProcessPools.addThread(reader);
 
             processOutput = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
             System.out.println("当前shell进程状态：" + process.isAlive());
 
 
-            new Thread(() -> {
-                writerAndTester = Thread.currentThread();
+        writerAndTester=new Thread(() -> {
+//                writerAndTester = Thread.currentThread();
 
                 try {
                     writeToProcess(processOutput, "open_hw" + "\n");
@@ -110,9 +129,9 @@ public class IsolationAd implements EventHandler {
                     writeToProcess(processOutput, "current_hw_device [get_hw_devices xc7vx690t_0]" + "\n");
                     writeToProcess(processOutput, "refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7vx690t_0] 0]" + "\n");
                     Thread.sleep(5000);
-                    writeToProcess(processOutput, "set_property PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0325/AD_impl_pps_r_added/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                    writeToProcess(processOutput, "set_property FULL_PROBES.FILE {E:/wx/2_projects/L payload/vivado files/0325/AD_impl_pps_r_added/TOP_test2.ltx} [get_hw_devices xc7vx690t_0]" + "\n");
-                    writeToProcess(processOutput, "set_property PROGRAM.FILE {E:/wx/2_projects/L payload/vivado files/0325/AD_impl_pps_r_added/TOP_test2.bit} [get_hw_devices xc7vx690t_0]" + "\n");
+                    writeToProcess(processOutput,      "set_property PROBES.FILE "+properties.getProperty("IsolationAd.probesPath")+" [get_hw_devices xc7vx690t_0]" + "\n");
+                    writeToProcess(processOutput, "set_property FULL_PROBES.FILE "+properties.getProperty("IsolationAd.probesPath")+" [get_hw_devices xc7vx690t_0]" + "\n");
+                    writeToProcess(processOutput,     "set_property PROGRAM.FILE "+properties.getProperty("IsolationAd.programPath")+" [get_hw_devices xc7vx690t_0]" + "\n");
                     if(btDownload.isSelected()) {
                         writeToProcess(processOutput, "program_hw_devices [get_hw_devices xc7vx690t_0]" + "\n");
                         //display_hw_ila_data [ get_hw_ila_data hw_ila_data_3 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~"ADandDA_inst/ila_addata_inst"}]]
@@ -156,13 +175,12 @@ public class IsolationAd implements EventHandler {
                         instru0.writeCmd(":OUTPut1 OFF");
                         instru0.writeCmd("SOURce:POWer:MODE CW");
                         instru0.writeCmd("SOURce1:FREQuency:CW 132.5MHz");
-                        String power = properties.getProperty("vsgPower");
+                        String power = propertiesConfig.getProperty("vsgPower");
                         instru0.writeCmd("SOURce1:POWer:POWer " + power + "dBm");//信号源初始功率
                         instru0.writeCmd(":OUTPut1 ON");
 
-                        String s = aChannelsTypeIn.getText().trim();
-                        String[] channels = s.split("\\s+");
-                        for (String channel : channels) {
+
+                        for (String channel : offeredChannels0) {
                             System.out.println("矩阵当前开启通道" + channel);
                             List<String> cmdChannel = Arrays.asList(channel);
                             matrix0.channelSwitch(cmdChannel);
@@ -174,12 +192,13 @@ public class IsolationAd implements EventHandler {
                             writeToProcess(processOutput, "upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/ila_addata_inst\"}]" + "\n");
 
                             System.out.println("开始存文件...");
-                            writeToProcess(processOutput, "write_hw_ila_data -csv_file {E:\\wx\\2_projects\\caishu\\0326\\ch_"
+                            writeToProcess(processOutput, "write_hw_ila_data -csv_file {"+properties.getProperty("IsolationAd.samplePath")+"ch_"
                                     + channel + ".csv} hw_ila_data_3" + "\n");
-                            File file = new File("E:\\wx\\2_projects\\caishu\\0326\\ch_" + channel + ".csv");
+                            File file = new File(properties.getProperty("IsolationAd.samplePath")+"ch_" + channel + ".csv");
                             while (true) {
+                                Thread.sleep(1);
                                 if (file.exists()) {
-                                    System.out.println("已生成文件" + "E:\\wx\\2_projects\\caishu\\0326\\ch_" + channel + ".csv");
+                                    System.out.println("已生成文件" + properties.getProperty("IsolationAd.samplePath")+"ch_" + channel + ".csv");
                                     break;
                                 }
                             }
@@ -189,14 +208,13 @@ public class IsolationAd implements EventHandler {
                     }else if(InstruType.E8267D.equals(instru0.instruType)){
                         instru0.writeCmd(":OUTPut OFF");
                         instru0.writeCmd(":FREQuency 132.5MHz");
-                        String power = properties.getProperty("vsgPower");
+                        String power = propertiesConfig.getProperty("vsgPower");
                         instru0.writeCmd("SOURce:POWer:LEVel " + power);  //keysight
                         instru0.writeCmd(":OUTPut ON"); //keysight
                         instru0.writeCmd(":OUTPut:MOD:STAT OFF");// keysight
 
-                        String s = aChannelsTypeIn.getText().trim();
-                        String[] channels = s.split("\\s+");
-                        for (String channel : channels) {
+
+                        for (String channel : offeredChannels0) {
                             System.out.println("矩阵当前开启通道" + channel);
                             List<String> cmdChannel = Arrays.asList(channel);
                             matrix0.channelSwitch(cmdChannel);
@@ -208,23 +226,35 @@ public class IsolationAd implements EventHandler {
                             writeToProcess(processOutput, "upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"ADandDA_inst/ila_addata_inst\"}]" + "\n");
 
                             System.out.println("开始存文件...");
-                            writeToProcess(processOutput, "write_hw_ila_data -csv_file {E:\\wx\\2_projects\\caishu\\0326\\ch_"
+                            writeToProcess(processOutput, "write_hw_ila_data -csv_file {"+properties.getProperty("IsolationAd.samplePath")+"ch_"
                                     + channel + ".csv} hw_ila_data_3" + "\n");
-                            File file = new File("E:\\wx\\2_projects\\caishu\\0326\\ch_" + channel + ".csv");
+                            File file = new File(properties.getProperty("IsolationAd.samplePath")+"ch_" + channel + ".csv");
                             while (true) {
+                                Thread.sleep(1);
                                 if (file.exists()) {
-                                    System.out.println("已生成文件" + "E:\\wx\\2_projects\\caishu\\0326\\ch_" + channel + ".csv");
+                                    System.out.println("已生成文件" + properties.getProperty("IsolationAd.samplePath")+"ch_" + channel + ".csv");
                                     break;
                                 }
                             }
                         }
                         instru0.writeCmd(":OUTPut OFF");
                     }
-                    System.out.println("测试结束");
+                    readerRunning0=false;
+                    System.out.println("关闭process的vivado...");
+                    SystemUtils.killProcessTree(process);
 
                 } catch (Exception e) {
                 }
-            }).start();
+            });
+
+        writerAndTester.start();
+        ThreadAndProcessPools.addThread(writerAndTester);
+
+        try {
+            writerAndTester.join();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
 
     }
