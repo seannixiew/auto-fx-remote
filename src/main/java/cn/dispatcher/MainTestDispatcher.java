@@ -32,18 +32,12 @@ public class MainTestDispatcher {
     ObservableList<TreeItem<TestItemModel>> selectedItems=rfTestController.selectedItems;
     TextArea taLogs=rfTestController.taLogs;
 
-    ComboBox<String> cbLoop=rfTestController.cbLoop;
-
     public Object HandlerInstance;
 
 
     public void testHandlerDispatcher( Event event){
 
         new Thread(()-> {
-
-            //此处仅打印
-            char mode=cbLoop.getValue().charAt(5);
-            System.out.println("遍历模式："+mode);
 
             try {
                 String time = DateFormat.FORFILENAME.format(new Date());

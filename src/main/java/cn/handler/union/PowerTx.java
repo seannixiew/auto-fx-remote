@@ -6,6 +6,7 @@ import cn.instr.InstrumentClient;
 import cn.model.InstruKind;
 import cn.utils.ControllersManager;
 import cn.utils.ExcelUtils;
+import cn.utils.ThreadAndProcessPools;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -26,7 +27,7 @@ public class PowerTx implements EventHandler {
     @Override
     public void handle(Event event) {
 
-        new Thread(()->{
+        Thread t=new Thread(()->{
 
             Map<String,Integer> map=new HashMap<>(); // 频率，offset列号
             map.put("218MHz",2);
@@ -75,7 +76,7 @@ public class PowerTx implements EventHandler {
                     }
                     System.out.println(freq);
                     HSSFSheet sheet = null;
-                    try {
+                    try {//E:\wx\2_projects\L payload\实验星测试数据\testDocuments\0117
                         HSSFWorkbook hssfWorkbook = new HSSFWorkbook(new FileInputStream("E:\\wx\\1_auto-test\\testDocuments\\0117\\offset表.xls")); //已包含1根公共线
                         sheet = hssfWorkbook.getSheetAt(0);
                     } catch (Exception excelE) {
@@ -151,7 +152,15 @@ public class PowerTx implements EventHandler {
             }
 
             System.out.println("DBF+RF-发射功率扫描：测试完成。");
-        }).start();
+        });
+        t.start();
+        ThreadAndProcessPools.addThread(t);
+
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private String toHex(int dec){

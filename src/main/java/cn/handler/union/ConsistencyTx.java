@@ -4,6 +4,7 @@ import cn.controllers.RfTestController;
 import cn.instr.DbfClient;
 import cn.instr.InstrumentClient;
 import cn.utils.ControllersManager;
+import cn.utils.ThreadAndProcessPools;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import org.apache.poi.ss.usermodel.CellType;
@@ -28,7 +29,7 @@ public class ConsistencyTx implements EventHandler {
     @Override
     public void handle(Event event) {
         System.out.println("执行DBF+RF-发射一致性测试...");
-        new Thread(()->{
+        Thread t=new Thread(()->{
             HashMap<String,Double> map=new HashMap<>();
             //补偿矢网和信号源功率delta
             // TODO: 2024/1/19 校准补偿
@@ -144,7 +145,15 @@ public class ConsistencyTx implements EventHandler {
                     exception.printStackTrace();
                 }
             }
-        }).start();
+        });
+        t.start();
+        ThreadAndProcessPools.addThread(t);
+
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private String toHex(int dec){

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class PopupControllerB extends RootController {
 
@@ -108,6 +109,32 @@ public class PopupControllerB extends RootController {
 
         Platform.runLater(()->{
             taLogs.appendText(DateFormat.FORLOG.format(new Date())+echo+"\n");
+        });
+    }
+
+    public void initialize(){
+        tfEndpoints.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue!=null){
+                if( newValue.trim().length()!=0){
+                    String[] ends=newValue.split("\\s+");
+                    if(ends!=null && ends.length==2){
+                        String pattern = "^[1-9]\\d*$";
+                        Pattern regex = Pattern.compile(pattern);
+                        if(regex.matcher(ends[0].trim()).matches() && regex.matcher(ends[1].trim()).matches()){
+                            int start=Integer.parseInt(ends[0].trim());
+                            int stop=Integer.parseInt(ends[1].trim());
+                            StringBuilder sb=new StringBuilder();
+                            while (start<stop+1){
+                                sb.append(start+" ");
+                                start++;
+                            }
+                            taChannels.setText(sb.toString());
+                        }
+                    }
+                }else {
+                    taChannels.setText("");
+                }
+            }
         });
     }
 

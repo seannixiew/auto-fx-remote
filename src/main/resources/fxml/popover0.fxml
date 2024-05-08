@@ -34,7 +34,7 @@
                               <Label prefHeight="15.0" prefWidth="60.0" text="快捷输入：" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
-                        <TextField fx:id="tfEndpoints" editable="false" focusTraversable="false" prefHeight="23.0" prefWidth="140.0" promptText="输入起止通道，以空格分隔...">
+                        <TextField fx:id="tfEndpoints" editable="true" focusTraversable="false" prefHeight="23.0" prefWidth="140.0" promptText="输入起止通道，以空格分隔...">
                            <font>
                               <Font size="10.0" />
                            </font>

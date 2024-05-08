@@ -24,7 +24,7 @@ public class TestItems {
 
     public static final TestItemModel txNoiseOutBand=new TestItemModel(5,"带外噪声谱");
 
-    public static final TestItemModel txConsisAmongChannels=new TestItemModel(6,"通道间幅相一致性");
+    public static final TestItemModel txConsisAmongChannels=new TestItemModel(6,"通道间幅相一致性","cn.handler.tx.ConsistencyTxRf");
 
     public static final TestItemModel rxP1dB=new TestItemModel(7,"P1dB");
 
