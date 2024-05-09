@@ -34,11 +34,7 @@ public class ConsistencyTxRf implements EventHandler {
                 Platform.runLater(()->{
                     taLogs.appendText("循环模式：0 --> 单通道测试\n");
                 });
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                //测试逻辑...
             }
         });
         t.start();

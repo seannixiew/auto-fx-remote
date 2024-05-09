@@ -22,6 +22,8 @@ import java.util.concurrent.locks.LockSupport;
  * FPGA刷新控制：关闭
  * FPGA刷新错误自动重载：不重载
  * 对于AGILENT TECHNOLOGIES,MSO-X 3014A，需要U盘且同名文件自动覆盖
+ *
+ * 不需要信号源和矩阵，只需要示波器
  */
 public class ModulePpsSynAd   implements EventHandler {
 
@@ -379,7 +381,7 @@ public class ModulePpsSynAd   implements EventHandler {
                     if(i<32){
                         delay=10;
                     }else if(i<64){
-                        delay=i;
+                        delay=i-32;
                     }else if(i<96){
                         delay=10;
                     }
@@ -453,7 +455,7 @@ public class ModulePpsSynAd   implements EventHandler {
                     if(i<64){
                         delay=10;
                     }else {
-                        delay=i;
+                        delay=i-64;
                     }
                     writeToProcess(processOutput2,2,"set_property OUTPUT_VALUE "+delay+" [get_hw_probes CNTVALUEIN -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"vio_pps_inst\"}]]"+"\n");
                     writeToProcess(processOutput2,2,"commit_hw_vio [get_hw_probes {CNTVALUEIN} -of_objects [get_hw_vios -of_objects [get_hw_devices xc7vx690t_0] -filter {CELL_NAME=~\"vio_pps_inst\"}]]"+"\n");
