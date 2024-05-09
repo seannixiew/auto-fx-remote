@@ -64,15 +64,6 @@
     - 打印的info：ila armed 4个reader都是ila4？
     > 重启Main，不下程序再跑，恢复正常
 
-## 未修复
-- DBF
-  - <font style=color:red> 单独下程序，调通，确保好用  </font>
-  - <font style=color:red> 最后一个采数不全问题</font>
-  - <font style=color:red> AD稳定性终止bug</font>
-  - <font style=color:red> 移植程序</font>
-- union
-  - <font style=color:red> 推功率完善</font>
-  - <font style=color:red> 测幅相完善</font>
 
 # 用户使用提示
 - 复选测试项，终止一次只终止一项，过3s再点下一次。

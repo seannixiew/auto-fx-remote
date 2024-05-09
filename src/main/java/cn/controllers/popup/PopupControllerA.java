@@ -116,7 +116,7 @@ public class PopupControllerA extends RootController {
         tfEndpoints.textProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue!=null){
                 if( newValue.trim().length()!=0){
-                    String[] ends=newValue.split("\\s+");
+                    String[] ends=newValue.trim().split("\\s+");
                     if(ends!=null && ends.length==2){
                         String pattern = "^[1-9]\\d*$";
                         Pattern regex = Pattern.compile(pattern);
