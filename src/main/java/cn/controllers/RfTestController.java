@@ -622,7 +622,7 @@ public class RfTestController extends RootController {
 //            });
 //        });
 
-        cbLoop.getItems().addAll("遍历模式：0","遍历模式：1","遍历模式：2","遍历模式：3","遍历模式：4","遍历模式：5");
+        cbLoop.getItems().addAll("测试模式：0","测试模式：1","测试模式：2","测试模式：3","测试模式：4","测试模式：5");
         cbLoop.getSelectionModel().select(0);
 
         cbOsc.valueProperty().addListener((observable, oldValue, newValue) -> {
