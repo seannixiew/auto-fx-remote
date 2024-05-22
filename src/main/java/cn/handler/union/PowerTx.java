@@ -37,7 +37,115 @@ public class PowerTx implements EventHandler {
 
         if(selectedIndex==0){
             Thread t=new Thread(()->{
-                //测试逻辑...
+
+                Map<String, Integer> map = new HashMap<>(); // 频率，offset列号
+                map.put("218MHz", 4);
+                map.put("221.5MHz", 5);
+                map.put("225MHz", 6);
+
+                instru2.writeCmd("SWEep:TYPE POINt");
+                instru2.writeCmd("SWEep:POINts 501");
+
+                instru3.writeCmd("*RST;*CLS");
+                instru3.writeCmd("*WAI");
+                instru3.writeCmd("SENSe:FREQuency 1.521 GHz");
+                instru3.writeCmd("UNIT:POWER DBM ");
+
+                for(int channel=1;channel<121;channel++) {
+                    try {
+//                    String dbfCmd = "BB00010000FF";
+                        String dbfCmd = "BB00" + toHex(channel) + "0000FF";
+                        System.out.println("DA通道为：" + channel + " --- dbf切换指令为：" + dbfCmd);
+                        String dbfAns = dbfClient.dbfWrite(dbfCmd);   //地检切通道
+                        System.out.println("DBF ans：" + dbfAns);
+                        Thread.sleep(1000);    //通道切换等待1s
+                    } catch (Exception ee) {
+                        ee.printStackTrace();
+                    }
+
+                    for (int i = 0; i < 3; i++) {
+                        String freq = "";
+                        if (i == 0) {
+                            freq = "218MHz";
+                        }
+                        if (i == 1) {
+                            freq = "221.5MHz";
+                        }
+                        if (i == 2) {
+                            freq = "225MHz";
+                        }
+                        System.out.println(freq);
+
+                        HSSFSheet sheet = null;
+                        try {
+                            HSSFWorkbook hssfWorkbook = new HSSFWorkbook(new FileInputStream("E:\\wx\\2_projects\\L payload\\组网星\\小卫星测试\\联测\\功分补偿_forRead.xls")); //不包含1根公共线1.05dB
+                            sheet = hssfWorkbook.getSheetAt(0);
+                        } catch (Exception excelE) {
+                            excelE.printStackTrace();
+                        }
+
+                        double offset = 0;
+                        offset = (-sheet.getRow(channel).getCell(map.get(freq)).getNumericCellValue())+1.05; //负号
+                        if (!(offset > 54)) { //如果offset无效
+                            offset = 55.8;
+                            System.out.println("offset 无效！");
+                        }
+                        System.out.println("offset:" + offset);
+
+                        double sourcePower = -20; //信号源初始化值设定
+                        try{
+                            instru2.writeCmd("SENSe1:FREQuency:FIXed "+freq);
+                            instru2.writeCmd("SOUR:POW "+sourcePower);
+                            instru2.writeCmd("CONFigure:CHANnel1:MEASure ON");
+
+                            instru3.writeCmd("SENSE:CORRECTION:OFFSET " + offset); // 设置offset
+                            instru3.writeCmd("SENSE:CORRECTION:OFFSET:State ON");
+                            instru3.writeCmd("SENSE:AVERAGE:COUNT 16384");
+                            instru3.writeCmd("INITiate:CONTinuous 1");
+                            instru3.writeCmd("*OPC?");
+                            instru3.readResult();
+                            Thread.sleep(2000);  //功率计设置后，读数前，固定等待
+                            instru3.writeCmd(":INIT:IMM");
+                            instru3.writeCmd("FETCH?");
+                            //保留两位小数
+                            String resultTmp = instru3.readResult();
+                            double valueD2 = new BigDecimal(Double.parseDouble(resultTmp)).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+
+                            double target = 34.05;//定标到 34 dbm
+                            while (target - valueD2 > 0.05 || valueD2 - target > 0.05) {
+                                sourcePower = (target - valueD2) / 2 + sourcePower;  //以(1/2*Δ)的速度逼近target，沿±方向
+
+                                if (sourcePower > -10) {//保护门限
+                                    System.out.println("信号源功率过高异常！");
+                                    sourcePower = -30; //
+                                    instru2.writeCmd("SOUR:POW -30");
+                                    break;
+                                }
+                                instru2.writeCmd("SOUR:POW "+sourcePower);
+                                instru2.writeCmd("*OPC?");
+                                instru2.readResult();
+
+                                Thread.sleep(1000); //信号源功率设置后，功率计读取前，再加上TR响应时间，固定等待1000 ms
+                                instru3.writeCmd(":INIT:IMM");
+                                instru3.writeCmd("FETCH?");
+                                valueD2 = new BigDecimal(Double.parseDouble(instru3.readResult())).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+
+                            }
+                            //入excel，打印结果
+                            System.out.println("sourcePower:" + sourcePower);
+                            System.out.println("meterPower:" + valueD2);
+                            ExcelUtils.writeVals2Cell(Arrays.asList(channel + "", freq, sourcePower + "", valueD2 + "", offset + ""), "E:\\wx\\2_projects\\L payload\\组网星\\小卫星测试\\联测\\功率标定0522.xlsx");
+
+                            instru2.writeCmd("CONFigure:CHANnel1:MEASure OFF");
+                            System.out.println("通道" + channel + "：" + "频率" + freq + "：测试完成。");
+                            Thread.sleep(1000);
+
+                            System.out.println("end.");
+                        }catch (Exception e){
+
+                        }
+                    }
+                }
             });
             t.start();
             ThreadAndProcessPools.addThread(t);
@@ -47,6 +155,7 @@ public class PowerTx implements EventHandler {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+/***********************************************************************************************/
         }else if(selectedIndex==5) {
             Thread t = new Thread(() -> {
 

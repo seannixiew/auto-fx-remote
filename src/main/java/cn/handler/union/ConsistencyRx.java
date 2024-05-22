@@ -33,7 +33,7 @@ public class ConsistencyRx implements EventHandler {
 
             for (int i = 1; i < 121; i++) {
                 int currChannel = i;
-                double vnaPower = -10; //随需求调整
+                double vnaPower = -5; //随需求调整
 
                 String fileName = "";
                 try {
@@ -55,9 +55,9 @@ public class ConsistencyRx implements EventHandler {
                 try {
 //                    instru0.writeCmd("*RST");
                     instru2.writeCmd(":SYSTEM:DISPLAY:UPDATE ON");
-                    instru2.writeCmd(":INITiate:CONTinuous:ALL OFF");
-                    //                    instru0.writeCmd("SENSe1:FREQuency:STARt 0.14 GHz; STOP 0.3 GHz");
-                    instru2.writeCmd("SENSe1:FREQuency:STARt 0.21 GHz; STOP 0.24 GHz");
+                    instru2.writeCmd(":INITiate:CONTinuous:ALL ON");
+//                    instru2.writeCmd(":INITiate:CONTinuous:ALL OFF");  // single step 1
+                    instru2.writeCmd("SENSe1:FREQuency:STARt 0.105 GHz; STOP 0.165 GHz");
                     instru2.writeCmd("SOUR:POW " + vnaPower);
                     instru2.writeCmd("SENSe1:BANDwidth:RESolution 1KHz");
                     instru2.writeCmd("SWEep:STEP 500 kHz");
@@ -71,16 +71,26 @@ public class ConsistencyRx implements EventHandler {
                     instru2.writeCmd("DISPlay:WINDow2:TRACe2:FEED 'Trc2'");
 
                     Thread.sleep(200);
-                    instru2.writeCmd("INITiate1:IMMediate; *WAI");
+//                    instru2.writeCmd("INITiate1:IMMediate; *WAI");  // single step 2
 //                        Thread.sleep(3000); //sweep time 400ms count 10
 
                     instru2.writeCmd("CALCulate1:PARameter:SELect 'Trc1'");
                     instru2.writeCmd("CALCulate1:MARKER1 ON");
                     instru2.writeCmd("CALCulate1:MARKER2 ON");
                     instru2.writeCmd("CALCulate1:MARKER3 ON");
-                    instru2.writeCmd("CALCulate1:MARKer1:X 0.218 GHz");
-                    instru2.writeCmd("CALCulate1:MARKer2:X 0.2215 GHz");
-                    instru2.writeCmd("CALCulate1:MARKer3:X 0.225 GHz");
+                    instru2.writeCmd("CALCulate1:MARKER4 ON");
+                    instru2.writeCmd("CALCulate1:MARKER5 ON");
+                    instru2.writeCmd("CALCulate1:MARKER6 ON");
+                    instru2.writeCmd("CALCulate1:MARKER7 ON");
+                    instru2.writeCmd("CALCulate1:MARKER8 ON");
+                    instru2.writeCmd("CALCulate1:MARKer1:X 0.105 GHz");
+                    instru2.writeCmd("CALCulate1:MARKer2:X 0.120 GHz");
+                    instru2.writeCmd("CALCulate1:MARKer3:X 0.1325 GHz");
+                    instru2.writeCmd("CALCulate1:MARKer4:X 0.135 GHz");
+                    instru2.writeCmd("CALCulate1:MARKer5:X 0.1385 GHz");
+                    instru2.writeCmd("CALCulate1:MARKer6:X 0.142 GHz");
+                    instru2.writeCmd("CALCulate1:MARKer7:X 0.150 GHz");
+                    instru2.writeCmd("CALCulate1:MARKer8:X 0.160 GHz");
 
                     //                    instru0.writeCmd("CALCulate:MARKer:COUPled:TYPE channel"); //不支持
                     instru2.writeCmd("CALC:MARK:COUP ON");
@@ -88,7 +98,13 @@ public class ConsistencyRx implements EventHandler {
                     // TODO: 2024/1/19 改路径
                     //导出.dat
                     Thread.sleep(200);
-                    String pathPre = "MMEMory:STORe:TRACe 'Trc1','C:\\20240521\\Rx\\";
+// single step 3
+//                    String pathPre = "MMEMory:STORe:TRACe 'Trc1','C:\\20240521\\Rx\\";
+//                    String pathPost = "',UNFORMatted,LOGPhase";
+//                    fileName = currChannel + ".dat";
+//                    String trace = pathPre + fileName + pathPost;
+
+                    String pathPre = "MMEM:STOR:TRAC:CHAN 1,'C:\\20240521\\Rx\\";
                     String pathPost = "',UNFORMatted,LOGPhase";
                     fileName = currChannel + ".dat";
                     String trace = pathPre + fileName + pathPost;

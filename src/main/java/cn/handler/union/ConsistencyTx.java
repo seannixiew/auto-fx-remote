@@ -46,6 +46,7 @@ public class ConsistencyTx implements EventHandler {
             }catch (Exception e){
                 e.printStackTrace();
             }
+/***********************************************************************************************/
         }else if (selectedIndex == 5) {
             Thread t = new Thread(() -> {
                 HashMap<String, Double> map = new HashMap<>();
